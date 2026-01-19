@@ -130,15 +130,38 @@ Edit animation keyframes in `styles/main.css`:
 - Skip to main content link (ready to implement)
 - Reduced motion support
 
+## 🚀 Deployment
+
+### Vercel Deployment
+
+This project is configured for easy deployment on Vercel:
+
+1. **Connect to Vercel:**
+   - Go to [vercel.com](https://vercel.com)
+   - Sign in with your GitHub account
+   - Click "New Project"
+   - Import the repository: `r1cko23/Swinetech-autopax1-website`
+
+2. **Automatic Deployment:**
+   - Vercel will automatically detect the static site
+   - No build command needed
+   - The site will be deployed instantly
+
+3. **Custom Domain (Optional):**
+   - Add your custom domain in Vercel project settings
+   - Update DNS records as instructed
+
+The `vercel.json` file is already configured for optimal static site deployment.
+
 ## 📄 License
 
-© Copyright 2024 Swine Tech. All rights reserved.
+© Copyright 2026 Swine Tech. All rights reserved.
 
 ## 📞 Contact
 
-- **Phone:** +63 966 946 4189
+- **Phone:** +63 956 946 4189
 - **Email:** autopax1@swinetech.ph
-- **Address:** SWINE TECH INC PHILIPPINES, Unit 202 E. Remedios St. Poblacion 3001, Pulilan, Bulacan, Philippines
+- **Address:** SWINE TECH INC PHILIPPINES, Unit 202 E, Formula Campos Esguerra, Poblacion 3005, Pulilan Bulacan, Philippines
 
 ## 🔧 Development Notes
 
