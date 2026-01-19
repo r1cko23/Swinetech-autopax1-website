@@ -21,20 +21,33 @@
     // Clear any existing cells first
     container.innerHTML = "";
 
-    // Load all 7 blue cells in a tight, organic cluster
+    // Load all 7 red cells in a tight, organic cluster (start as red, change to blue when clicked)
     const cellCount = 7;
 
-    // Define varying sizes for cells (in pixels) - matching reference image exactly
+    // Define varying sizes for cells - will scale proportionally based on viewport
     // Z-index values ensure proper layering: higher = in front
-    const cellSizes = [
-      { width: 100, height: 100, zIndex: 4 }, // Cell 1
-      { width: 85, height: 85, zIndex: 3 }, // Cell 2
-      { width: 229, height: 207, zIndex: 0 }, // Cell 3
-      { width: 62, height: 60, zIndex: 6 }, // Cell 4
-      { width: 128, height: 144, zIndex: 20 }, // Cell 5
-      { width: 222, height: 208, zIndex: 3 }, // Cell 6
-      { width: 134, height: 120, zIndex: 4 }, // Cell 7
-    ];
+    // Base sizes for desktop (will scale down on smaller screens)
+    const getCellSizes = () => {
+      // Calculate scale factor based on viewport width
+      // Base reference: 1200px container width
+      const baseWidth = 1200;
+      const viewportWidth = window.innerWidth;
+      // Scale factor: 1.0 at 1200px+, scales down proportionally below that
+      // Minimum scale: 0.4 (for very small screens), Maximum: 1.0
+      const scaleFactor = Math.max(0.4, Math.min(1.0, viewportWidth / baseWidth));
+      
+      return [
+        { width: 100 * scaleFactor, height: 100 * scaleFactor, zIndex: 4 }, // Cell 1
+        { width: 85 * scaleFactor, height: 85 * scaleFactor, zIndex: 3 }, // Cell 2
+        { width: 229 * scaleFactor, height: 207 * scaleFactor, zIndex: 0 }, // Cell 3
+        { width: 62 * scaleFactor, height: 60 * scaleFactor, zIndex: 6 }, // Cell 4
+        { width: 128 * scaleFactor, height: 144 * scaleFactor, zIndex: 20 }, // Cell 5
+        { width: 222 * scaleFactor, height: 208 * scaleFactor, zIndex: 3 }, // Cell 6
+        { width: 134 * scaleFactor, height: 120 * scaleFactor, zIndex: 4 }, // Cell 7
+      ];
+    };
+    
+    const cellSizes = getCellSizes();
 
     // Define tightly grouped positions - matching reference image exactly
     // Positions based on reference: cells tightly clustered with precise x,y coordinates
@@ -52,45 +65,80 @@
     // Store wrappers globally for drag functionality
     window.cellWrappers = [];
 
-    // Function to toggle cell color between blue and red
-    function toggleCellColor(cellIndex, cellImg, wrapper) {
+    // Function to change cell color from red to blue (one-way, not reversible)
+    function changeCellToBlue(cellIndex, cellImg, wrapper) {
       const cellData = window.cellWrappers[cellIndex];
       if (!cellData) return;
 
-      // Toggle state
-      cellData.isRed = !cellData.isRed;
+      // Only allow change if cell is currently red
+      if (!cellData.isRed) {
+        return; // Already blue, do nothing
+      }
+
+      // Change state to blue
+      cellData.isRed = false;
 
       // Add animation effect
       cellImg.style.opacity = "0";
       cellImg.style.transform = "scale(0.8)";
 
       setTimeout(() => {
-        // Switch image source
-        if (cellData.isRed) {
-          cellImg.src = `assets/Section 4/Red Cells/Cell_${cellIndex + 1}.png`;
-          cellImg.classList.add("cell-red");
-          cellImg.classList.remove("cell-blue");
-        } else {
-          cellImg.src = `assets/Section 4/Blue Cells/Cell_${cellIndex + 1}.png`;
-          cellImg.classList.add("cell-blue");
-          cellImg.classList.remove("cell-red");
-        }
+        // Switch image source from red to blue
+        cellImg.src = `assets/Section 4/Blue Cells/Cell_${cellIndex + 1}.png`;
+        cellImg.classList.add("cell-blue");
+        cellImg.classList.remove("cell-red");
+
+        // Update wrapper state and make it non-clickable
+        wrapper.setAttribute("data-cell-state", "blue");
+        wrapper.style.cursor = "default"; // No longer clickable
 
         // Animate back
         cellImg.style.opacity = "1";
         cellImg.style.transform = "scale(1)";
       }, 200);
 
-      console.log(
-        `Cell ${cellIndex + 1} switched to ${cellData.isRed ? "RED" : "BLUE"}`
-      );
+      console.log(`Cell ${cellIndex + 1} changed from RED to BLUE (one-way)`);
     }
+
+    // Function to update cell sizes on resize
+    const updateCellSizes = () => {
+      const newSizes = getCellSizes();
+      window.cellWrappers.forEach((cellData, index) => {
+        if (cellData.wrapper && newSizes[index]) {
+          cellData.wrapper.style.width = `${newSizes[index].width}px`;
+          cellData.wrapper.style.height = `${newSizes[index].height}px`;
+          // Update stored size
+          cellData.originalSize = newSizes[index];
+        }
+      });
+      
+      // Also update ripple sizes if they exist
+      const ripples = clickPromptWrapper.querySelectorAll('.cell-animation__ripple');
+      const newRippleSize = getRippleSize();
+      ripples.forEach(ripple => {
+        ripple.style.width = `${newRippleSize}px`;
+        ripple.style.height = `${newRippleSize}px`;
+      });
+    };
+
+    // Handle window resize to scale cells proportionally
+    let resizeTimeout;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        updateCellSizes();
+        // Update prompt font size on resize
+        if (clickPrompt) {
+          clickPrompt.style.fontSize = getPromptFontSize();
+        }
+      }, 100);
+    });
 
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement("img");
-      cell.src = `assets/Section 4/Blue Cells/Cell_${i + 1}.png`;
+      cell.src = `assets/Section 4/Red Cells/Cell_${i + 1}.png`;
       cell.alt = "";
-      cell.className = "cell-animation__cell cell-blue";
+      cell.className = "cell-animation__cell cell-red";
       cell.style.animationDelay = `${i * 0.15}s`;
 
       const wrapper = document.createElement("div");
@@ -101,9 +149,10 @@
       wrapper.style.top = positions[i].top;
       wrapper.style.transform = "translate(-50%, -50%)";
       wrapper.style.zIndex = cellSizes[i].zIndex;
-      wrapper.style.cursor = "pointer";
+      wrapper.style.cursor = "pointer"; // Start as clickable (red cells)
       wrapper.setAttribute("data-cell-index", i);
       wrapper.setAttribute("data-cell-number", i + 1);
+      wrapper.setAttribute("data-cell-state", "red"); // Track state for styling
 
       cell.style.width = "100%";
       cell.style.height = "100%";
@@ -121,14 +170,19 @@
         index: i,
         cellNumber: i + 1,
         originalSize: cellSizes[i],
-        isRed: false, // Track state
+        isRed: true, // Start as red - initial state
       });
 
-      // Add click functionality to toggle cell color
+      // Verify initial state is red
+      console.log(`Cell ${i + 1} initialized as RED (src: ${cell.src})`);
+
+      // Add click functionality to change cell from red to blue (one-way)
       wrapper.addEventListener("click", () => {
-        toggleCellColor(i, cell, wrapper);
+        changeCellToBlue(i, cell, wrapper);
       });
     }
+    
+    console.log(`✅ All ${cellCount} cells initialized as RED`);
 
     // Add "CLICK TO SPRAY" text with ripple background effect (centered where pointer was)
     const clickPromptWrapper = document.createElement("div");
@@ -143,15 +197,23 @@
     clickPromptWrapper.style.alignItems = "center";
     clickPromptWrapper.style.justifyContent = "center";
 
-    // Create ripple background circles
+    // Create ripple background circles - scale based on viewport
+    const getRippleSize = () => {
+      const baseWidth = 1200;
+      const viewportWidth = window.innerWidth;
+      const scaleFactor = Math.max(0.4, Math.min(1.0, viewportWidth / baseWidth));
+      return 200 * scaleFactor;
+    };
+    
+    const rippleSize = getRippleSize();
     for (let i = 0; i < 3; i++) {
       const ripple = document.createElement("div");
       ripple.className = `cell-animation__ripple cell-animation__ripple--${
         i + 1
       }`;
       ripple.style.position = "absolute";
-      ripple.style.width = "200px";
-      ripple.style.height = "200px";
+      ripple.style.width = `${rippleSize}px`;
+      ripple.style.height = `${rippleSize}px`;
       ripple.style.borderRadius = "50%";
       ripple.style.border = `2px solid rgba(255, 255, 255, ${0.3 - i * 0.1})`;
       ripple.style.left = "50%";
@@ -162,6 +224,14 @@
       clickPromptWrapper.appendChild(ripple);
     }
 
+    // Function to get prompt font size based on viewport
+    const getPromptFontSize = () => {
+      const baseWidth = 1200;
+      const viewportWidth = window.innerWidth;
+      const scaleFactor = Math.max(0.5, Math.min(1.0, viewportWidth / baseWidth));
+      return `${0.875 * scaleFactor}rem`;
+    };
+    
     // Add text
     const clickPrompt = document.createElement("div");
     clickPrompt.className = "cell-animation__click-prompt";
@@ -170,7 +240,7 @@
     clickPrompt.style.color = "var(--text-light)";
     clickPrompt.style.fontFamily = "var(--font-heading)";
     clickPrompt.style.fontWeight = "var(--font-weight-bold)";
-    clickPrompt.style.fontSize = "1rem";
+    clickPrompt.style.fontSize = getPromptFontSize();
     clickPrompt.style.textTransform = "uppercase";
     clickPrompt.style.letterSpacing = "0.1em";
     clickPrompt.style.whiteSpace = "nowrap";
@@ -362,10 +432,12 @@
       return codeToCopy;
     };
 
-    console.log("✅ Cell click-to-toggle animation enabled!");
+    console.log("✅ Cell click-to-spray animation enabled!");
     console.log("\n📖 HOW TO USE:");
-    console.log("   • Click any cell to toggle between blue and red");
-    console.log("   • Cells maintain their fixed positions");
+    console.log("   • Cells start as RED (infected)");
+    console.log("   • Click any red cell to change it to BLUE (treated)");
+    console.log("   • Changes are one-way (red → blue only)");
+    console.log("   • Refresh page to reset all cells to red");
     console.log("\n💡 Console commands:");
     console.log("   • getCellPositions() - Get current positions");
     console.log("   • getCellSizes() - Get current sizes");
@@ -399,9 +471,12 @@
 
       // Hide all slides
       slides.forEach((slide, i) => {
-        slide.classList.remove("carousel__slide--active");
+        slide.classList.remove("carousel__slide--active", "carousel__slide--next");
         if (i === index) {
           slide.classList.add("carousel__slide--active");
+        } else if (i === index + 1 && index + 1 < slides.length) {
+          // Show next slide with reduced opacity as preview
+          slide.classList.add("carousel__slide--next");
         }
       });
 
@@ -489,6 +564,11 @@
     // Initialize first slide (this will set arrow visibility)
     showSlide(0);
     
+    // Ensure next slide is visible on initial load
+    if (slides.length > 1) {
+      slides[1].classList.add("carousel__slide--next");
+    }
+    
     // Initialize indicator images on load
     indicators.forEach((indicator, i) => {
       const indicatorImg = indicator.querySelector(".carousel__indicator-img");
@@ -573,8 +653,19 @@
     }, observerOptions);
 
     // Observe sections for animation
-    document.querySelectorAll("section").forEach((section) => {
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section) => {
       observer.observe(section);
+      
+      // If section is already in view on page load, animate it in immediately
+      const rect = section.getBoundingClientRect();
+      const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+      if (isInView) {
+        // Small delay to ensure smooth animation
+        setTimeout(() => {
+          section.classList.add("animate-in");
+        }, 100);
+      }
     });
   }
 
@@ -1052,6 +1143,126 @@
   }
 
   // ============================================
+  // INFOGRAPHICS CAROUSEL
+  // ============================================
+  function initInfographicsCarousel() {
+    const carousel = document.querySelector(".infographics-section__carousel");
+    if (!carousel) return;
+
+    const slides = carousel.querySelectorAll(".infographics-section__slide");
+    const prevBtn = document.getElementById("infographicPrev");
+    const nextBtn = document.getElementById("infographicNext");
+    const timelineCircles = document.querySelectorAll(".infographics-section__timeline-circle");
+
+    if (slides.length === 0) return;
+
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      // Ensure index is within bounds
+      if (index < 0 || index >= slides.length) return;
+
+      // Hide all slides
+      slides.forEach((slide, i) => {
+        slide.classList.remove("infographics-section__slide--active");
+        if (i === index) {
+          slide.classList.add("infographics-section__slide--active");
+        }
+      });
+
+      // Update timeline indicators
+      timelineCircles.forEach((circle, i) => {
+        const circleImg = circle.querySelector(".infographics-section__timeline-circle-img");
+        if (i === index) {
+          circle.classList.add("infographics-section__timeline-circle--active");
+          if (circleImg) {
+            circleImg.src = "assets/Infographic/Circle_1.png";
+          }
+        } else {
+          circle.classList.remove("infographics-section__timeline-circle--active");
+          if (circleImg) {
+            circleImg.src = "assets/Infographic/Circle_2.png";
+          }
+        }
+      });
+
+      // Update button visibility
+      if (prevBtn && nextBtn) {
+        if (index === 0) {
+          // First slide: hide left arrow, show right arrow
+          prevBtn.classList.remove("infographics-section__nav-btn--visible");
+          nextBtn.style.opacity = "1";
+          nextBtn.style.pointerEvents = "auto";
+        } else if (index === slides.length - 1) {
+          // Last slide: show left arrow, hide right arrow
+          prevBtn.classList.add("infographics-section__nav-btn--visible");
+          nextBtn.style.opacity = "0";
+          nextBtn.style.pointerEvents = "none";
+        } else {
+          // Middle slides: show both arrows
+          prevBtn.classList.add("infographics-section__nav-btn--visible");
+          nextBtn.style.opacity = "1";
+          nextBtn.style.pointerEvents = "auto";
+        }
+      }
+
+      // Show next slide as preview (foreshadowing)
+      slides.forEach((slide, i) => {
+        slide.classList.remove("infographics-section__slide--next");
+        if (i === index + 1 && index + 1 < slides.length) {
+          slide.classList.add("infographics-section__slide--next");
+        }
+      });
+
+      currentSlide = index;
+    }
+
+    // Previous button
+    if (prevBtn) {
+      prevBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (currentSlide > 0) {
+          showSlide(currentSlide - 1);
+        }
+      });
+    }
+
+    // Next button
+    if (nextBtn) {
+      nextBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (currentSlide < slides.length - 1) {
+          showSlide(currentSlide + 1);
+        }
+      });
+    }
+
+    // Timeline circle clicks
+    timelineCircles.forEach((circle, index) => {
+      circle.addEventListener("click", () => {
+        showSlide(index);
+      });
+    });
+
+    // Keyboard navigation
+    carousel.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft" && currentSlide > 0) {
+        showSlide(currentSlide - 1);
+      } else if (e.key === "ArrowRight" && currentSlide < slides.length - 1) {
+        showSlide(currentSlide + 1);
+      }
+    });
+
+    // Initialize first slide
+    showSlide(0);
+    
+    // Show next slide as preview on initial load
+    if (slides.length > 1) {
+      slides[1].classList.add("infographics-section__slide--next");
+    }
+  }
+
+  // ============================================
   // INITIALIZATION
   // ============================================
   function init() {
@@ -1064,6 +1275,7 @@
     // Initialize all features
     initCellAnimation();
     initCarousel();
+    initInfographicsCarousel();
     initSmoothScroll();
     initVideoModals();
     initScrollAnimations();

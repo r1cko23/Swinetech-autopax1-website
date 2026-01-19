@@ -109,7 +109,7 @@ test.describe('Swine Tech Funnel Website', () => {
         // Check specific benefits
         await expect(page.locator('.mechanism-section__benefit').first()).toContainText('Boosts the innate immunity');
         await expect(page.locator('.mechanism-section__benefit').nth(1)).toContainText('Inhibits the replication');
-        await expect(page.locator('.mechanism-section__benefit').nth(2)).toContainText('Activates effective cells');
+        await expect(page.locator('.mechanism-section__benefit').nth(2)).toContainText('Activates effector cells');
         
         // Check red CTA button
         await expect(page.locator('.btn--red')).toBeVisible();
@@ -135,18 +135,14 @@ test.describe('Swine Tech Funnel Website', () => {
     test('should display product section with features', async ({ page }) => {
         await expect(page.locator('.product-section__heading')).toContainText('Your Partner in Swine Health');
         
-        // Check product images
-        await expect(page.locator('.product-section__box-img')).toBeVisible();
-        await expect(page.locator('.product-section__bottle-img')).toBeVisible();
-        
-        // Check features
+        // Check features (product images were removed from HTML)
         const features = page.locator('.product-section__feature');
         await expect(features).toHaveCount(3);
         
         // Check feature titles
-        await expect(page.locator('.product-section__feature-title').first()).toHaveText('Feed Application');
-        await expect(page.locator('.product-section__feature-title').nth(1)).toHaveText('Oral Administration');
-        await expect(page.locator('.product-section__feature-title').nth(2)).toHaveText('Easy to Administer');
+        await expect(page.locator('.product-section__feature-title').first()).toHaveText('Rapid Absorption');
+        await expect(page.locator('.product-section__feature-title').nth(1)).toHaveText('Immune Support');
+        await expect(page.locator('.product-section__feature-title').nth(2)).toHaveText('Swine Health');
     });
 
     test('should display admin section with blue highlighted text', async ({ page }) => {
@@ -173,9 +169,8 @@ test.describe('Swine Tech Funnel Website', () => {
     });
 
     test('should display footer with correct information', async ({ page }) => {
-        // Check logo
+        // Check logo (footer__brand-text was removed from HTML)
         await expect(page.locator('.footer__logo')).toBeVisible();
-        await expect(page.locator('.footer__brand-text')).toHaveText('SWINE TECH');
         
         // Check address
         const address = page.locator('.footer__address');
@@ -229,6 +224,10 @@ test.describe('Swine Tech Funnel Website', () => {
         
         for (const selector of images) {
             const img = page.locator(selector);
+            // Skip elements that don't exist in the HTML
+            if (selector === '.product-section__box-img' || selector === '.product-section__bottle-img') {
+                continue;
+            }
             await expect(img).toBeVisible();
             
             // Check if image is loaded

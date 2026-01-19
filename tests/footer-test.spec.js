@@ -91,14 +91,15 @@ test.describe('Footer Section - Reference Design Verification', () => {
         const logo = page.locator('.footer__logo');
         await expect(logo).toBeVisible();
         
-        // Check brand text
-        const brandText = page.locator('.footer__brand-text');
-        await expect(brandText).toBeVisible();
-        await expect(brandText).toHaveText('SWINE TECH');
+        // Check brand text (footer__brand-text was removed from HTML)
+        // Logo is visible, brand text was removed per user request
         
-        // Check social media icons
-        const socialMedia = page.locator('.footer__social-img');
-        await expect(socialMedia).toBeVisible();
+        // Check social media icons (now using Font Awesome icons, not a single image)
+        const socialLinks = page.locator('.footer__social-link');
+        await expect(socialLinks.first()).toBeVisible();
+        // Should have multiple social media links
+        const socialCount = await socialLinks.count();
+        expect(socialCount).toBeGreaterThan(0);
     });
 
     test('should display footer legal links', async ({ page }) => {
