@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "ocr-mcp": {
+      "command": "python",
+      "args": ["-m", "ocr_mcp.server"],
+      "env": {
+        "OCR_CACHE_DIR": "./ocr-mcp/.cache",
+        "OCR_DEVICE": "cpu"
+      }
+    }
+  }
+}

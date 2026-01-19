@@ -66,7 +66,7 @@
     window.cellWrappers = [];
 
     // Function to change cell color from red to blue (one-way, not reversible)
-    function changeCellToBlue(cellIndex, cellImg, wrapper) {
+    function changeCellToBlue(cellIndex, cellImg, wrapper, clickEvent) {
       const cellData = window.cellWrappers[cellIndex];
       if (!cellData) return;
 
@@ -78,10 +78,102 @@
       // Change state to blue
       cellData.isRed = false;
 
-      // Add animation effect
-      cellImg.style.opacity = "0";
-      cellImg.style.transform = "scale(0.8)";
+      // Get click position relative to the cell
+      const rect = wrapper.getBoundingClientRect();
+      const clickX = clickEvent ? clickEvent.clientX - rect.left : rect.width / 2;
+      const clickY = clickEvent ? clickEvent.clientY - rect.top : rect.height / 2;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      // Calculate offset from center for ripple effect
+      const offsetX = ((clickX - centerX) / rect.width) * 100;
+      const offsetY = ((clickY - centerY) / rect.height) * 100;
 
+      // Create modern ripple effect with multiple layers for depth
+      const rippleContainer = document.createElement("div");
+      rippleContainer.className = "cell-animation__ripple-container";
+      rippleContainer.style.position = "absolute";
+      rippleContainer.style.left = `${clickX}px`;
+      rippleContainer.style.top = `${clickY}px`;
+      rippleContainer.style.transform = "translate(-50%, -50%)";
+      rippleContainer.style.pointerEvents = "none";
+      rippleContainer.style.zIndex = "1000";
+      wrapper.appendChild(rippleContainer);
+
+      // Create multiple ripple layers for ultra-smooth depth effect
+      // Increased layers and smoother transitions for better visual effect
+      for (let i = 0; i < 5; i++) {
+        const ripple = document.createElement("div");
+        ripple.className = `cell-animation__ripple-effect cell-animation__ripple-effect--layer-${i + 1}`;
+        ripple.style.position = "absolute";
+        ripple.style.left = "0";
+        ripple.style.top = "0";
+        ripple.style.width = "0px";
+        ripple.style.height = "0px";
+        ripple.style.borderRadius = "50%";
+        const delay = i * 0.08; // Reduced delay for smoother wave effect
+        const opacity = 0.9 - (i * 0.15); // Higher initial opacity for more visible ripples
+        
+        // Create a gradient from red (spray point) to blue (treated) for smooth color transition
+        const redIntensity = Math.max(0, 1 - (i * 0.2));
+        const blueIntensity = Math.min(1, i * 0.25);
+        ripple.style.background = `radial-gradient(circle, 
+          rgba(251, 54, 64, ${opacity * redIntensity}) 0%, 
+          rgba(251, 54, 64, ${opacity * redIntensity * 0.6}) 15%, 
+          rgba(0, 125, 235, ${opacity * blueIntensity}) 30%, 
+          rgba(0, 125, 235, ${opacity * blueIntensity * 0.5}) 50%, 
+          transparent 75%)`;
+        ripple.style.boxShadow = `0 0 ${40 + i * 15}px rgba(0, 125, 235, ${0.8 - i * 0.15}), 
+          0 0 ${20 + i * 8}px rgba(251, 54, 64, ${0.4 - i * 0.08})`;
+        ripple.style.transform = "translate(-50%, -50%)";
+        ripple.style.opacity = "0";
+        rippleContainer.appendChild(ripple);
+
+        // Animate each layer with ultra-smooth staggered timing for fluid wave effect
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            const maxSize = Math.max(rect.width, rect.height) * (3.2 + i * 0.4); // Larger ripples
+            const scaleX = 1.05 + (i * 0.04); // More subtle scaling
+            const scaleY = 0.95 - (i * 0.03);
+            
+            // Ultra-smooth easing for fluid motion
+            ripple.style.transition = `width 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              height 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              transform 1.4s cubic-bezier(0.16, 1, 0.3, 1)`;
+            ripple.style.width = `${maxSize}px`;
+            ripple.style.height = `${maxSize}px`;
+            ripple.style.opacity = "0";
+            // Smooth organic scaling with gentle rotation
+            ripple.style.transform = `translate(-50%, -50%) scale(${scaleX}, ${scaleY}) rotate(${i * 4}deg)`;
+          }, delay * 1000);
+        });
+      }
+
+      // Remove ripple container after all animations complete
+      setTimeout(() => {
+        if (rippleContainer.parentNode) {
+          rippleContainer.remove();
+        }
+      }, 1800); // Extended time for smoother animation
+
+      // Add ultra-smooth liquify/distortion effect to the cell during spray
+      // Use CSS custom properties for smooth interpolation
+      wrapper.style.setProperty('--liquify-offset-x', `${offsetX * 0.12}%`);
+      wrapper.style.setProperty('--liquify-offset-y', `${offsetY * 0.12}%`);
+      wrapper.style.setProperty('--liquify-scale', '0.92');
+      wrapper.style.setProperty('--liquify-blur', '2px');
+      wrapper.style.setProperty('--liquify-brightness', '1.25');
+      
+      // Smoother initial transition with better easing
+      cellImg.style.transition = "opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s cubic-bezier(0.16, 1, 0.3, 1), clip-path 0.6s cubic-bezier(0.16, 1, 0.3, 1)";
+      cellImg.style.filter = "blur(var(--liquify-blur)) brightness(var(--liquify-brightness)) contrast(1.08) saturate(1.15) drop-shadow(0 0 8px rgba(251, 54, 64, 0.4))";
+      cellImg.style.transform = `scale(var(--liquify-scale)) translate(var(--liquify-offset-x), var(--liquify-offset-y)) perspective(500px) rotateX(${offsetY * 0.15}deg) rotateY(${offsetX * 0.15}deg)`;
+      cellImg.style.opacity = "0.8";
+      // Smoother organic clip-path for liquify shape
+      cellImg.style.clipPath = "inset(4% 4% 4% 4% round 12% 18% 12% 18%)";
+
+      // Transition to blue with ultra-smooth liquify effect
       setTimeout(() => {
         // Switch image source from red to blue
         cellImg.src = `assets/Section 4/Blue Cells/Cell_${cellIndex + 1}.png`;
@@ -92,10 +184,41 @@
         wrapper.setAttribute("data-cell-state", "blue");
         wrapper.style.cursor = "default"; // No longer clickable
 
-        // Animate back
+        // Ultra-smooth bounce with 3D perspective and fluid liquify
+        wrapper.style.setProperty('--liquify-scale', '1.15');
+        wrapper.style.setProperty('--liquify-offset-x', `${offsetX * 0.06}%`);
+        wrapper.style.setProperty('--liquify-offset-y', `${offsetY * 0.06}%`);
+        wrapper.style.setProperty('--liquify-blur', '0.5px');
+        wrapper.style.setProperty('--liquify-brightness', '1.12');
+        
+        // Ultra-smooth transition with fluid easing curves
+        cellImg.style.transition = "opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1)";
         cellImg.style.opacity = "1";
-        cellImg.style.transform = "scale(1)";
-      }, 200);
+        // Smooth 3D transform with gentle perspective for depth
+        const rotateX = offsetY * 0.08;
+        const rotateY = offsetX * 0.08;
+        const rotateZ = offsetX * 0.04;
+        cellImg.style.transform = `scale(var(--liquify-scale)) translate(var(--liquify-offset-x), var(--liquify-offset-y)) perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) rotateZ(${rotateZ}deg)`;
+        cellImg.style.filter = "drop-shadow(0 0 30px rgba(0, 125, 235, 0.9)) brightness(var(--liquify-brightness)) contrast(1.06) saturate(1.15) blur(var(--liquify-blur))";
+        // Smooth organic clip-path transition
+        const borderRadius = 12 + Math.abs(offsetX) * 0.08;
+        cellImg.style.clipPath = `inset(0% 0% 0% 0% round ${borderRadius}% ${borderRadius * 1.15}% ${borderRadius}% ${borderRadius * 1.15}%)`;
+
+        // Final settle animation with ultra-smooth liquify return
+        setTimeout(() => {
+          wrapper.style.setProperty('--liquify-scale', '1');
+          wrapper.style.setProperty('--liquify-offset-x', '0%');
+          wrapper.style.setProperty('--liquify-offset-y', '0%');
+          wrapper.style.setProperty('--liquify-blur', '0px');
+          wrapper.style.setProperty('--liquify-brightness', '1');
+          
+          // Ultra-smooth settle with fluid easing
+          cellImg.style.transition = "transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1)";
+          cellImg.style.transform = "scale(1) translate(0%, 0%) perspective(700px) rotateX(0deg) rotateY(0deg) rotateZ(0deg)";
+          cellImg.style.filter = "drop-shadow(0 0 15px rgba(0, 125, 235, 0.7))";
+          cellImg.style.clipPath = "inset(0% 0% 0% 0% round 0%)";
+        }, 700);
+      }, 400);
 
       console.log(`Cell ${cellIndex + 1} changed from RED to BLUE (one-way)`);
     }
@@ -177,8 +300,8 @@
       console.log(`Cell ${i + 1} initialized as RED (src: ${cell.src})`);
 
       // Add click functionality to change cell from red to blue (one-way)
-      wrapper.addEventListener("click", () => {
-        changeCellToBlue(i, cell, wrapper);
+      wrapper.addEventListener("click", (e) => {
+        changeCellToBlue(i, cell, wrapper, e);
       });
     }
     
@@ -235,7 +358,7 @@
     // Add text
     const clickPrompt = document.createElement("div");
     clickPrompt.className = "cell-animation__click-prompt";
-    clickPrompt.textContent = "CLICK TO SPRAY";
+    clickPrompt.textContent = "Click to spray autopax1";
     clickPrompt.style.position = "relative";
     clickPrompt.style.color = "var(--text-light)";
     clickPrompt.style.fontFamily = "var(--font-heading)";
@@ -469,14 +592,28 @@
         return; // Don't go after last slide
       }
 
+      // Add animation class for smooth transitions
+      const previousSlide = slides[currentSlide];
+      if (previousSlide && previousSlide !== slides[index]) {
+        previousSlide.classList.add("carousel__slide--exiting");
+        setTimeout(() => {
+          previousSlide.classList.remove("carousel__slide--exiting");
+        }, 500);
+      }
+
       // Hide all slides
       slides.forEach((slide, i) => {
-        slide.classList.remove("carousel__slide--active", "carousel__slide--next");
+        slide.classList.remove("carousel__slide--active", "carousel__slide--next", "carousel__slide--exiting");
         if (i === index) {
-          slide.classList.add("carousel__slide--active");
+          // Add active class with animation
+          requestAnimationFrame(() => {
+            slide.classList.add("carousel__slide--active");
+          });
         } else if (i === index + 1 && index + 1 < slides.length) {
           // Show next slide with reduced opacity as preview
-          slide.classList.add("carousel__slide--next");
+          requestAnimationFrame(() => {
+            slide.classList.add("carousel__slide--next");
+          });
         }
       });
 
@@ -580,6 +717,119 @@
         }
       }
     });
+
+    // Add error handling for missing certificate images
+    slides.forEach((slide, index) => {
+      const img = slide.querySelector(".carousel__image");
+      if (img) {
+        img.addEventListener("error", function() {
+          console.warn(`Certificate image ${index + 1} (${this.src}) failed to load. Please ensure Cert_${index + 1}.png exists in assets/Section 5/`);
+          // Add a visual indicator for missing images
+          this.style.border = "2px dashed rgba(255, 0, 0, 0.5)";
+          this.alt = `Certificate ${index + 1} - Image not found`;
+        });
+        img.addEventListener("load", function() {
+          console.log(`✓ Certificate image ${index + 1} loaded successfully`);
+        });
+      }
+    });
+
+    // Initialize certificate modal
+    initCertificateModal();
+  }
+
+  // ============================================
+  // CERTIFICATE MODAL
+  // ============================================
+  function initCertificateModal() {
+    const modal = document.getElementById("certificateModal");
+    const modalImage = document.getElementById("certificateModalImage");
+    const closeBtn = document.getElementById("closeCertificateModal");
+    const viewMoreLinks = document.querySelectorAll(".carousel__view-more");
+
+    if (!modal || !modalImage) return;
+
+    // Open modal function
+    function openModal(imageSrc, imageAlt) {
+      // Clear previous image first
+      modalImage.src = "";
+      modalImage.alt = imageAlt || "Certificate document";
+      
+      // Set new image source
+      modalImage.src = imageSrc;
+      
+      // Ensure image loads and fits properly
+      modalImage.onload = function() {
+        // Force image to fit within smaller viewport
+        const maxWidth = window.innerWidth * 0.75; // 75% of viewport width
+        const maxHeight = window.innerHeight * 0.80; // 80% of viewport height
+        
+        // Calculate aspect ratio
+        const imgAspectRatio = this.naturalWidth / this.naturalHeight;
+        const containerAspectRatio = maxWidth / maxHeight;
+        
+        // Reset styles first
+        this.style.maxWidth = "";
+        this.style.maxHeight = "";
+        this.style.width = "";
+        this.style.height = "";
+        
+        // Adjust to ensure full image is visible without scrolling
+        if (imgAspectRatio > containerAspectRatio) {
+          // Image is wider - constrain by width
+          this.style.maxWidth = maxWidth + "px";
+          this.style.height = "auto";
+        } else {
+          // Image is taller - constrain by height
+          this.style.maxHeight = maxHeight + "px";
+          this.style.width = "auto";
+        }
+        
+        // Ensure image never exceeds container
+        this.style.objectFit = "contain";
+      };
+      
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    // Close modal function
+    function closeModal() {
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      // Clear image src after animation to prevent showing previous image
+      setTimeout(() => {
+        modalImage.src = "";
+      }, 300);
+    }
+
+    // Add click handlers to all "View More" links
+    viewMoreLinks.forEach((link) => {
+      link.addEventListener("click", function(e) {
+        e.preventDefault();
+        const imageSrc = this.getAttribute("data-cert-image") || this.getAttribute("href");
+        const imageAlt = this.getAttribute("data-cert-alt") || this.textContent.trim();
+        openModal(imageSrc, imageAlt);
+      });
+    });
+
+    // Close modal on close button click
+    if (closeBtn) {
+      closeBtn.addEventListener("click", closeModal);
+    }
+
+    // Close modal on overlay click
+    const overlay = modal.querySelector(".certificate-modal__overlay");
+    if (overlay) {
+      overlay.addEventListener("click", closeModal);
+    }
+
+    // Close modal on Escape key
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") {
+        closeModal();
+      }
+    });
   }
 
   // ============================================
@@ -667,6 +917,23 @@
         }, 100);
       }
     });
+
+    // Force animate-in for complete-order-section and order-section immediately on page load
+    // These sections should always be visible since they're the main content
+    const completeOrderSection = document.querySelector(".complete-order-section");
+    const orderSection = document.querySelector(".order-section");
+    
+    if (completeOrderSection) {
+      setTimeout(() => {
+        completeOrderSection.classList.add("animate-in");
+      }, 50);
+    }
+    
+    if (orderSection) {
+      setTimeout(() => {
+        orderSection.classList.add("animate-in");
+      }, 50);
+    }
   }
 
   // ============================================
@@ -1272,6 +1539,16 @@
       return;
     }
 
+    // CRITICAL: Force visibility for ALL sections immediately BEFORE anything else
+    // This must run first to ensure content is visible
+    const allSections = document.querySelectorAll("section");
+    allSections.forEach((section) => {
+      // Force visibility with inline styles (highest priority)
+      section.style.setProperty("opacity", "1", "important");
+      section.style.setProperty("transform", "none", "important");
+      section.classList.add("animate-in");
+    });
+
     // Initialize all features
     initCellAnimation();
     initCarousel();
@@ -1281,8 +1558,305 @@
     initScrollAnimations();
     initMobileMenu();
     initUniversalEditor();
+    initOrderForm();
+    initBulkOrderModal();
+
+    // Force visibility again after a short delay to ensure it sticks
+    setTimeout(() => {
+      allSections.forEach((section) => {
+        section.style.setProperty("opacity", "1", "important");
+        section.style.setProperty("transform", "none", "important");
+        section.classList.add("animate-in");
+      });
+    }, 100);
 
     console.log("Swine Tech website initialized");
+  }
+
+  // ============================================
+  // ORDER FORM HANDLING
+  // ============================================
+  function initOrderForm() {
+    const orderForm = document.getElementById("orderForm");
+    if (!orderForm) return;
+
+    orderForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      // Get form data
+      const formData = {
+        firstName: document.getElementById("firstName").value.trim(),
+        farmLocation: document.getElementById("farmLocation").value,
+        herdSize: document.getElementById("herdSize").value,
+        message: document.getElementById("message").value.trim(),
+      };
+
+      // Validate form
+      if (!formData.firstName || !formData.farmLocation || !formData.herdSize || !formData.message) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      // All orders go to bulk order page
+      // Navigate to bulk order page
+      window.location.href = "bulk-order.html";
+
+      // Reset form
+      orderForm.reset();
+    });
+  }
+
+  // ============================================
+  // BULK ORDER MODAL & PAGE
+  // ============================================
+  function initBulkOrderModal() {
+    const modal = document.getElementById("bulkOrderModal");
+    const openModalBtn = document.getElementById("openBulkOrderModal");
+    const openModalBtnFromNav = document.getElementById("openBulkOrderModalFromNav");
+    const closeModalBtn = document.getElementById("closeBulkOrderModal");
+    // Get package cards from both modal and page
+    const packageCards = document.querySelectorAll(".package-card");
+    const bulkOrderForm = document.getElementById("bulkOrderForm");
+
+    if (!modal) return;
+
+    // Open modal function
+    window.openBulkOrderModal = function () {
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      // Update URL hash without scrolling
+      if (history.pushState) {
+        history.pushState(null, null, "#bulk-order");
+      }
+    };
+
+    // Close modal function
+    function closeModal() {
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      // Remove hash from URL
+      if (history.pushState) {
+        history.pushState(null, null, window.location.pathname);
+      }
+    }
+
+    // Open modal from dropdown link
+    if (openModalBtn) {
+      openModalBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        openBulkOrderModal();
+      });
+    }
+
+    // Open modal from navigation dropdown link (on order-form.html)
+    if (openModalBtnFromNav) {
+      openModalBtnFromNav.addEventListener("click", function (e) {
+        e.preventDefault();
+        // If we're on order-form.html, open modal directly
+        if (window.location.pathname.includes("order-form.html")) {
+          openBulkOrderModal();
+        } else {
+          // Otherwise, navigate to order-form.html with hash
+          window.location.href = "order-form.html#bulk-order";
+        }
+      });
+    }
+
+    // Check if URL hash is #bulk-order and open modal
+    function checkHashAndOpenModal() {
+      if (window.location.hash === "#bulk-order") {
+        setTimeout(() => {
+          openBulkOrderModal();
+        }, 100);
+      }
+    }
+
+    // Check on page load
+    checkHashAndOpenModal();
+
+    // Check on hash change (for navigation)
+    window.addEventListener("hashchange", checkHashAndOpenModal);
+
+    // Close modal
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener("click", closeModal);
+    }
+
+    // Close modal when clicking overlay
+    const overlay = modal.querySelector(".bulk-order-modal__overlay");
+    if (overlay) {
+      overlay.addEventListener("click", closeModal);
+    }
+
+    // Close modal on Escape key
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && modal.getAttribute("aria-hidden") === "false") {
+        closeModal();
+      }
+    });
+
+    // Update order summary function
+    function updateOrderSummary(selectedCard) {
+      const packageName = selectedCard.dataset.package;
+      const price = selectedCard.dataset.price;
+      const bottles = selectedCard.dataset.bottles;
+
+      // Package name mapping
+      const packageNames = {
+        starter: "Starter Package (1 Bottle)",
+        popular: "Popular Package (3 Bottles)",
+        professional: "Professional Package (6 Bottles)",
+      };
+
+      // Update summary (works for both modal and page)
+      const summaryPackage = document.getElementById("summaryPackage");
+      const summaryPrice = document.getElementById("summaryPrice");
+      const summaryTotal = document.getElementById("summaryTotal");
+
+      if (summaryPackage) {
+        summaryPackage.textContent = packageNames[packageName] || "Package";
+      }
+      if (summaryPrice) {
+        summaryPrice.textContent = `₱${parseInt(price).toLocaleString()}`;
+      }
+      if (summaryTotal) {
+        summaryTotal.textContent = `₱${parseInt(price).toLocaleString()}`;
+      }
+    }
+
+    // Package selection (works for both modal and page)
+    // Only add listeners if cards exist
+    if (packageCards.length > 0) {
+      packageCards.forEach((card) => {
+        card.addEventListener("click", function () {
+          // Remove selected class from all cards (both modal and page)
+          document.querySelectorAll(".package-card").forEach((c) => c.classList.remove("package-card--selected"));
+          // Add selected class to clicked card
+          card.classList.add("package-card--selected");
+          // Update order summary (works for both modal and page)
+          updateOrderSummary(card);
+        });
+      });
+    }
+
+    // Form submission handler
+    function handleBulkOrderSubmit(e) {
+      e.preventDefault();
+
+      // Get selected package (check both modal and page)
+      const selectedCard = document.querySelector(".package-card--selected");
+      if (!selectedCard) {
+        alert("Please select a package.");
+        return;
+      }
+
+      // Get form data
+      const formData = {
+        package: selectedCard.dataset.package,
+        bottles: selectedCard.dataset.bottles,
+        price: selectedCard.dataset.price,
+        fullName: document.getElementById("bulkFullName").value.trim(),
+        email: document.getElementById("bulkEmail").value.trim(),
+        phone: document.getElementById("bulkPhoneCode").value + document.getElementById("bulkPhone").value.trim(),
+        province: document.getElementById("bulkProvince").value,
+        address: document.getElementById("bulkAddress").value.trim(),
+        terms: document.getElementById("bulkTerms").checked,
+      };
+
+      // Validate form
+      if (
+        !formData.fullName ||
+        !formData.email ||
+        !formData.phone ||
+        !formData.province ||
+        !formData.address ||
+        !formData.terms
+      ) {
+        alert("Please fill in all required fields and agree to the terms.");
+        return;
+      }
+
+      // Here you would typically send the data to a server
+      console.log("Bulk Order Form Submission:", formData);
+
+      // Show success message
+      alert(
+        "Thank you for your order! We'll process your order and contact you soon."
+      );
+
+      // Reset form
+      if (bulkOrderForm) {
+        bulkOrderForm.reset();
+      }
+
+      // Close modal if it's open
+      if (modal && modal.getAttribute("aria-hidden") === "false") {
+        closeModal();
+      }
+    }
+
+    // Form submission (works for both modal and page)
+    if (bulkOrderForm) {
+      bulkOrderForm.addEventListener("submit", handleBulkOrderSubmit);
+    }
+
+    // Initialize with default selected package (works for both modal and page)
+    const defaultCard = document.querySelector(".package-card--selected");
+    if (defaultCard) {
+      updateOrderSummary(defaultCard);
+    }
+  }
+
+  // ============================================
+  // PACKAGE SELECTION ON ORDER FORM PAGE
+  // ============================================
+  function initPackageSelection() {
+    // This handles package selection on the order-form.html page
+    // The initBulkOrderModal function already handles modal package selection
+    // This ensures page-level package selection also works
+    const pagePackageCards = document.querySelectorAll(".complete-order-section .package-card");
+    if (pagePackageCards.length === 0) return;
+
+    // Use the same update function from initBulkOrderModal if available
+    // Otherwise create a local one
+    const updatePageOrderSummary = function(selectedCard) {
+      const packageName = selectedCard.dataset.package;
+      const price = selectedCard.dataset.price;
+
+      const packageNames = {
+        starter: "Starter Package (1 Bottle)",
+        popular: "Popular Package (3 Bottles)",
+        professional: "Professional Package (6 Bottles)",
+      };
+
+      const summaryPackage = document.getElementById("summaryPackage");
+      const summaryPrice = document.getElementById("summaryPrice");
+      const summaryTotal = document.getElementById("summaryTotal");
+
+      if (summaryPackage) {
+        summaryPackage.textContent = packageNames[packageName] || "Package";
+      }
+      if (summaryPrice) {
+        summaryPrice.textContent = `₱${parseInt(price).toLocaleString()}`;
+      }
+      if (summaryTotal) {
+        summaryTotal.textContent = `₱${parseInt(price).toLocaleString()}`;
+      }
+    };
+
+    pagePackageCards.forEach((card) => {
+      card.addEventListener("click", function () {
+        pagePackageCards.forEach((c) => c.classList.remove("package-card--selected"));
+        card.classList.add("package-card--selected");
+        updatePageOrderSummary(card);
+      });
+    });
+
+    // Initialize with default
+    const defaultCard = document.querySelector(".complete-order-section .package-card--selected");
+    if (defaultCard) {
+      updatePageOrderSummary(defaultCard);
+    }
   }
 
   // Start initialization

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Order Form - Autopax 1 Complete your order. Choose your package and enter your details."
+    />
+    <title>Order Form - Swine Tech | Autopax 1</title>
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="styles/main.css?v=8" />
+    <link rel="stylesheet" href="styles/funnel.css?v=3" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body class="funnel-page">
+    <!-- Header Navigation -->
+    <header class="header funnel-header" role="banner">
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav__container">
+          <a href="index.html" class="nav__logo" aria-label="Swine Tech Home">
+            <img
+              src="assets/Navi Section/Logo.png"
+              alt="Swine Tech Logo"
+              class="nav__logo-img logo-image"
+            />
+          </a>
+          <div class="nav__right">
+            <ul class="nav__menu" role="menubar">
+              <li>
+                <a href="index.html" class="nav__link" role="menuitem">Home</a>
+              </li>
+              <li>
+                <a href="infographics.html" class="nav__link" role="menuitem"
+                  >Infographics</a
+                >
+              </li>
+              <li class="nav__item--dropdown">
+                <a
+                  href="order-form.html"
+                  class="nav__link nav__link--dropdown nav__link--active"
+                  role="menuitem"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  id="orderFormDropdown"
+                >
+                  Order Form
+                  <span class="nav__dropdown-arrow" aria-hidden="true">▼</span>
+                </a>
+                <ul class="nav__dropdown-menu" role="menu" aria-labelledby="orderFormDropdown">
+                  <li role="none">
+                    <a href="order-form.html" class="nav__dropdown-link nav__dropdown-link--active" role="menuitem">Small Order Form</a>
+                  </li>
+                  <li role="none">
+                    <a href="bulk-order.html" class="nav__dropdown-link" role="menuitem">Bulk Order Form</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav__item--dropdown">
+                <a
+                  href="#faq"
+                  class="nav__link nav__link--dropdown"
+                  role="menuitem"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  FAQ
+                  <span class="nav__dropdown-arrow" aria-hidden="true">▼</span>
+                </a>
+              </li>
+              <li class="nav__separator" aria-hidden="true">|</li>
+              <li>
+                <a href="#contact" class="nav__link" role="menuitem"
+                  >Contact Us</a
+                >
+              </li>
+            </ul>
+            <div class="trust-badge-small">
+              <i class="fas fa-lock"></i>
+              <span>Secure Checkout</span>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Order Form - Single Screen -->
+    <main class="order-main-compact" role="main">
+      <div class="container">
+        <div class="order-grid-compact">
+          <!-- Left Side - Form -->
+          <div class="form-column">
+            <div class="form-header-compact">
+              <h1>Complete Your Order</h1>
+              <p>Choose your package and enter your details below</p>
+            </div>
+
+            <form id="orderForm" class="compact-form">
+              <!-- Package Selection - Horizontal Cards -->
+              <div class="package-selector-compact">
+                <label class="package-option-compact">
+                  <input type="radio" name="package" value="starter" data-price="4984">
+                  <div class="package-box">
+                    <div class="package-name">Starter</div>
+                    <div class="package-bottles">1 Bottle</div>
+                    <div class="package-price-compact">₱4,984</div>
+                  </div>
+                </label>
+
+                <label class="package-option-compact popular-compact">
+                  <input type="radio" name="package" value="popular" data-price="13272" checked>
+                  <div class="popular-tag">Best Value</div>
+                  <div class="package-box">
+                    <div class="package-name">Popular</div>
+                    <div class="package-bottles">3 Bottles</div>
+                    <div class="package-price-compact">₱13,272</div>
+                    <div class="savings-tag">Save 15%</div>
+                  </div>
+                </label>
+
+                <label class="package-option-compact">
+                  <input type="radio" name="package" value="professional" data-price="23184">
+                  <div class="package-box">
+                    <div class="package-name">Professional</div>
+                    <div class="package-bottles">6 Bottles</div>
+                    <div class="package-price-compact">₱23,184</div>
+                    <div class="savings-tag">Save 25%</div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Contact & Shipping - Compact Grid -->
+              <div class="info-grid-compact">
+                <div class="input-group-compact">
+                  <label>Full Name *</label>
+                  <input type="text" name="fullname" required placeholder="John Doe">
+                </div>
+                
+                <div class="input-group-compact">
+                  <label>Email *</label>
+                  <input type="email" name="email" required placeholder="john@example.com">
+                </div>
+                
+                <div class="input-group-compact">
+                  <label>Phone *</label>
+                  <input type="tel" name="phone" required placeholder="+63 XXX XXX XXXX">
+                </div>
+                
+                <div class="input-group-compact">
+                  <label>Province *</label>
+                  <select name="province" required>
+                    <option value="">Select</option>
+                    <option value="metro-manila">Metro Manila</option>
+                    <option value="luzon">Luzon</option>
+                    <option value="visayas">Visayas</option>
+                    <option value="mindanao">Mindanao</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                
+                <div class="input-group-compact full-width">
+                  <label>Complete Address *</label>
+                  <input type="text" name="address" required placeholder="Street, City, Postal Code">
+                </div>
+              </div>
+
+              <!-- Terms & Submit -->
+              <div class="form-footer-compact">
+                <label class="checkbox-compact">
+                  <input type="checkbox" name="terms" required>
+                  <span>I agree to the <a href="#terms" class="link-inline">Terms & Conditions</a></span>
+                </label>
+                
+                <button type="submit" class="btn-submit-compact">
+                  <span>Complete Order</span>
+                  <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Right Side - Order Summary -->
+          <div class="summary-column">
+            <div class="order-summary-card">
+              <h3>Order Summary</h3>
+              
+              <div class="summary-item">
+                <span id="selectedPackageName">Popular Package (3 Bottles)</span>
+                <span id="selectedPackagePrice">₱13,272</span>
+              </div>
+              
+              <div class="summary-item">
+                <span>Shipping</span>
+                <span id="shippingCost">FREE</span>
+              </div>
+              
+              <div class="summary-divider"></div>
+              
+              <div class="summary-total">
+                <span>Total</span>
+                <span id="totalPrice">₱13,272</span>
+              </div>
+
+              <div class="guarantee-badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div>
+                  <div class="guarantee-title">60-Day Money Back Guarantee</div>
+                  <div class="guarantee-text">100% satisfaction or full refund</div>
+                </div>
+              </div>
+
+              <div class="trust-badges-stack">
+                <div class="trust-item-small">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0110 0v4"/>
+                  </svg>
+                  <span>SSL Encrypted</span>
+                </div>
+                <div class="trust-item-small">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <span>FDA Approved</span>
+                </div>
+                <div class="trust-item-small">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  </svg>
+                  <span>Secure Payment</span>
+                </div>
+              </div>
+
+              <div class="contact-support">
+                <p>Need help?</p>
+                <a href="mailto:swinetech.ph@gmail.com">swinetech.ph@gmail.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Upsell Modal -->
+    <div id="upsellModal" class="offer-modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeUpsellModal()" aria-label="Close modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        
+        <div class="modal-alert">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <span>WAIT! Your order is not complete yet...</span>
+        </div>
+
+        <div class="modal-header">
+          <div class="timer-badge" id="modalTimer">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span id="modalCountdown">05:00</span>
+          </div>
+          <h2>🎉 Congratulations! You Qualify for Our Exclusive Offer</h2>
+          <p class="subtitle">Maximize your results with the Premium Protection Package</p>
+        </div>
+
+        <div class="modal-offer-box">
+          <div class="offer-badge">ONE-TIME SPECIAL OFFER</div>
+          
+          <div class="offer-layout">
+            <div class="offer-image">
+              <img src="assets/Section 1/Bottle.png" alt="Premium Protection Package" onerror="this.style.display='none'">
+              <div class="image-badge">
+                <span class="badge-value">32% OFF</span>
+                <span class="badge-label">Limited Time</span>
+              </div>
+            </div>
+
+            <div class="offer-details">
+              <h3>Premium Protection Package</h3>
+              <p class="offer-subtitle">Complete protection for your entire herd</p>
+
+              <div class="whats-included">
+                <h4>What's Included:</h4>
+                <ul class="inclusion-list">
+                  <li>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                      <strong>6 Extra Bottles of Autopax 1</strong>
+                      <span>Extend your treatment program</span>
+                    </div>
+                  </li>
+                  <li>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                      <strong>Paximune 1 Supplement (2 bottles)</strong>
+                      <span>Enhanced immunity booster</span>
+                    </div>
+                  </li>
+                  <li>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                      <strong>Complete Veterinary Guide</strong>
+                      <span>PDF guide worth ₱2,744</span>
+                    </div>
+                  </li>
+                  <li>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                      <strong>Priority Support & Express Shipping</strong>
+                      <span>Direct access + 1-2 day delivery</span>
+                    </div>
+                  </li>
+                  <li>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                      <strong>90-Day Money Back Guarantee</strong>
+                      <span>Extended guarantee period</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="pricing-comparison">
+                <div class="price-row">
+                  <span>Regular Price:</span>
+                  <span class="old-price">₱32,984</span>
+                </div>
+                <div class="price-row special">
+                  <span>Your Special Price Today:</span>
+                  <span class="new-price">₱22,344</span>
+                </div>
+                <div class="savings-highlight">
+                  You Save: ₱10,640 (32% OFF)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-urgency">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <div>
+            <strong>This Offer Expires in <span id="modalCountdownText">5:00</span></strong>
+            <p>This special price is only available RIGHT NOW. Once you close this, this offer will not be available again!</p>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button onclick="acceptUpsell()" class="btn btn-primary btn-large btn-full">
+            <span>YES! Add Premium Package to My Order</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+          <p class="guarantee-note">✓ Protected by 90-Day Money Back Guarantee</p>
+          <button onclick="declineUpsell()" class="decline-link-btn">
+            No thanks, I'll stick with my original order
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Partnership Tier Modal -->
+    <div id="partnershipModal" class="offer-modal partnership-modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content partnership-modal-content">
+        <button class="modal-close" onclick="closePartnershipModal()" aria-label="Close modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        
+        <div class="partnership-modal-header">
+          <h2>II. Tiered Commitment & Pricing Structure</h2>
+          <p class="partnership-intro">Our tiers are designed to provide maximum competitive advantage to our most committed partners.</p>
+        </div>
+
+        <!-- Commitment & Benefits Table -->
+        <div class="partnership-table-wrapper">
+          <table class="partnership-table commitment-table">
+            <thead>
+              <tr>
+                <th>Partnership Level</th>
+                <th>Minimum Order Quantity</th>
+                <th>Payment Terms Required</th>
+                <th>Total Discount Per Bottle</th>
+                <th>Benefit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tier 1: Standard</strong></td>
+                <td>Below 5,000 bottles</td>
+                <td>Cash on Delivery (COD), Check or Card</td>
+                <td>% (Not Available)</td>
+                <td>Market Access</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 2: Premium</strong></td>
+                <td>Below 5,000 bottles</td>
+                <td>50% Upfront / 50% Upon Delivery</td>
+                <td>2%</td>
+                <td>Cash-Flow Discount</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 3: Elite</strong></td>
+                <td>5,000 bottles and up</td>
+                <td>Cash on Delivery (COD), Check or Card</td>
+                <td>3%</td>
+                <td>Volume Discount</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 4: Exclusive</strong></td>
+                <td>5,000 bottles and up</td>
+                <td>50% Upfront / 50% Upon Delivery</td>
+                <td>5%</td>
+                <td>Max Discount + Territory</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="table-footnote"><strong>**Tier 4 also entitles Partners to 'Exclusive Reseller' Rights subject to geographical agreement.**</strong></p>
+        </div>
+
+        <div class="partnership-explanation">
+          <p>Our strategic pricing framework is designed to prioritize the premium status and innovative excellence of Autopax 1 while rewarding our most dedicated partners. By selecting your preferred tier, you secure a specialized price point and access an optimal discount structure.</p>
+        </div>
+
+        <!-- Discount & Equivalent Price Table -->
+        <div class="partnership-table-wrapper">
+          <table class="partnership-table pricing-table">
+            <thead>
+              <tr>
+                <th>Partnership Level</th>
+                <th>Total Discount per Bottle</th>
+                <th>Equivalent Price per Bottle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tier 1: Standard</strong></td>
+                <td>Baseline Premium Pricing</td>
+                <td>PHP 10,679.99</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 2: Premium</strong></td>
+                <td>2%</td>
+                <td>PHP 10,460.00</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 3: Elite</strong></td>
+                <td>3%</td>
+                <td>PHP 10,360.00</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 4: Exclusive</strong></td>
+                <td>5%</td>
+                <td>PHP 10,134.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="modal-actions partnership-actions">
+          <button onclick="becomePartner()" class="btn btn-primary btn-large btn-full">
+            <span>Become a Partner</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+          <button onclick="closePartnershipModal()" class="decline-link-btn">
+            Continue with regular order
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Downsell Modal -->
+    <div id="downsellModal" class="offer-modal">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeDownsellModal()" aria-label="Close modal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        
+        <div class="modal-header">
+          <div class="hand-icon">✋</div>
+          <h2>Hold On! We Have One More Special Offer For You</h2>
+          <p class="subtitle">We understand that budgets can be tight. That's why we've created this special starter option just for you...</p>
+        </div>
+
+        <div class="modal-offer-box">
+          <div class="offer-badge">LAST CHANCE SPECIAL</div>
+          
+          <div class="offer-layout">
+            <div class="offer-image">
+              <img src="assets/Section 1/Bottle.png" alt="Starter Success Pack" onerror="this.style.display='none'">
+              <div class="image-badge">
+                <span class="badge-value">28% OFF</span>
+                <span class="badge-label">Special Price</span>
+              </div>
+            </div>
+
+            <div class="offer-details">
+              <h3>Starter Success Pack</h3>
+              <p class="offer-subtitle">Everything you need to extend your treatment</p>
+
+              <div class="whats-included">
+                <h4>What's Included:</h4>
+                <ul class="inclusion-list">
+                  <li>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                      <strong>2 Extra Bottles of Autopax 1</strong>
+                      <span>Extend your treatment by 2 months</span>
+                    </div>
+                  </li>
+                  <li>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                      <strong>Application Guide (PDF)</strong>
+                      <span>Step-by-step usage instructions</span>
+                    </div>
+                  </li>
+                  <li>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                      <strong>Email Support Access</strong>
+                      <span>Get help when you need it</span>
+                    </div>
+                  </li>
+                  <li>
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                      <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <div>
+                      <strong>FREE Standard Shipping</strong>
+                      <span>No additional shipping charges</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="pricing-comparison">
+                <div class="price-row">
+                  <span>Regular Price:</span>
+                  <span class="old-price">₱9,968</span>
+                </div>
+                <div class="price-row special">
+                  <span>Your Special Price Today:</span>
+                  <span class="new-price">₱7,224</span>
+                </div>
+                <div class="savings-highlight">
+                  You Save: ₱2,744 (28% OFF)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-notice">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <div>
+            <strong>This is your final special offer</strong>
+            <p>Once you proceed, this deal will not be available again. Take advantage of this special pricing while you still can!</p>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button onclick="acceptDownsell()" class="btn btn-primary btn-large btn-full">
+            <span>YES! Add Starter Pack to My Order</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+          <p class="guarantee-note">✓ Protected by 60-Day Money Back Guarantee</p>
+          <button onclick="declineDownsell()" class="decline-link-btn">
+            No thanks, I'll skip this offer and continue
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer__container">
+        <div class="footer__brand">
+          <img
+            src="assets/Footer/Logo.png"
+            alt="Swine Tech Logo"
+            class="footer__logo"
+          />
+          <div class="footer__social">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="Facebook"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="Instagram"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a
+              href="https://www.youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="YouTube"
+            >
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="LinkedIn"
+            >
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a
+              href="https://www.twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="Twitter"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer__address">
+          <img
+            src="assets/Footer/Address Icon.png"
+            alt=""
+            class="footer__icon"
+            aria-hidden="true"
+          />
+          <p>
+            SWINE TECH INC PHILIPPINES<br />
+            Unit 202 E, Formula Campos Esguerra,<br />
+            Poblacion 3005, Pulilan Bulacan, Philippines
+          </p>
+        </div>
+        <div class="footer__contact">
+          <a href="tel:+639569464189" class="footer__contact-item">
+            <img
+              src="assets/Footer/Phone Icon.png"
+              alt=""
+              class="footer__icon"
+              aria-hidden="true"
+            />
+            <span>+63 956 946 4189</span>
+          </a>
+          <a href="mailto:autopax1@swinetech.ph" class="footer__contact-item">
+            <img
+              src="assets/Footer/Email Icon.png"
+              alt=""
+              class="footer__icon"
+              aria-hidden="true"
+            />
+            <span>autopax1@swinetech.ph</span>
+          </a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">
+          © Copyright 2026 Swine Tech. All rights reserved.
+        </p>
+        <nav class="footer__legal" aria-label="Legal links">
+          <a href="#security" class="footer__legal-link">Security</a>
+          <a href="#cookies" class="footer__legal-link">Cookie Policy</a>
+          <a href="#terms" class="footer__legal-link">Terms of Services</a>
+          <a href="#privacy" class="footer__legal-link">Privacy Policy</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="scripts/order.js?v=3"></script>
+  </body>
+</html>

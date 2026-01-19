@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Bulk Order Form - Autopax 1 Bulk order form with contact information and inquiry form."
+    />
+    <title>Bulk Order Form - Swine Tech | Autopax 1</title>
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="styles/main.css?v=7" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="header" role="banner">
+      <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav__container">
+          <a href="index.html" class="nav__logo" aria-label="Swine Tech Home">
+            <img
+              src="assets/Navi Section/Logo.png"
+              alt="Swine Tech Logo"
+              class="nav__logo-img"
+            />
+          </a>
+          <div class="nav__right">
+            <ul class="nav__menu" role="menubar">
+              <li>
+                <a href="index.html" class="nav__link" role="menuitem">Home</a>
+              </li>
+              <li>
+                <a href="infographics.html" class="nav__link" role="menuitem"
+                  >Infographics</a
+                >
+              </li>
+              <li class="nav__item--dropdown">
+                <a
+                  href="bulk-order.html"
+                  class="nav__link nav__link--dropdown nav__link--active"
+                  role="menuitem"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  id="orderFormDropdown"
+                >
+                  Order Form
+                  <span class="nav__dropdown-arrow" aria-hidden="true">▼</span>
+                </a>
+                <ul class="nav__dropdown-menu" role="menu" aria-labelledby="orderFormDropdown">
+                  <li role="none">
+                    <a href="order-form.html" class="nav__dropdown-link" role="menuitem">Order Form</a>
+                  </li>
+                  <li role="none">
+                    <a href="bulk-order.html" class="nav__dropdown-link nav__dropdown-link--active" role="menuitem">Bulk Order Form</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav__item--dropdown">
+                <a
+                  href="#faq"
+                  class="nav__link nav__link--dropdown"
+                  role="menuitem"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  FAQ
+                  <span class="nav__dropdown-arrow" aria-hidden="true">▼</span>
+                </a>
+              </li>
+              <li class="nav__separator" aria-hidden="true">|</li>
+              <li>
+                <a href="#contact" class="nav__link" role="menuitem"
+                  >Contact Us</a
+                >
+              </li>
+            </ul>
+            <a href="tel:+639569464189" class="nav__phone" aria-label="Call us">
+              <img
+                src="assets/Navi Section/Phone_Icon.png"
+                alt=""
+                class="nav__phone-icon"
+                aria-hidden="true"
+              />
+              <span>+63 956 946 4189</span>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main role="main">
+      <!-- Order Form Section -->
+      <section id="order" class="order-section" aria-labelledby="order-heading">
+        <div class="order-section__container">
+          <div class="order-section__content">
+            <p class="order-section__subtitle">We're Here to Help You</p>
+            <h2 id="order-heading" class="order-section__heading">
+              Join the Repopulation
+            </h2>
+            <div class="order-section__contact">
+              <a href="mailto:autopax1@swinetech.ph" class="order-section__contact-item">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+                <div>
+                  <span class="order-section__contact-label">E-mail</span>
+                  <span class="order-section__contact-value">autopax1@swinetech.ph</span>
+                </div>
+              </a>
+              <a href="tel:+639569464189" class="order-section__contact-item">
+                <i class="fas fa-phone" aria-hidden="true"></i>
+                <div>
+                  <span class="order-section__contact-label">Phone Number</span>
+                  <span class="order-section__contact-value">+63 956 946 4189</span>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div class="order-section__form-wrapper">
+            <form class="order-form" id="orderForm" aria-label="Bulk order form">
+              <div class="order-form__field">
+                <label for="firstName" class="order-form__label">
+                  Your First Name<span class="order-form__required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  class="order-form__input"
+                  required
+                  aria-required="true"
+                />
+              </div>
+              <div class="order-form__field">
+                <label for="farmLocation" class="order-form__label">
+                  Farm Location<span class="order-form__required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="farmLocation"
+                  name="farmLocation"
+                  class="order-form__input"
+                  required
+                  aria-required="true"
+                />
+              </div>
+              <div class="order-form__field">
+                <label for="herdSize" class="order-form__label">
+                  Herd Size<span class="order-form__required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="herdSize"
+                  name="herdSize"
+                  class="order-form__input"
+                  required
+                  aria-required="true"
+                />
+              </div>
+              <div class="order-form__field">
+                <label for="message" class="order-form__label">
+                  Message<span class="order-form__required">*</span>
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="order-form__textarea"
+                  rows="4"
+                  required
+                  aria-required="true"
+                ></textarea>
+              </div>
+              <p class="order-form__note">Limited Slots Available for Pre-Order</p>
+              <button type="submit" class="btn btn--blue order-form__submit">
+                SECURE MY SUPPLY
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <div class="footer__container">
+        <div class="footer__brand">
+          <img
+            src="assets/Footer/Logo.png"
+            alt="Swine Tech Logo"
+            class="footer__logo"
+          />
+          <div class="footer__social">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="Facebook"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://www.instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="Instagram"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a
+              href="https://www.youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="YouTube"
+            >
+              <i class="fab fa-youtube"></i>
+            </a>
+            <a
+              href="https://www.linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="LinkedIn"
+            >
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a
+              href="https://www.twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer__social-link"
+              aria-label="Twitter"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer__address">
+          <img
+            src="assets/Footer/Address Icon.png"
+            alt=""
+            class="footer__icon"
+            aria-hidden="true"
+          />
+          <p>
+            SWINE TECH INC PHILIPPINES<br />
+            Unit 202 E, Formula Campos Esguerra,<br />
+            Poblacion 3005, Pulilan Bulacan, Philippines
+          </p>
+        </div>
+        <div class="footer__contact">
+          <a href="tel:+639569464189" class="footer__contact-item">
+            <img
+              src="assets/Footer/Phone Icon.png"
+              alt=""
+              class="footer__icon"
+              aria-hidden="true"
+            />
+            <span>+63 956 946 4189</span>
+          </a>
+          <a href="mailto:autopax1@swinetech.ph" class="footer__contact-item">
+            <img
+              src="assets/Footer/Email Icon.png"
+              alt=""
+              class="footer__icon"
+              aria-hidden="true"
+            />
+            <span>autopax1@swinetech.ph</span>
+          </a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copyright">
+          © Copyright 2026 Swine Tech. All rights reserved.
+        </p>
+        <nav class="footer__legal" aria-label="Legal links">
+          <a href="#security" class="footer__legal-link">Security</a>
+          <a href="#cookies" class="footer__legal-link">Cookie Policy</a>
+          <a href="#terms" class="footer__legal-link">Terms of Services</a>
+          <a href="#privacy" class="footer__legal-link">Privacy Policy</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="scripts/main.js?v=14"></script>
+  </body>
+</html>

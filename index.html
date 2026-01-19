@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png" />
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="styles/main.css?v=20" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -54,15 +54,24 @@
               </li>
               <li class="nav__item--dropdown">
                 <a
-                  href="#order"
+                  href="order-form.html"
                   class="nav__link nav__link--dropdown"
                   role="menuitem"
                   aria-haspopup="true"
                   aria-expanded="false"
+                  id="orderFormDropdown"
                 >
                   Order Form
                   <span class="nav__dropdown-arrow" aria-hidden="true">▼</span>
                 </a>
+                <ul class="nav__dropdown-menu" role="menu" aria-labelledby="orderFormDropdown">
+                  <li role="none">
+                    <a href="order-form.html" class="nav__dropdown-link nav__dropdown-link--active" role="menuitem">Small Order Form</a>
+                  </li>
+                  <li role="none">
+                    <a href="bulk-order.html" class="nav__dropdown-link" role="menuitem">Bulk Order Form</a>
+                  </li>
+                </ul>
               </li>
               <li class="nav__item--dropdown">
                 <a
@@ -121,7 +130,7 @@
               <span>Immune Support against ASF and other viruses.</span>
             </p>
             <a
-              href="#order"
+              href="order-form.html"
               class="btn btn--blue btn--large"
               aria-label="Secure my supply of Autopax 1"
             >
@@ -150,29 +159,12 @@
               African Swine Fever isn't just a disease, it's a crisis that can wipe out your entire herd in a single episode rapidly, as quick within 4 to 7 days. There is no commercial vaccine. Biosecurity alone is not enough.
             </p>
             <a
-              href="#order"
+              href="order-form.html"
               class="btn btn--black"
               aria-label="Secure my supply"
             >
               SECURE MY SUPPLY
             </a>
-          </div>
-          <!-- Video player inside ASF section -->
-          <div class="asf-section__video">
-            <div class="video-section__player">
-              <button class="video-section__play-btn" aria-label="Play video">
-                <img
-                  src="assets/Section 3/Thumbnail.png"
-                  alt="Video thumbnail"
-                  class="video-section__thumbnail"
-                />
-                <img
-                  src="assets/Section 3/Play Button.png"
-                  alt="Play video"
-                  class="video-section__play-icon"
-                />
-              </button>
-            </div>
           </div>
         </div>
       </section>
@@ -180,14 +172,27 @@
       <!-- Video Testimonial Section -->
       <section class="video-section" aria-labelledby="video-heading">
         <div class="video-section__container">
-          <!-- Video player removed - now in Section 2 (ASF section) -->
+          <div class="video-section__player">
+            <button class="video-section__play-btn" aria-label="Play video">
+              <img
+                src="assets/Section 3/Thumbnail.png"
+                alt="Video thumbnail"
+                class="video-section__thumbnail"
+              />
+              <img
+                src="assets/Section 3/Play Button.png"
+                alt="Play video"
+                class="video-section__play-icon"
+              />
+            </button>
+          </div>
           <h2 id="video-heading" class="video-section__heading">
             <span>Filipino <strong class="video-section__heading--red">Compassion</strong>,</span>
             <br />
             <span>Australian <strong class="video-section__heading--blue">Technology</strong>.</span>
           </h2>
             <a
-              href="#order"
+              href="order-form.html"
               class="btn btn--blue"
               aria-label="Secure my supply"
             >
@@ -244,7 +249,7 @@
                 <span>Activates effector cells of innate immunity.</span>
               </li>
             </ul>
-            <a href="#order" class="btn btn--red" aria-label="Secure my supply">
+            <a href="bulk-order.html" class="btn btn--red" aria-label="Secure my supply">
               SECURE MY SUPPLY
             </a>
           </div>
@@ -262,7 +267,7 @@
               <strong class="proof-section__heading--blue">Lab.</strong>
             </h2>
             <a
-              href="#order"
+              href="order-form.html"
               class="btn btn--blue"
               aria-label="Secure my supply"
             >
@@ -279,39 +284,104 @@
                 <div class="carousel__slide carousel__slide--active">
                   <div class="carousel__slide-wrapper">
                     <img
-                      src="assets/Section 5/Cert_1.png"
-                      alt="Scientific certification document 1"
+                      src="assets/Section 5/[01] CERTIFICATE OF PRODUCT REGISTRATION - SWINE TECH.jpg"
+                      alt="Certificate of Product Registration - Swine Tech"
                       class="carousel__image"
                     />
                     <div class="carousel__overlay">
                       <div class="carousel__gradient"></div>
-                      <a href="assets/Section 5/Cert_1.png" target="_blank" class="carousel__view-more" rel="noopener noreferrer">View More</a>
+                      <a href="assets/Section 5/[01] CERTIFICATE OF PRODUCT REGISTRATION - SWINE TECH.jpg" class="carousel__view-more" data-cert-image="assets/Section 5/[01] CERTIFICATE OF PRODUCT REGISTRATION - SWINE TECH.jpg" data-cert-alt="Certificate of Product Registration - Swine Tech">View More</a>
                     </div>
                   </div>
                 </div>
                 <div class="carousel__slide">
                   <div class="carousel__slide-wrapper">
                     <img
-                      src="assets/Section 5/Cert_1.png"
-                      alt="Scientific certification document 2"
+                      src="assets/Section 5/[02] 2025 ELISA TEST 1 OUT OF 3_page-0001.jpg"
+                      alt="2025 ELISA Test 1 Out of 3"
                       class="carousel__image"
                     />
                     <div class="carousel__overlay">
                       <div class="carousel__gradient"></div>
-                      <a href="assets/Section 5/Cert_1.png" target="_blank" class="carousel__view-more" rel="noopener noreferrer">View More</a>
+                      <a href="assets/Section 5/[02] 2025 ELISA TEST 1 OUT OF 3_page-0001.jpg" class="carousel__view-more" data-cert-image="assets/Section 5/[02] 2025 ELISA TEST 1 OUT OF 3_page-0001.jpg" data-cert-alt="2025 ELISA Test 1 Out of 3">View More</a>
                     </div>
                   </div>
                 </div>
                 <div class="carousel__slide">
                   <div class="carousel__slide-wrapper">
                     <img
-                      src="assets/Section 5/Cert_1.png"
-                      alt="Scientific certification document 3"
+                      src="assets/Section 5/[03] 2025 ELISA TEST 2 OUT OF 3_page-0001.jpg"
+                      alt="2025 ELISA Test 2 Out of 3"
                       class="carousel__image"
                     />
                     <div class="carousel__overlay">
                       <div class="carousel__gradient"></div>
-                      <a href="assets/Section 5/Cert_1.png" target="_blank" class="carousel__view-more" rel="noopener noreferrer">View More</a>
+                      <a href="assets/Section 5/[03] 2025 ELISA TEST 2 OUT OF 3_page-0001.jpg" class="carousel__view-more" data-cert-image="assets/Section 5/[03] 2025 ELISA TEST 2 OUT OF 3_page-0001.jpg" data-cert-alt="2025 ELISA Test 2 Out of 3">View More</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel__slide">
+                  <div class="carousel__slide-wrapper">
+                    <img
+                      src="assets/Section 5/[04] 2025 ELISA TEST 3 OUT OF 3_page-0001.jpg"
+                      alt="2025 ELISA Test 3 Out of 3"
+                      class="carousel__image"
+                    />
+                    <div class="carousel__overlay">
+                      <div class="carousel__gradient"></div>
+                      <a href="assets/Section 5/[04] 2025 ELISA TEST 3 OUT OF 3_page-0001.jpg" class="carousel__view-more" data-cert-image="assets/Section 5/[04] 2025 ELISA TEST 3 OUT OF 3_page-0001.jpg" data-cert-alt="2025 ELISA Test 3 Out of 3">View More</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel__slide">
+                  <div class="carousel__slide-wrapper">
+                    <img
+                      src="assets/Section 5/[05] 2022 MARCH ELISA TEST_page-0001.jpg"
+                      alt="2022 March ELISA Test"
+                      class="carousel__image"
+                    />
+                    <div class="carousel__overlay">
+                      <div class="carousel__gradient"></div>
+                      <a href="assets/Section 5/[05] 2022 MARCH ELISA TEST_page-0001.jpg" class="carousel__view-more" data-cert-image="assets/Section 5/[05] 2022 MARCH ELISA TEST_page-0001.jpg" data-cert-alt="2022 March ELISA Test">View More</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel__slide">
+                  <div class="carousel__slide-wrapper">
+                    <img
+                      src="assets/Section 5/[06] 2022 FEBRUARY RT-PCR_page-0001.jpg"
+                      alt="2022 February RT-PCR"
+                      class="carousel__image"
+                    />
+                    <div class="carousel__overlay">
+                      <div class="carousel__gradient"></div>
+                      <a href="assets/Section 5/[06] 2022 FEBRUARY RT-PCR_page-0001.jpg" class="carousel__view-more" data-cert-image="assets/Section 5/[06] 2022 FEBRUARY RT-PCR_page-0001.jpg" data-cert-alt="2022 February RT-PCR">View More</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel__slide">
+                  <div class="carousel__slide-wrapper">
+                    <img
+                      src="assets/Section 5/[07] 2022 JANUARY RT-PCR_page-0001.jpg"
+                      alt="2022 January RT-PCR"
+                      class="carousel__image"
+                    />
+                    <div class="carousel__overlay">
+                      <div class="carousel__gradient"></div>
+                      <a href="assets/Section 5/[07] 2022 JANUARY RT-PCR_page-0001.jpg" class="carousel__view-more" data-cert-image="assets/Section 5/[07] 2022 JANUARY RT-PCR_page-0001.jpg" data-cert-alt="2022 January RT-PCR">View More</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="carousel__slide">
+                  <div class="carousel__slide-wrapper">
+                    <img
+                      src="assets/Section 5/[08] 2019 VIETNAM RESULTS_page-0001.jpg"
+                      alt="2019 Vietnam Results"
+                      class="carousel__image"
+                    />
+                    <div class="carousel__overlay">
+                      <div class="carousel__gradient"></div>
+                      <a href="assets/Section 5/[08] 2019 VIETNAM RESULTS_page-0001.jpg" class="carousel__view-more" data-cert-image="assets/Section 5/[08] 2019 VIETNAM RESULTS_page-0001.jpg" data-cert-alt="2019 Vietnam Results">View More</a>
                     </div>
                   </div>
                 </div>
@@ -380,11 +450,92 @@
                     aria-hidden="true"
                   />
                 </button>
+                <button
+                  class="carousel__indicator"
+                  aria-label="Slide 4"
+                  aria-selected="false"
+                  data-slide="3"
+                >
+                  <img
+                    src="assets/Section 5/Circle_2.png"
+                    alt=""
+                    class="carousel__indicator-img"
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  class="carousel__indicator"
+                  aria-label="Slide 5"
+                  aria-selected="false"
+                  data-slide="4"
+                >
+                  <img
+                    src="assets/Section 5/Circle_2.png"
+                    alt=""
+                    class="carousel__indicator-img"
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  class="carousel__indicator"
+                  aria-label="Slide 6"
+                  aria-selected="false"
+                  data-slide="5"
+                >
+                  <img
+                    src="assets/Section 5/Circle_2.png"
+                    alt=""
+                    class="carousel__indicator-img"
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  class="carousel__indicator"
+                  aria-label="Slide 7"
+                  aria-selected="false"
+                  data-slide="6"
+                >
+                  <img
+                    src="assets/Section 5/Circle_2.png"
+                    alt=""
+                    class="carousel__indicator-img"
+                    aria-hidden="true"
+                  />
+                </button>
+                <button
+                  class="carousel__indicator"
+                  aria-label="Slide 8"
+                  aria-selected="false"
+                  data-slide="7"
+                >
+                  <img
+                    src="assets/Section 5/Circle_2.png"
+                    alt=""
+                    class="carousel__indicator-img"
+                    aria-hidden="true"
+                  />
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      <!-- Certificate Modal -->
+      <div id="certificateModal" class="certificate-modal" aria-hidden="true" role="dialog" aria-labelledby="certificateModalTitle">
+        <div class="certificate-modal__overlay"></div>
+        <div class="certificate-modal__content">
+          <button class="certificate-modal__close" id="closeCertificateModal" aria-label="Close certificate modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div class="certificate-modal__image-container">
+            <img id="certificateModalImage" src="" alt="" class="certificate-modal__image" />
+          </div>
+        </div>
+      </div>
 
       <!-- Product Display Section -->
       <section class="product-section" aria-labelledby="product-heading">
@@ -486,7 +637,7 @@
               Best for Day 1 to Day 5 Piglets for stronger immunity.
             </p>
             <a
-              href="#order"
+              href="order-form.html"
               class="btn btn--blue"
               aria-label="Secure my supply"
             >
@@ -601,6 +752,6 @@
       </div>
     </footer>
 
-    <script src="scripts/main.js?v=3"></script>
+    <script src="scripts/main.js?v=20"></script>
   </body>
 </html>

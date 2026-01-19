@@ -68,6 +68,48 @@ SwineTech/
      npx http-server
      ```
 
+## 🔍 OCR Setup (For Image Analysis)
+
+This project includes OCR (Optical Character Recognition) capabilities to analyze and view images like `Swine Tech_Funnel Web_Assets.jpg` more effectively.
+
+### Quick Setup
+
+**Windows:**
+```powershell
+.\setup-ocr.ps1
+```
+
+**Linux/Mac:**
+```bash
+chmod +x setup-ocr.sh
+./setup-ocr.sh
+```
+
+### Manual Setup
+
+1. **Clone the OCR MCP repository:**
+   ```bash
+   git clone https://github.com/sandraschi/ocr-mcp.git
+   cd ocr-mcp
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   # Using Poetry (recommended)
+   poetry install
+   
+   # For GPU support (optional)
+   poetry run pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+   ```
+
+3. **Configure in Cursor:**
+   - Open Cursor settings
+   - Add the MCP server configuration from `mcp-config.json`
+   - Update `OCR_CACHE_DIR` to your preferred cache location
+   - Set `OCR_DEVICE` to `"cuda"` for GPU or `"cpu"` for CPU mode
+
+For detailed instructions, see [ocr-setup.md](ocr-setup.md).
+
 2. **Customization**
    - Edit `styles/main.css` for styling changes
    - Modify `scripts/main.js` for interactive features
