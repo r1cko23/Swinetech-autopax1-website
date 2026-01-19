@@ -1,0 +1,21 @@
+{
+  "name": "swinetech",
+  "version": "1.0.0",
+  "description": "A modern, responsive funnel website for Swine Tech's Autopax 1 product - an FDA Approved Organic Solution for Swine Health and Immune Support against ASF and other viruses.",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:visual": "playwright test visual-test.spec.js",
+    "test:report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "playwright": "^1.57.0"
+  }
+}
