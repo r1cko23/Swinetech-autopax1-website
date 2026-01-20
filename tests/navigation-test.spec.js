@@ -24,7 +24,17 @@ test.describe('Navigation Tests - All Screen Sizes', () => {
       for (const pageInfo of pages) {
         test(`Navigation links work on ${pageInfo.name}`, async ({ page }) => {
           await page.goto(`http://localhost:8000/${pageInfo.url}`);
-          await page.waitForLoadState('networkidle');
+          await page.waitForLoadState('domcontentloaded');
+          await page.waitForTimeout(500); // Wait for JS to initialize
+
+          // Open mobile menu if needed
+          if (viewport.width <= 768) {
+            const menuToggle = page.getByRole('button', { name: 'Toggle navigation menu' });
+            if (await menuToggle.isVisible()) {
+              await menuToggle.click();
+              await page.waitForTimeout(300);
+            }
+          }
 
           // Test Home link
           const homeLink = page.getByRole('menuitem', { name: 'Home' });
@@ -35,12 +45,23 @@ test.describe('Navigation Tests - All Screen Sizes', () => {
 
           // Go back to original page
           await page.goto(`http://localhost:8000/${pageInfo.url}`);
-          await page.waitForLoadState('networkidle');
+          await page.waitForLoadState('domcontentloaded');
+          await page.waitForTimeout(500);
         });
 
         test(`Infographics link works on ${pageInfo.name}`, async ({ page }) => {
           await page.goto(`http://localhost:8000/${pageInfo.url}`);
-          await page.waitForLoadState('networkidle');
+          await page.waitForLoadState('domcontentloaded');
+          await page.waitForTimeout(500);
+
+          // Open mobile menu if needed
+          if (viewport.width <= 768) {
+            const menuToggle = page.getByRole('button', { name: 'Toggle navigation menu' });
+            if (await menuToggle.isVisible()) {
+              await menuToggle.click();
+              await page.waitForTimeout(300);
+            }
+          }
 
           const infographicsLink = page.getByRole('menuitem', { name: 'Infographics' });
           await expect(infographicsLink).toBeVisible();
@@ -51,7 +72,17 @@ test.describe('Navigation Tests - All Screen Sizes', () => {
 
         test(`Contact Us link works on ${pageInfo.name}`, async ({ page }) => {
           await page.goto(`http://localhost:8000/${pageInfo.url}`);
-          await page.waitForLoadState('networkidle');
+          await page.waitForLoadState('domcontentloaded');
+          await page.waitForTimeout(500);
+
+          // Open mobile menu if needed
+          if (viewport.width <= 768) {
+            const menuToggle = page.getByRole('button', { name: 'Toggle navigation menu' });
+            if (await menuToggle.isVisible()) {
+              await menuToggle.click();
+              await page.waitForTimeout(300);
+            }
+          }
 
           const contactLink = page.getByRole('menuitem', { name: 'Contact Us' });
           await expect(contactLink).toBeVisible();
@@ -62,7 +93,17 @@ test.describe('Navigation Tests - All Screen Sizes', () => {
 
         test(`FAQ link redirects to bulk-order.html#faq on ${pageInfo.name}`, async ({ page }) => {
           await page.goto(`http://localhost:8000/${pageInfo.url}`);
-          await page.waitForLoadState('networkidle');
+          await page.waitForLoadState('domcontentloaded');
+          await page.waitForTimeout(500);
+
+          // Open mobile menu if needed
+          if (viewport.width <= 768) {
+            const menuToggle = page.getByRole('button', { name: 'Toggle navigation menu' });
+            if (await menuToggle.isVisible()) {
+              await menuToggle.click();
+              await page.waitForTimeout(300);
+            }
+          }
 
           const faqLink = page.getByRole('menuitem', { name: 'FAQ' });
           await expect(faqLink).toBeVisible();
@@ -84,7 +125,8 @@ test.describe('Navigation Tests - All Screen Sizes', () => {
       // Test Order Form dropdown
       test('Order Form dropdown works on mobile/tablet', async ({ page }) => {
         await page.goto('http://localhost:8000/index.html');
-        await page.waitForLoadState('networkidle');
+        await page.waitForLoadState('domcontentloaded');
+        await page.waitForTimeout(500);
 
         // Open mobile menu if needed
         if (viewport.width <= 768) {
@@ -133,9 +175,11 @@ test.describe('Navigation Tests - All Screen Sizes', () => {
       // Test phone link
       test('Phone link works', async ({ page }) => {
         await page.goto('http://localhost:8000/index.html');
-        await page.waitForLoadState('networkidle');
+        await page.waitForLoadState('domcontentloaded');
+        await page.waitForTimeout(500);
 
-        const phoneLink = page.getByRole('link', { name: /Call us|956 946 4189/ });
+        // Use more specific selector for nav phone link
+        const phoneLink = page.locator('.nav__phone').first();
         await expect(phoneLink).toBeVisible();
         
         const href = await phoneLink.getAttribute('href');
