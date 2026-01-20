@@ -358,7 +358,7 @@
     // Add text
     const clickPrompt = document.createElement("div");
     clickPrompt.className = "cell-animation__click-prompt";
-    clickPrompt.textContent = "Click to spray autopax1";
+    clickPrompt.textContent = "Click to spray AUTOPAX 1";
     clickPrompt.style.position = "relative";
     clickPrompt.style.color = "var(--text-light)";
     clickPrompt.style.fontFamily = "var(--font-heading)";
