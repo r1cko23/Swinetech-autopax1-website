@@ -2086,12 +2086,12 @@ main {
 @media (min-width: 1025px) {
   .product-section__features {
     /* Push features DOWN by using smaller bottom values */
-    bottom: clamp(3%, 5vw, 6%) !important; /* Very small bottom = features pushed way down */
+    bottom: clamp(2%, 4vw, 5%) !important; /* Very small bottom = features pushed way down */
     position: absolute !important;
   }
 
   .product-section__container {
-    padding-bottom: clamp(18rem, 28vw, 26rem) !important; /* Extra bottom padding on desktop */
+    padding-bottom: clamp(20rem, 30vw, 28rem) !important; /* Extra bottom padding on desktop */
     padding-top: clamp(3rem, 6vw, 5rem);
   }
   
@@ -2103,22 +2103,22 @@ main {
 /* Large desktop screens - even more spacing */
 @media (min-width: 1440px) {
   .product-section__features {
-    bottom: clamp(2%, 4vw, 5%) !important; /* Even smaller = pushed further down */
+    bottom: clamp(1%, 3vw, 4%) !important; /* Even smaller = pushed further down */
   }
   
   .product-section__container {
-    padding-bottom: clamp(22rem, 32vw, 30rem) !important;
+    padding-bottom: clamp(24rem, 34vw, 32rem) !important;
   }
 }
 
 /* Extra large screens - maximum spacing */
 @media (min-width: 1920px) {
   .product-section__features {
-    bottom: clamp(1%, 3vw, 4%) !important; /* Smallest = pushed furthest down */
+    bottom: clamp(0.5%, 2vw, 3%) !important; /* Smallest = pushed furthest down */
   }
   
   .product-section__container {
-    padding-bottom: clamp(26rem, 38vw, 36rem) !important;
+    padding-bottom: clamp(28rem, 40vw, 38rem) !important;
   }
 }
 
