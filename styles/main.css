@@ -2085,8 +2085,8 @@ main {
 /* Desktop and larger screens - ensure features are well below product */
 @media (min-width: 1025px) {
   .product-section__features {
-    /* Use fixed minimum spacing combined with percentage for better control on larger screens */
-    bottom: max(320px, 38%) !important; /* Significantly increased - minimum 320px from bottom, or 38% whichever is larger */
+    /* Push features DOWN by using smaller bottom values */
+    bottom: clamp(3%, 5vw, 6%) !important; /* Very small bottom = features pushed way down */
     position: absolute !important;
   }
 
@@ -2103,7 +2103,7 @@ main {
 /* Large desktop screens - even more spacing */
 @media (min-width: 1440px) {
   .product-section__features {
-    bottom: max(450px, 42%) !important; /* Minimum 450px from bottom on large screens */
+    bottom: clamp(2%, 4vw, 5%) !important; /* Even smaller = pushed further down */
   }
   
   .product-section__container {
@@ -2114,7 +2114,7 @@ main {
 /* Extra large screens - maximum spacing */
 @media (min-width: 1920px) {
   .product-section__features {
-    bottom: max(550px, 48%) !important; /* Minimum 550px from bottom on extra large screens */
+    bottom: clamp(1%, 3vw, 4%) !important; /* Smallest = pushed furthest down */
   }
   
   .product-section__container {
