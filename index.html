@@ -539,10 +539,9 @@
             </svg>
           </button>
           <div class="video-modal__video-container">
-            <video id="videoModalPlayer" class="video-modal__video" controls preload="metadata">
-              <source src="/swintech BRAND VIDEO eng FINAL W SUBS.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+            <div id="videoModalPlayer" class="video-modal__youtube-container">
+              <!-- YouTube iframe will be inserted here -->
+            </div>
           </div>
         </div>
       </div>
@@ -762,6 +761,16 @@
       </div>
     </footer>
 
+    <!-- Supabase Configuration - Add your credentials here or via window.SUPABASE_CONFIG -->
+    <script>
+      // Option 1: Set credentials here (not recommended for production)
+      // window.SUPABASE_CONFIG = {
+      //   url: 'https://your-project.supabase.co',
+      //   anonKey: 'your-anon-key-here'
+      // };
+    </script>
+    <script src="scripts/supabase-config.js"></script>
+    <script src="scripts/video-config.js"></script>
     <script src="scripts/main.js?v=22"></script>
   </body>
 </html>
