@@ -814,9 +814,12 @@ main {
   max-width: 100% !important; /* Allow to scale within container */
   height: 100% !important; /* Match content height */
   object-fit: contain; /* Maintain aspect ratio while fitting height */
-  transform: rotate(-3deg); /* Tilt more to the left */
   display: block;
   /* Bottle height will match content height, width scales proportionally */
+}
+
+.hero__bottle--tilted {
+  transform: rotate(-3deg); /* Tilt more to the left - only for bottle image */
 }
 
 /* Further reduce bottle size on laptop/desktop screens */

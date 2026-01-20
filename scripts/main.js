@@ -956,6 +956,9 @@
   // VIDEO MODAL
   // ============================================
   function initVideoModals() {
+    // #region agent log
+    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:958',message:'initVideoModals called',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
+    // #endregion
     const videoModal = document.getElementById("videoModal");
     const videoPlayer = document.getElementById("videoModalPlayer");
     const closeBtn = document.getElementById("closeVideoModal");
@@ -963,20 +966,77 @@
       ".video-section__play-btn"
     );
     const watchStoryBtn = document.getElementById("watchStoryBtn");
+    const adminPlayButtons = document.querySelectorAll(
+      ".admin-section__play-btn"
+    );
 
-    if (!videoModal || !videoPlayer) return;
+    // #region agent log
+    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:967',message:'Elements found',data:{videoModal:!!videoModal,videoPlayer:!!videoPlayer,closeBtn:!!closeBtn,playButtonsCount:playButtons.length,watchStoryBtn:!!watchStoryBtn,adminPlayButtonsCount:adminPlayButtons.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+    // #endregion
+
+    if (!videoModal || !videoPlayer) {
+      // #region agent log
+      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:970',message:'Early return - elements missing',data:{videoModal:!!videoModal,videoPlayer:!!videoPlayer},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+      // #endregion
+      return;
+    }
+
+    // #region agent log
+    const sourceElement = videoPlayer.querySelector('source');
+    const videoSrc = sourceElement ? sourceElement.src : (videoPlayer.src || 'none');
+    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:975',message:'Video source check on init (post-fix)',data:{videoSrc,hasSourceElement:!!sourceElement,currentSrc:videoPlayer.currentSrc,readyState:videoPlayer.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'post-fix',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion
+
+    // Add error event listener to video player
+    videoPlayer.addEventListener('error', function(e) {
+      // #region agent log
+      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:980',message:'Video error event',data:{error:videoPlayer.error?{code:videoPlayer.error.code,message:videoPlayer.error.message}:null,networkState:videoPlayer.networkState,readyState:videoPlayer.readyState,currentSrc:videoPlayer.currentSrc},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+      // #endregion
+    });
+
+    // Add loadedmetadata event listener
+    videoPlayer.addEventListener('loadedmetadata', function() {
+      // #region agent log
+      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:985',message:'Video metadata loaded',data:{duration:videoPlayer.duration,currentSrc:videoPlayer.currentSrc},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+      // #endregion
+    });
 
     let playPromise = null;
     let isClosing = false;
 
-    // Open modal function
-    function openVideoModal() {
+    // Video sources
+    const brandVideoSrc = "swintech BRAND VIDEO eng FINAL W SUBS.mp4";
+    const demoVideoSrc = "demo video spray only VO engsubs FIOINAL.mp4";
+
+    // Open modal function - accepts optional video source
+    function openVideoModal(videoSource) {
+      // #region agent log
+      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:973',message:'openVideoModal called',data:{videoSource,timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+      // #endregion
       isClosing = false;
+      
+      // Update video source if provided
+      if (videoSource) {
+        const sourceElement = videoPlayer.querySelector('source');
+        if (sourceElement) {
+          sourceElement.src = videoSource;
+          videoPlayer.load(); // Reload video with new source
+        } else {
+          videoPlayer.src = videoSource;
+          videoPlayer.load();
+        }
+      }
+      
       videoModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
       
       // Reset video to beginning
       videoPlayer.currentTime = 0;
+      
+      // #region agent log
+      const currentVideoSrc = videoPlayer.querySelector('source')?.src || videoPlayer.src || 'none';
+      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:980',message:'Before play - video source check',data:{currentVideoSrc,currentTime:videoPlayer.currentTime,readyState:videoPlayer.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+      // #endregion
       
       // Play video and store the promise to handle race conditions
       playPromise = videoPlayer.play();
@@ -985,10 +1045,16 @@
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:988',message:'Video play promise resolved',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+            // #endregion
             // Video started playing successfully
             playPromise = null;
           })
           .catch((error) => {
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:992',message:'Video play promise rejected',data:{errorName:error.name,errorMessage:error.message,isClosing,readyState:videoPlayer.readyState,networkState:videoPlayer.networkState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+            // #endregion
             // Only log if it's not an abort error (which is expected when closing quickly)
             if (error.name !== "AbortError" && !isClosing) {
               console.error("Error playing video:", error);
@@ -1031,21 +1097,35 @@
       videoPlayer.currentTime = 0;
     }
 
-    // Add click handlers to play buttons
-    playButtons.forEach((button) => {
+    // Add click handlers to section 3 play buttons (brand video)
+    playButtons.forEach((button, index) => {
       button.addEventListener("click", function (e) {
+        // #region agent log
+        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:1035',message:'Play button clicked',data:{buttonIndex:index,timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+        // #endregion
         e.preventDefault();
-        openVideoModal();
+        openVideoModal(brandVideoSrc);
       });
     });
 
-    // Add click handler to "WATCH THE STORY" CTA button
+    // Add click handler to "WATCH THE STORY" CTA button (brand video)
     if (watchStoryBtn) {
       watchStoryBtn.addEventListener("click", function (e) {
+        // #region agent log
+        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:1023',message:'Watch story button clicked',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+        // #endregion
         e.preventDefault();
-        openVideoModal();
+        openVideoModal(brandVideoSrc);
       });
     }
+
+    // Add click handlers to section 7 play buttons (demo video)
+    adminPlayButtons.forEach((button, index) => {
+      button.addEventListener("click", function (e) {
+        e.preventDefault();
+        openVideoModal(demoVideoSrc);
+      });
+    });
 
     // Close modal on close button click
     if (closeBtn) {
