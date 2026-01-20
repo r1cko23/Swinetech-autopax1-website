@@ -2066,16 +2066,38 @@ main {
 /* Desktop and larger screens - ensure features are well below product */
 @media (min-width: 1025px) {
   .product-section__features {
-    bottom: clamp(10%, 12vw, 18%); /* Position features below product packaging on desktop */
+    bottom: clamp(15%, 18vw, 25%); /* Increased spacing to position features well below product packaging on desktop */
   }
 
   .product-section__container {
-    padding-bottom: clamp(6rem, 12vw, 10rem); /* Extra bottom padding on desktop */
+    padding-bottom: clamp(8rem, 15vw, 12rem); /* Extra bottom padding on desktop */
     padding-top: clamp(3rem, 6vw, 5rem);
   }
   
   .product-section__heading {
     margin-bottom: clamp(3rem, 8vw, 5rem); /* More space below heading on desktop */
+  }
+}
+
+/* Large desktop screens - even more spacing */
+@media (min-width: 1440px) {
+  .product-section__features {
+    bottom: clamp(18%, 20vw, 28%); /* Even more space on very large screens */
+  }
+  
+  .product-section__container {
+    padding-bottom: clamp(10rem, 18vw, 14rem);
+  }
+}
+
+/* Tablet screens - medium spacing */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .product-section__features {
+    bottom: clamp(12%, 15vw, 22%); /* Position features below product on tablet */
+  }
+  
+  .product-section__container {
+    padding-bottom: clamp(5rem, 10vw, 8rem);
   }
 }
 
@@ -2180,7 +2202,7 @@ main {
   gap: clamp(0.5rem, 2vw, var(--spacing-md));
   flex-wrap: nowrap; /* Keep horizontal layout on all screens */
   position: absolute; /* Use absolute positioning to place below product consistently */
-  bottom: clamp(8%, 12vw, 15%); /* Position from bottom - percentage ensures it stays below product packaging */
+  bottom: clamp(8%, 12vw, 20%); /* Position from bottom - increased max for medium screens */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
