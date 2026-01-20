@@ -15,7 +15,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png" />
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" href="styles/main.css?v=7" />
+    <link rel="stylesheet" href="styles/main.css?v=23" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -75,7 +75,7 @@
               </li>
               <li class="nav__item--dropdown">
                 <a
-                  href="#faq"
+                  href="bulk-order.html#faq"
                   class="nav__link nav__link--dropdown"
                   role="menuitem"
                   aria-haspopup="true"
@@ -194,6 +194,33 @@
           </div>
         </div>
       </section>
+
+      <!-- FAQ Section -->
+      <section id="faq" class="faq-section" aria-labelledby="faq-heading">
+        <div class="faq-section__container">
+          <h2 id="faq-heading" class="faq-section__heading">FAQ</h2>
+          <div class="faq-section__list">
+            <div class="faq-item">
+              <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-1">
+                <span class="faq-item__question-text">Q: Is this a vaccine?</span>
+                <span class="faq-item__chevron" aria-hidden="true">▼</span>
+              </button>
+              <div class="faq-item__answer" id="faq-answer-1" aria-hidden="true">
+                <p class="faq-item__answer-text">A: No, it is a nutritional supplement that boosts innate immunity.</p>
+              </div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-item__question" aria-expanded="false" aria-controls="faq-answer-2">
+                <span class="faq-item__question-text">Q: Is it FDA Approved?</span>
+                <span class="faq-item__chevron" aria-hidden="true">▼</span>
+              </button>
+              <div class="faq-item__answer" id="faq-answer-2" aria-hidden="true">
+                <p class="faq-item__answer-text">A: Yes, Certificate VR-4838.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
@@ -300,6 +327,6 @@
       </div>
     </footer>
 
-    <script src="scripts/main.js?v=14"></script>
+    <script src="scripts/main.js?v=21"></script>
   </body>
 </html>

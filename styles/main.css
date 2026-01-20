@@ -601,20 +601,43 @@ main {
   background-position: center center;
   background-repeat: no-repeat;
   padding: var(--spacing-xl) var(--container-padding);
-  padding-bottom: calc(var(--spacing-xl) + 350px); /* Extra padding for video overlap below CTA */
+  padding-bottom: calc(var(--spacing-xl) + 180px); /* Reduced padding for video overlap below CTA */
   position: relative;
-  z-index: 1; /* Lower z-index so video section appears above */
+  z-index: 3; /* Higher z-index than video section (z-index: 2) so ASF content appears above video */
+  isolation: isolate; /* Create new stacking context to ensure z-index works correctly */
   color: var(--text-light);
-  min-height: 500px;
+  min-height: auto; /* Remove fixed min-height */
   width: 100%;
   overflow: visible; /* Allow video to overlap into next section */
+}
+
+/* Tablet and smaller screens - reduce red section size */
+@media (max-width: 1024px) {
+  .asf-section {
+    padding-bottom: calc(var(--spacing-lg) + 120px); /* Reduced for tablet */
+  }
+}
+
+@media (max-width: 768px) {
+  .asf-section {
+    padding-bottom: calc(var(--spacing-md) + 80px); /* Further reduced for smaller tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .asf-section {
+    overflow: visible; /* Ensure video can overlap on mobile */
+    padding-bottom: calc(var(--spacing-md) + 80px); /* Significantly reduced padding for smaller screens */
+    padding-top: var(--spacing-md);
+    min-height: auto;
+  }
 }
 
 .asf-section__container {
   max-width: var(--container-max-width);
   margin: 0 auto;
   position: relative;
-  z-index: 1;
+  z-index: 10; /* Higher than video thumbnail to ensure text is visible */
   text-align: center;
 }
 
@@ -625,6 +648,8 @@ main {
   margin-bottom: var(--spacing-md);
   line-height: 1.2;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better readability */
+  position: relative;
+  z-index: 12; /* Higher than video thumbnail (z-index: 3) to ensure text is always visible */
 }
 
 .asf-section__heading span {
@@ -637,21 +662,25 @@ main {
   margin: 0 auto var(--spacing-lg);
   line-height: 1.8;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Add shadow for better readability */
+  position: relative;
+  z-index: 12; /* Higher than video thumbnail (z-index: 3) to ensure text is always visible */
 }
 
 .asf-section__content {
   position: relative;
-  z-index: 3; /* Ensure CTA is above video thumbnail */
-  margin-bottom: var(--spacing-xxl);
-  padding-bottom: var(--spacing-lg);
+  z-index: 10; /* Ensure CTA is above video thumbnail */
+  margin-bottom: var(--spacing-md); /* Reduced margin */
+  padding-bottom: var(--spacing-sm); /* Reduced padding */
 }
 
 .asf-section__content .btn {
   position: relative;
-  z-index: 4;
+  z-index: 11 !important; /* Higher z-index to ensure CTA is always above video */
   display: inline-block;
   margin-top: var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 0; /* Remove bottom margin */
+  visibility: visible !important; /* Ensure button is visible */
+  opacity: 1 !important; /* Ensure button is not transparent */
 }
 
 /* ============================================
@@ -662,7 +691,7 @@ main {
   padding: var(--spacing-xl) var(--container-padding);
   padding-top: 0;
   position: relative;
-  z-index: 2; /* Above ASF background, but below CTA button */
+  z-index: 1; /* Lower than ASF section (z-index: 3) so video appears behind ASF content */
   margin-top: -300px; /* Pull up to overlap ASF section, but not too much */
   overflow: visible; /* Allow video to overlap from ASF section */
 }
@@ -699,8 +728,8 @@ main {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  z-index: 2; /* Above ASF section background, but below CTA button (z-index: 4) */
-  margin-top: -250px; /* Overlap into Section 2, positioned below CTA button */
+  z-index: 0; /* Lower z-index - video should appear behind ASF section content (which has z-index: 3 with isolation) */
+  margin-top: -200px; /* Reduced overlap to prevent covering text - positioned below text and CTA */
   margin-bottom: var(--spacing-md);
   overflow: visible; /* Ensure thumbnail is not clipped */
 }
@@ -1597,11 +1626,16 @@ main {
 /* Desktop and larger screens - ensure features are well below product */
 @media (min-width: 1025px) {
   .product-section__features {
-    bottom: clamp(4rem, 10vw, 8rem); /* Lower on desktop - higher bottom value = lower position */
+    bottom: clamp(10%, 12vw, 18%); /* Position features below product packaging on desktop */
   }
 
   .product-section__container {
     padding-bottom: clamp(6rem, 12vw, 10rem); /* Extra bottom padding on desktop */
+    padding-top: clamp(3rem, 6vw, 5rem);
+  }
+  
+  .product-section__heading {
+    margin-bottom: clamp(3rem, 8vw, 5rem); /* More space below heading on desktop */
   }
 }
 
@@ -1613,7 +1647,12 @@ main {
   }
 
   .product-section__features {
-    bottom: clamp(2rem, 5vw, 3rem); /* Lower on tablet */
+    bottom: clamp(8%, 10vw, 15%); /* Position features below product on tablet */
+  }
+  
+  .product-section__container {
+    padding-top: clamp(1.5rem, 4vw, 3rem);
+    padding-bottom: clamp(3rem, 8vw, 6rem);
   }
 }
 
@@ -1624,7 +1663,16 @@ main {
   }
 
   .product-section__features {
-    bottom: clamp(1.5rem, 4vw, 2.5rem); /* Lower on mobile */
+    bottom: clamp(6%, 8vw, 12%); /* Position features below product on mobile */
+  }
+  
+  .product-section__container {
+    padding-top: clamp(1rem, 3vw, 2rem);
+    padding-bottom: clamp(2rem, 6vw, 4rem);
+  }
+  
+  .product-section__heading {
+    margin-bottom: clamp(1.5rem, 5vw, 3rem); /* Reduced spacing on mobile */
   }
 }
 
@@ -1655,7 +1703,10 @@ main {
   align-items: center;
   justify-content: flex-start; /* Start from top */
   padding: var(--spacing-xl) var(--container-padding);
+  padding-top: clamp(2rem, 5vw, 4rem);
+  padding-bottom: clamp(4rem, 10vw, 8rem); /* Extra bottom padding to push features below product */
   gap: var(--spacing-xl); /* Add gap between elements */
+  min-height: 100%; /* Ensure container takes full height */
 }
 
 .product-section__heading {
@@ -1688,8 +1739,8 @@ main {
   align-items: center;
   gap: clamp(0.5rem, 2vw, var(--spacing-md));
   flex-wrap: nowrap; /* Keep horizontal layout on all screens */
-  position: absolute; /* Use absolute positioning to place below product */
-  bottom: clamp(3rem, 8vw, 6rem); /* Position from bottom - lower values = lower on page */
+  position: absolute; /* Use absolute positioning to place below product consistently */
+  bottom: clamp(8%, 12vw, 15%); /* Position from bottom - percentage ensures it stays below product packaging */
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -1697,6 +1748,7 @@ main {
   z-index: 1;
   padding: 0 var(--container-padding);
   box-sizing: border-box;
+  margin: 0; /* Remove margin since we're using bottom positioning */
 }
 
 .product-section__feature {
@@ -2286,6 +2338,25 @@ main {
   grid-template-columns: 1fr 1fr;
   gap: var(--spacing-xxl);
   align-items: flex-start;
+  width: 100%;
+}
+
+/* Ensure horizontal layout on desktop */
+@media (min-width: 769px) {
+  .order-section__container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xxl);
+    align-items: flex-start;
+  }
+  
+  .order-section__content {
+    order: 1;
+  }
+  
+  .order-section__form-wrapper {
+    order: 2;
+  }
 }
 
 .order-section__content {
@@ -3300,19 +3371,23 @@ main {
   .asf-section {
     min-height: auto;
     padding: var(--spacing-md) var(--container-padding);
-    padding-bottom: calc(var(--spacing-sm) + 80px); /* Reduced gap - video overlaps */
+    padding-bottom: calc(var(--spacing-sm) + 50px); /* Significantly reduced for tablet - smaller screens */
   }
   
   /* Scale down fonts and CTA in ASF section */
   .asf-section__heading {
     font-size: clamp(1rem, 4vw, 2.5rem);
     margin-bottom: var(--spacing-xs);
+    position: relative;
+    z-index: 12; /* Higher than video thumbnail to ensure text is visible */
   }
   
   .asf-section__text {
     font-size: clamp(0.75rem, 2.2vw, 1.1rem);
     margin-bottom: var(--spacing-sm);
     line-height: 1.7;
+    position: relative;
+    z-index: 12; /* Higher than video thumbnail to ensure text is visible */
   }
   
   .asf-section__content {
@@ -3405,8 +3480,9 @@ main {
     flex-wrap: nowrap; /* Keep on one line */
     justify-content: center;
     /* Ensure circles stay below bottle/packaging - use bottom positioning */
-    bottom: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(6%, 8vw, 12%); /* Position features below product */
     position: absolute; /* Absolute positioning to place below product */
+    margin: 0; /* Remove margin since we're using bottom positioning */
   }
 
   .product-section__feature {
@@ -3438,8 +3514,12 @@ main {
     gap: var(--spacing-xl);
   }
 
+  .order-section__content {
+    order: 2; /* Show content second on mobile */
+  }
+
   .order-section__form-wrapper {
-    order: -1; /* Show form first on mobile */
+    order: 1; /* Show form first on mobile */
   }
 
   .protocol-section__image {
@@ -3607,19 +3687,28 @@ main {
 
   .asf-section {
     padding: var(--spacing-sm) var(--container-padding);
-    padding-bottom: calc(var(--spacing-xs) + 60px); /* Reduced gap - treat as one section */
+    padding-bottom: calc(var(--spacing-xs) + 50px); /* Significantly reduced for mobile - video overlaps */
     min-height: auto;
+  }
+  
+  .asf-section__content {
+    margin-bottom: var(--spacing-sm); /* Reduced margin on mobile */
+    padding-bottom: var(--spacing-xs); /* Reduced padding on mobile */
   }
 
   .asf-section__heading {
     font-size: clamp(0.9rem, 3.8vw, 2.5rem);
     margin-bottom: var(--spacing-xs);
+    position: relative;
+    z-index: 12; /* Higher than video thumbnail to ensure text is visible */
   }
 
   .asf-section__text {
     font-size: clamp(0.7rem, 2vw, 1.1rem);
     margin-bottom: var(--spacing-xs);
     line-height: 1.7;
+    position: relative;
+    z-index: 12; /* Higher than video thumbnail to ensure text is visible */
   }
   
   .asf-section__content .btn {
@@ -3629,33 +3718,51 @@ main {
     margin-top: var(--spacing-xs);
   }
 
-  /* Keep video absolute to maintain overlap between sections 2 and 3 */
-  .asf-section__video {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 45%); /* Center and move 45% down to overlap */
+  /* Video player positioning to overlap sections 2 and 3 on mobile */
+  .video-section__player {
+    position: relative;
+    z-index: 0; /* Lower z-index - video should appear behind ASF section content (which has z-index: 3 with isolation) */
+    margin-top: -80px; /* Further reduced overlap to prevent covering text on mobile */
+    margin-bottom: var(--spacing-xs);
     width: 100%;
     max-width: 100%;
-    z-index: 5; /* Lower than CTA button (z-index: 10) */
-    padding: 0 var(--container-padding);
-    margin-top: 0;
   }
   
-  /* Ensure CTA button is above video on mobile */
+  /* Ensure CTA button is above video on mobile - critical fix */
   .asf-section__content {
+    position: relative;
     z-index: 10; /* Higher than video */
+    margin-bottom: var(--spacing-md); /* Reduced margin for smaller screens */
+    padding-bottom: var(--spacing-sm); /* Reduced padding for smaller screens */
   }
   
   .asf-section__content .btn {
-    z-index: 10; /* Higher than video */
+    z-index: 11 !important; /* Even higher than video to ensure it's clickable and visible */
     position: relative;
+    display: inline-block;
+    background-color: var(--bg-black) !important; /* Ensure button is visible */
   }
 
   .video-section {
     padding: var(--spacing-sm) var(--container-padding);
-    padding-top: var(--spacing-xs); /* Reduced gap - treat as one section */
-    margin-top: -60px; /* Pull up to reduce gap */
+    padding-top: 70px; /* Reduced padding to accommodate video overlap from section 2 */
+    margin-top: -70px; /* Reduced pull up for smaller screens */
+    position: relative;
+    z-index: 2; /* Above section 2 background */
+    overflow: visible; /* Allow video to extend beyond section boundaries */
+  }
+  
+  /* Ensure video thumbnail overlaps both red (section 2) and white (section 3) backgrounds */
+  .video-section__thumbnail {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    display: block;
+  }
+  
+  /* Ensure ASF section allows overflow for video overlap */
+  .asf-section {
+    overflow: visible; /* Allow video to overlap */
+    padding-bottom: calc(var(--spacing-sm) + 60px); /* Significantly reduced padding for mobile landscape */
   }
 
   .video-section__heading {
@@ -3760,8 +3867,12 @@ main {
     gap: var(--spacing-lg);
   }
 
+  .order-section__content {
+    order: 2; /* Show content second on mobile */
+  }
+
   .order-section__form-wrapper {
-    order: -1; /* Show form first on mobile */
+    order: 1; /* Show form first on mobile */
   }
 
   .order-form {
@@ -3836,6 +3947,471 @@ main {
   .product-section {
     padding-bottom: 40%;
     min-height: 450px;
+  }
+}
+
+/* ============================================
+   COMPREHENSIVE RESPONSIVE STYLES FOR ALL PAGES
+   ============================================ */
+
+/* Large Desktop (1920px+) - Maintain desktop layout */
+@media (min-width: 1920px) {
+  :root {
+    --container-max-width: 1400px;
+  }
+}
+
+/* Desktop (1440px - 1919px) - Standard desktop layout */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  :root {
+    --container-max-width: 1200px;
+  }
+}
+
+/* Medium Desktop / Large Tablet (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  :root {
+    --container-max-width: 1000px;
+  }
+  
+  /* Scale down fonts slightly to maintain layout */
+  .hero__heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+  
+  .asf-section__heading {
+    font-size: clamp(2rem, 4.5vw, 3rem);
+  }
+  
+  .video-section__heading {
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  }
+}
+
+/* Tablet Landscape (768px - 1023px) - Scale down proportionally */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Infographics Section */
+  .infographics-section__container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+  
+  .infographics-section__hero-content {
+    flex-direction: row;
+    gap: var(--spacing-lg);
+  }
+  
+  .infographics-section__heading {
+    font-size: clamp(1.75rem, 5vw, 3rem);
+  }
+  
+  .infographics-section__phone-frame {
+    max-width: 400px;
+  }
+  
+  /* Order Section */
+  .order-section__container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+  
+  .order-section__heading {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+  
+  .order-form {
+    padding: var(--spacing-xl);
+  }
+  
+  /* Scale down buttons */
+  .btn {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    padding: clamp(0.75rem, 1.8vw, 1rem) clamp(1rem, 2.5vw, 1.5rem);
+  }
+  
+  .btn--large {
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+    padding: clamp(0.875rem, 2vw, 1.125rem) clamp(1.25rem, 3vw, 1.75rem);
+  }
+}
+
+/* Tablet Portrait (600px - 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+  /* Infographics */
+  .infographics-section__hero-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .infographics-section__timeline {
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .infographics-section__phone-frame {
+    max-width: 350px;
+  }
+  
+  /* Order Forms */
+  .order-section__heading {
+    font-size: clamp(1.75rem, 6vw, 3rem);
+  }
+  
+  .order-form__input,
+  .order-form__select,
+  .order-form__textarea {
+    font-size: clamp(0.875rem, 2.2vw, 1rem);
+    padding: clamp(0.75rem, 2vw, 1rem);
+  }
+  
+  .order-form__label {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+  }
+}
+
+/* Mobile Landscape (480px - 599px) */
+@media (min-width: 480px) and (max-width: 599px) {
+  /* Infographics */
+  .infographics-section__phone-frame {
+    max-width: 300px;
+  }
+  
+  .infographics-section__nav-btn {
+    width: clamp(35px, 7vw, 45px);
+    height: clamp(35px, 7vw, 45px);
+  }
+  
+  /* Order Forms */
+  .order-section__container {
+    gap: var(--spacing-lg);
+    grid-template-columns: 1fr 1fr; /* Maintain horizontal layout on larger tablets */
+  }
+  
+  @media (min-width: 1024px) {
+    .order-section__container {
+      gap: var(--spacing-xxl);
+    }
+  }
+  
+  .order-section__heading {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+  
+  .order-section__contact-item i {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+  }
+}
+
+/* Enhanced Mobile Portrait (480px) - Comprehensive scaling */
+@media (max-width: 480px) {
+  /* Infographics Section - Mobile */
+  .infographics-section {
+    padding: var(--spacing-lg) var(--container-padding);
+  }
+  
+  .infographics-section__heading {
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+    line-height: 1.2;
+  }
+  
+  .infographics-section__subtitle {
+    font-size: clamp(0.875rem, 3.5vw, 1.125rem);
+  }
+  
+  .infographics-section__phone-frame {
+    max-width: 100%;
+    padding: clamp(8px, 2vw, 15px);
+  }
+  
+  .infographics-section__nav-btn {
+    width: clamp(32px, 6.5vw, 42px);
+    height: clamp(32px, 6.5vw, 42px);
+  }
+  
+  .infographics-section__nav-btn--next {
+    right: clamp(-8px, -2vw, -15px);
+  }
+  
+  .infographics-section__nav-btn--prev {
+    left: clamp(-8px, -2vw, -15px);
+  }
+  
+  .infographics-section__arrow {
+    width: clamp(14px, 3vw, 20px);
+    height: clamp(14px, 3vw, 20px);
+  }
+  
+  .infographics-section__timeline-circle {
+    width: clamp(35px, 7vw, 50px);
+    height: clamp(35px, 7vw, 50px);
+  }
+  
+  .infographics-section__timeline-number {
+    font-size: clamp(0.875rem, 2.5vw, 1.25rem);
+  }
+  
+  /* Order Section - Mobile */
+  .order-section {
+    padding: var(--spacing-lg) var(--container-padding);
+  }
+  
+  .order-section__heading {
+    font-size: clamp(1.75rem, 7vw, 3rem);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .order-section__subtitle {
+    font-size: clamp(0.875rem, 3vw, 1rem);
+  }
+  
+  .order-section__contact-item {
+    gap: var(--spacing-xs);
+  }
+  
+  .order-section__contact-item i {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    width: 20px;
+  }
+  
+  .order-section__contact-label {
+    font-size: clamp(0.7rem, 2vw, 0.875rem);
+  }
+  
+  .order-section__contact-value {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  /* Order Form - Mobile */
+  .order-form {
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+  }
+  
+  .order-form__label {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  .order-form__input,
+  .order-form__select,
+  .order-form__textarea {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+    padding: clamp(0.75rem, 2.2vw, 1rem);
+    border-radius: 6px;
+  }
+  
+  .order-form__textarea {
+    min-height: 90px;
+  }
+  
+  .order-form__note {
+    font-size: clamp(0.7rem, 2vw, 0.875rem);
+  }
+  
+  .order-form__submit {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+    padding: clamp(0.875rem, 2.5vw, 1.125rem) clamp(1rem, 3vw, 1.5rem);
+    min-height: 48px; /* Better touch target */
+  }
+  
+  /* Buttons - Mobile */
+  .btn {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+    padding: clamp(0.75rem, 2.2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
+    min-height: 48px;
+    border-radius: 8px;
+  }
+  
+  .btn--large {
+    font-size: clamp(1rem, 3vw, 1.125rem);
+    padding: clamp(0.875rem, 2.5vw, 1.125rem) clamp(1.25rem, 3.5vw, 1.75rem);
+    min-height: 50px;
+  }
+  
+  /* Complete Order Section - Mobile */
+  .complete-order-section {
+    padding: var(--spacing-lg) var(--container-padding);
+  }
+  
+  .complete-order-section__title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+  
+  .complete-order-section__subtitle {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  /* Package Cards - Mobile */
+  .package-card {
+    padding: var(--spacing-md);
+  }
+  
+  .package-card__name {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+  }
+  
+  .package-card__quantity {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  .package-card__price {
+    font-size: clamp(1.125rem, 3.5vw, 1.5rem);
+  }
+  
+  .package-card__discount {
+    font-size: clamp(0.7rem, 2vw, 0.875rem);
+  }
+}
+
+/* ============================================
+   FAQ SECTION
+   ============================================ */
+.faq-section {
+  background-color: var(--bg-white);
+  padding: var(--spacing-xxl) var(--container-padding);
+  position: relative;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.faq-section__container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.faq-section__heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-dark);
+  margin: 0 0 var(--spacing-xl) 0;
+  text-align: center;
+}
+
+.faq-section__list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.faq-item {
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+
+.faq-item:last-child {
+  border-bottom: none;
+}
+
+.faq-item__question {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: var(--spacing-lg) var(--spacing-md);
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-dark);
+  transition: color var(--transition-fast);
+}
+
+.faq-item__question:hover,
+.faq-item__question:focus {
+  color: var(--accent-blue);
+  outline: none;
+}
+
+.faq-item__question-text {
+  flex: 1;
+}
+
+.faq-item__chevron {
+  font-size: clamp(0.75rem, 2vw, 1rem);
+  color: #999;
+  transition: transform var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.faq-item__question[aria-expanded="true"] .faq-item__chevron {
+  transform: rotate(180deg);
+  color: var(--accent-blue);
+}
+
+.faq-item__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-normal), padding var(--transition-normal);
+  padding: 0 var(--spacing-md);
+}
+
+.faq-item__answer[aria-hidden="false"] {
+  max-height: 500px;
+  padding: 0 var(--spacing-md) var(--spacing-lg) var(--spacing-md);
+}
+
+.faq-item__answer-text {
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  color: var(--text-dark);
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* FAQ Responsive */
+@media (max-width: 768px) {
+  .faq-section {
+    padding: var(--spacing-xl) var(--container-padding);
+  }
+
+  .faq-section__heading {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .faq-item__question {
+    padding: var(--spacing-md);
+    font-size: clamp(0.95rem, 3vw, 1.125rem);
+  }
+
+  .faq-item__answer {
+    padding: 0 var(--spacing-md);
+  }
+
+  .faq-item__answer[aria-hidden="false"] {
+    padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
+  }
+
+  .faq-item__answer-text {
+    font-size: clamp(0.875rem, 2.5vw, 0.95rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .faq-section {
+    padding: var(--spacing-lg) var(--container-padding);
+  }
+
+  .faq-section__heading {
+    font-size: clamp(1.25rem, 7vw, 2rem);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .faq-item__question {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .faq-item__chevron {
+    font-size: clamp(0.7rem, 2vw, 0.875rem);
   }
 }
 

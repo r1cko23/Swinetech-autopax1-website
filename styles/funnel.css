@@ -1026,6 +1026,47 @@
   }
 }
 
+/* Tablet and below (1024px) */
+@media (max-width: 1024px) {
+  .order-grid-compact {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+  
+  .summary-column {
+    order: -1;
+  }
+  
+  .form-header-compact h1 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+  }
+  
+  .form-header-compact p {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+  }
+  
+  .package-selector-compact {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+  }
+  
+  .package-box {
+    padding: var(--spacing-md);
+  }
+  
+  .package-name {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+  }
+  
+  .package-bottles {
+    font-size: clamp(0.75rem, 1.8vw, 0.875rem);
+  }
+  
+  .package-price-compact {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+  }
+}
+
 @media (max-width: 768px) {
   .partnership-table-wrapper {
     overflow-x: scroll;
@@ -1034,24 +1075,50 @@
 
   .partnership-table {
     min-width: 600px;
-    font-size: 0.7rem;
+    font-size: clamp(0.65rem, 1.5vw, 0.75rem);
   }
 
   .partnership-table th,
   .partnership-table td {
-    padding: var(--spacing-xs);
+    padding: clamp(0.5rem, 1.5vw, 0.75rem);
   }
 
   .partnership-modal-content {
     max-width: 98%;
-    padding: var(--spacing-sm);
+    padding: var(--spacing-md);
+    max-height: 95vh;
   }
+  
+  .partnership-modal-header h2 {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+  }
+  
+  .partnership-intro {
+    font-size: clamp(0.8rem, 2vw, 0.95rem);
+  }
+  
   .package-selector-compact {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .package-box {
+    padding: var(--spacing-lg);
   }
 
   .info-grid-compact {
     grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .input-group-compact label {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+  }
+  
+  .input-group-compact input,
+  .input-group-compact select {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    padding: clamp(0.75rem, 2vw, 1rem);
   }
 
   .order-main-compact {
@@ -1062,10 +1129,32 @@
   .order-summary-card {
     padding: var(--spacing-lg);
   }
+  
+  .order-summary-card h3 {
+    font-size: clamp(1.125rem, 3vw, 1.5rem);
+  }
+  
+  .summary-item {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+  }
+  
+  .summary-total {
+    font-size: clamp(1.125rem, 3vw, 1.5rem);
+  }
 
   .modal-content {
     padding: var(--spacing-lg);
     width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .modal-header h2 {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+  }
+  
+  .modal-header .subtitle {
+    font-size: clamp(0.875rem, 2vw, 1rem);
   }
 
   .funnel-header .nav__phone {
@@ -1078,5 +1167,79 @@
 
   .trust-badge-small {
     padding: var(--spacing-xs);
+  }
+  
+  .btn-submit-compact {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+    padding: clamp(0.875rem, 2.5vw, 1.125rem) clamp(1rem, 3vw, 1.5rem);
+    min-height: 48px;
+  }
+}
+
+/* Mobile (480px) */
+@media (max-width: 480px) {
+  .order-main-compact {
+    padding: var(--spacing-md) var(--container-padding);
+  }
+  
+  .form-column,
+  .order-summary-card {
+    padding: var(--spacing-md);
+  }
+  
+  .form-header-compact h1 {
+    font-size: clamp(1.25rem, 6vw, 2rem);
+  }
+  
+  .package-selector-compact {
+    gap: var(--spacing-sm);
+  }
+  
+  .package-box {
+    padding: var(--spacing-md);
+  }
+  
+  .package-name {
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+  }
+  
+  .package-price-compact {
+    font-size: clamp(0.95rem, 2.8vw, 1.125rem);
+  }
+  
+  .info-grid-compact {
+    gap: var(--spacing-sm);
+  }
+  
+  .input-group-compact input,
+  .input-group-compact select {
+    padding: clamp(0.7rem, 2vw, 0.9rem);
+    font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  }
+  
+  .order-summary-card {
+    font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+  }
+  
+  .partnership-table {
+    font-size: clamp(0.6rem, 1.8vw, 0.7rem);
+    min-width: 550px;
+  }
+  
+  .partnership-table th,
+  .partnership-table td {
+    padding: clamp(0.4rem, 1.2vw, 0.6rem);
+  }
+  
+  .modal-content {
+    padding: var(--spacing-md);
+    width: 98%;
+  }
+  
+  .btn-primary,
+  .btn-submit-compact {
+    font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    padding: clamp(0.8rem, 2.2vw, 1rem) clamp(0.9rem, 2.8vw, 1.25rem);
+    min-height: 46px;
   }
 }

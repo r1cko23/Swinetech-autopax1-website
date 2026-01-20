@@ -746,6 +746,7 @@
     const modalImage = document.getElementById("certificateModalImage");
     const closeBtn = document.getElementById("closeCertificateModal");
     const viewMoreLinks = document.querySelectorAll(".carousel__view-more");
+    const learnMoreBtn = document.querySelector(".proof-section__learn-more-btn");
 
     if (!modal || !modalImage) return;
 
@@ -812,6 +813,17 @@
         openModal(imageSrc, imageAlt);
       });
     });
+
+    // Handle "LEARN MORE" button click - open first certificate
+    if (learnMoreBtn) {
+      learnMoreBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        const firstViewMore = document.querySelector(".carousel__view-more");
+        if (firstViewMore) {
+          firstViewMore.click();
+        }
+      });
+    }
 
     // Close modal on close button click
     if (closeBtn) {
@@ -1560,6 +1572,7 @@
     initUniversalEditor();
     initOrderForm();
     initBulkOrderModal();
+    initFAQ();
 
     // Force visibility again after a short delay to ensure it sticks
     setTimeout(() => {
@@ -1856,6 +1869,51 @@
     const defaultCard = document.querySelector(".complete-order-section .package-card--selected");
     if (defaultCard) {
       updatePageOrderSummary(defaultCard);
+    }
+  }
+
+  // ============================================
+  // FAQ ACCORDION
+  // ============================================
+  function initFAQ() {
+    const faqQuestions = document.querySelectorAll('.faq-item__question');
+    if (faqQuestions.length === 0) return;
+
+    faqQuestions.forEach((question) => {
+      question.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        const answerId = this.getAttribute('aria-controls');
+        const answer = document.getElementById(answerId);
+        
+        if (!answer) return;
+
+        // Close all other FAQ items (optional - remove if you want multiple open)
+        faqQuestions.forEach((otherQuestion) => {
+          if (otherQuestion !== this) {
+            const otherAnswerId = otherQuestion.getAttribute('aria-controls');
+            const otherAnswer = document.getElementById(otherAnswerId);
+            if (otherAnswer) {
+              otherQuestion.setAttribute('aria-expanded', 'false');
+              otherAnswer.setAttribute('aria-hidden', 'true');
+            }
+          }
+        });
+
+        // Toggle current FAQ item
+        const newState = !isExpanded;
+        this.setAttribute('aria-expanded', newState);
+        answer.setAttribute('aria-hidden', !newState);
+      });
+    });
+
+    // Handle hash navigation to FAQ
+    if (window.location.hash === '#faq') {
+      const faqSection = document.getElementById('faq');
+      if (faqSection) {
+        setTimeout(() => {
+          faqSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+      }
     }
   }
 
