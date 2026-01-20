@@ -962,6 +962,7 @@
     const playButtons = document.querySelectorAll(
       ".video-section__play-btn"
     );
+    const watchStoryBtn = document.getElementById("watchStoryBtn");
 
     if (!videoModal || !videoPlayer) return;
 
@@ -1037,6 +1038,14 @@
         openVideoModal();
       });
     });
+
+    // Add click handler to "WATCH THE STORY" CTA button
+    if (watchStoryBtn) {
+      watchStoryBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        openVideoModal();
+      });
+    }
 
     // Close modal on close button click
     if (closeBtn) {
