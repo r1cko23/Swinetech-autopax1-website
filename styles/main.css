@@ -2085,13 +2085,13 @@ main {
 /* Desktop and larger screens - ensure features are well below product */
 @media (min-width: 1025px) {
   .product-section__features {
-    /* Push features DOWN by using smaller bottom values */
-    bottom: clamp(2%, 4vw, 5%) !important; /* Very small bottom = features pushed way down */
+    /* Push features DOWN by using smaller bottom values - laptop sizes need more space */
+    bottom: clamp(0.5%, 2.5vw, 3%) !important; /* Very small bottom = features pushed way down on laptops */
     position: absolute !important;
   }
 
   .product-section__container {
-    padding-bottom: clamp(20rem, 30vw, 28rem) !important; /* Extra bottom padding on desktop */
+    padding-bottom: clamp(24rem, 34vw, 32rem) !important; /* Extra bottom padding on desktop/laptop */
     padding-top: clamp(3rem, 6vw, 5rem);
   }
   
