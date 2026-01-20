@@ -1004,9 +1004,9 @@
     let playPromise = null;
     let isClosing = false;
 
-    // Video sources
-    const brandVideoSrc = "swintech BRAND VIDEO eng FINAL W SUBS.mp4";
-    const demoVideoSrc = "demo video spray only VO engsubs FIOINAL.mp4";
+    // Video sources - use root-relative paths for consistency across all pages
+    const brandVideoSrc = "/swintech BRAND VIDEO eng FINAL W SUBS.mp4";
+    const demoVideoSrc = "/demo video spray only VO engsubs FIOINAL.mp4";
 
     // Open modal function - accepts optional video source
     function openVideoModal(videoSource) {
@@ -1015,52 +1015,93 @@
       // #endregion
       isClosing = false;
       
-      // Update video source if provided
-      if (videoSource) {
-        const sourceElement = videoPlayer.querySelector('source');
-        if (sourceElement) {
-          sourceElement.src = videoSource;
-          videoPlayer.load(); // Reload video with new source
-        } else {
-          videoPlayer.src = videoSource;
-          videoPlayer.load();
-        }
-      }
-      
+      // Show modal first
       videoModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
       
       // Reset video to beginning
       videoPlayer.currentTime = 0;
       
-      // #region agent log
-      const currentVideoSrc = videoPlayer.querySelector('source')?.src || videoPlayer.src || 'none';
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:980',message:'Before play - video source check',data:{currentVideoSrc,currentTime:videoPlayer.currentTime,readyState:videoPlayer.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-      // #endregion
-      
-      // Play video and store the promise to handle race conditions
-      playPromise = videoPlayer.play();
-      
-      // Handle play promise errors gracefully
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            // #region agent log
-            fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:988',message:'Video play promise resolved',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-            // #endregion
-            // Video started playing successfully
-            playPromise = null;
-          })
-          .catch((error) => {
-            // #region agent log
-            fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:992',message:'Video play promise rejected',data:{errorName:error.name,errorMessage:error.message,isClosing,readyState:videoPlayer.readyState,networkState:videoPlayer.networkState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-            // #endregion
-            // Only log if it's not an abort error (which is expected when closing quickly)
-            if (error.name !== "AbortError" && !isClosing) {
-              console.error("Error playing video:", error);
-            }
-            playPromise = null;
+      // Update video source if provided
+      if (videoSource) {
+        const sourceElement = videoPlayer.querySelector('source');
+        if (sourceElement) {
+          sourceElement.src = videoSource;
+        } else {
+          videoPlayer.src = videoSource;
+        }
+        
+        // Load the new video source
+        videoPlayer.load();
+        
+        // Wait for video to be ready before playing
+        const playWhenReady = () => {
+          if (isClosing) return; // Don't play if modal was closed
+          
+          // #region agent log
+          const currentVideoSrc = videoPlayer.querySelector('source')?.src || videoPlayer.src || 'none';
+          fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:980',message:'Before play - video source check',data:{currentVideoSrc,currentTime:videoPlayer.currentTime,readyState:videoPlayer.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+          // #endregion
+          
+          // Play video and store the promise to handle race conditions
+          playPromise = videoPlayer.play();
+          
+          // Handle play promise errors gracefully
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                // #region agent log
+                fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:988',message:'Video play promise resolved',data:{timestamp:Date.now()},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+                // #endregion
+                // Video started playing successfully
+                playPromise = null;
+              })
+              .catch((error) => {
+                // #region agent log
+                fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:992',message:'Video play promise rejected',data:{errorName:error.name,errorMessage:error.message,isClosing,readyState:videoPlayer.readyState,networkState:videoPlayer.networkState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+                // #endregion
+                // Only log if it's not an abort error (which is expected when closing quickly)
+                if (error.name !== "AbortError" && !isClosing) {
+                  console.error("Error playing video:", error);
+                  console.error("Video source:", videoPlayer.querySelector('source')?.src || videoPlayer.src);
+                }
+                playPromise = null;
+              });
+          }
+        };
+        
+        // Wait for video to be ready (canplay event means enough data is loaded to play)
+        videoPlayer.addEventListener('canplay', playWhenReady, { once: true });
+        
+        // Also handle errors
+        videoPlayer.addEventListener('error', function(e) {
+          console.error("Video loading error:", {
+            error: videoPlayer.error,
+            networkState: videoPlayer.networkState,
+            readyState: videoPlayer.readyState,
+            src: videoPlayer.querySelector('source')?.src || videoPlayer.src
           });
+        }, { once: true });
+      } else {
+        // No new source provided, use existing source and play immediately
+        // #region agent log
+        const currentVideoSrc = videoPlayer.querySelector('source')?.src || videoPlayer.src || 'none';
+        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:980',message:'Before play - video source check',data:{currentVideoSrc,currentTime:videoPlayer.currentTime,readyState:videoPlayer.readyState},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+        // #endregion
+        
+        playPromise = videoPlayer.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => {
+              playPromise = null;
+            })
+            .catch((error) => {
+              if (error.name !== "AbortError" && !isClosing) {
+                console.error("Error playing video:", error);
+              }
+              playPromise = null;
+            });
+        }
       }
       
       // Focus management for accessibility - focus close button after modal opens

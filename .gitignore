@@ -34,8 +34,8 @@ npm-debug.log*
 *.tmp
 *.temp
 
-# Large video files
-*.mp4
-*.mov
-*.avi
-swintech BRAND VIDEO eng FINAL W SUBS.mp4
+# Large video files - commented out to allow video deployment
+# *.mp4
+# *.mov
+# *.avi
+# swintech BRAND VIDEO eng FINAL W SUBS.mp4
