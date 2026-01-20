@@ -1,5 +1,49 @@
 {
   "version": 2,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/home"
+    },
+    {
+      "source": "/home",
+      "destination": "/home/index.html"
+    },
+    {
+      "source": "/Learn",
+      "destination": "/Learn/index.html"
+    },
+    {
+      "source": "/Order",
+      "destination": "/Order/index.html"
+    },
+    {
+      "source": "/Order/bulk",
+      "destination": "/Order/bulk/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/home",
+      "permanent": true
+    },
+    {
+      "source": "/infographics.html",
+      "destination": "/Learn",
+      "permanent": true
+    },
+    {
+      "source": "/order-form.html",
+      "destination": "/Order",
+      "permanent": true
+    },
+    {
+      "source": "/bulk-order.html",
+      "destination": "/Order/bulk",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/assets/:path*",

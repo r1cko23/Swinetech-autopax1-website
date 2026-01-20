@@ -23,18 +23,12 @@
 
   // Quantity selection handler
   function initQuantitySelection() {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initQuantitySelection',message:'Initializing quantity selection',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'QuantitySelection'})}).catch(()=>{});
-    // #endregion
     
     const quantityInput = document.getElementById('quantity');
     const decreaseBtn = document.getElementById('quantityDecrease');
     const increaseBtn = document.getElementById('quantityIncrease');
     
     if (!quantityInput) {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initQuantitySelection',message:'Quantity input not found',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'QuantitySelection'})}).catch(()=>{});
-      // #endregion
       return;
     }
 
@@ -81,15 +75,9 @@
       // Update button states
       updateButtonStates();
       
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initQuantitySelection',message:'Quantity changed',data:{quantity:quantity},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'QuantitySelection'})}).catch(()=>{});
-      // #endregion
       
       // Show partnership modal if quantity is more than 3
       if (quantity > 3) {
-        // #region agent log
-        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initQuantitySelection',message:'Triggering partnership modal',data:{quantity:quantity,threshold:3},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'PartnershipModal'})}).catch(()=>{});
-        // #endregion
         
         // Small delay to ensure UI updates smoothly
         setTimeout(() => {
@@ -107,9 +95,6 @@
 
   // Update order summary based on quantity
   function updateOrderSummary(quantity) {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:updateOrderSummary',message:'Function called',data:{quantity:quantity},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'QuantitySelection'})}).catch(()=>{});
-    // #endregion
     
     const bottles = parseInt(quantity) || 1;
     const totalPrice = PRICE_PER_BOTTLE * bottles;
@@ -117,9 +102,6 @@
     const totalSavings = 0; // No savings at SRP pricing
     const savingsPercent = 0; // No discount at SRP pricing
     
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:updateOrderSummary',message:'Calculated values',data:{bottles:bottles,totalPrice:totalPrice,totalSRP:totalSRP,totalSavings:totalSavings,savingsPercent:savingsPercent},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'QuantitySelection'})}).catch(()=>{});
-    // #endregion
 
     const packageNameEl = document.getElementById('selectedPackageName');
     const packagePriceEl = document.getElementById('selectedPackagePrice');
@@ -142,70 +124,41 @@
     const specialPriceEl = document.getElementById('specialPrice');
     const savingsAmountEl = document.getElementById('savingsAmount');
     
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:updateOrderSummary',message:'Looking for price elements',data:{specialPriceElExists:!!specialPriceEl,savingsAmountElExists:!!savingsAmountEl},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'QuantitySelection'})}).catch(()=>{});
-    // #endregion
     
     if (specialPriceEl) {
       specialPriceEl.textContent = `₱${totalPrice.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:updateOrderSummary',message:'Updated special price',data:{newText:specialPriceEl.textContent},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'QuantitySelection'})}).catch(()=>{});
-      // #endregion
     }
     
     if (savingsAmountEl) {
       const savingsText = `You Save: ₱${totalSavings.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})} (${savingsPercent}% OFF)`;
       savingsAmountEl.textContent = savingsText;
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:updateOrderSummary',message:'Updated savings amount',data:{newText:savingsText},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'QuantitySelection'})}).catch(()=>{});
-      // #endregion
     }
   }
 
   // Form submission handler
   function initFormSubmission() {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initFormSubmission',message:'Initializing form submission',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'FormSubmission'})}).catch(()=>{});
-    // #endregion
     
     const orderForm = document.getElementById('orderForm');
     if (!orderForm) {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initFormSubmission',message:'Order form not found',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'FormSubmission'})}).catch(()=>{});
-      // #endregion
       return;
     }
 
     orderForm.addEventListener('submit', function(e) {
       e.preventDefault();
 
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initFormSubmission',message:'Form submitted',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'FormSubmission'})}).catch(()=>{});
-      // #endregion
-
       // Get form data
       const formData = new FormData(this);
       const quantity = parseInt(formData.get('quantity')) || 1;
       const totalPrice = PRICE_PER_BOTTLE * quantity;
 
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initFormSubmission',message:'Form data retrieved',data:{quantity:quantity,totalPrice:totalPrice},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'FormSubmission'})}).catch(()=>{});
-      // #endregion
-
       // Validate form
       if (!this.checkValidity()) {
-        // #region agent log
-        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initFormSubmission',message:'Form validation failed',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'FormSubmission'})}).catch(()=>{});
-        // #endregion
         this.reportValidity();
         return;
       }
 
       // Check if quantity is more than 3, show partnership modal
       if (quantity > 3) {
-        // #region agent log
-        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initFormSubmission',message:'Quantity > 3, showing partnership modal',data:{quantity:quantity},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'FormSubmission'})}).catch(()=>{});
-        // #endregion
         showPartnershipModal();
         return;
       }
@@ -224,10 +177,6 @@
         },
         timestamp: new Date().toISOString()
       };
-
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:initFormSubmission',message:'Processing order',data:{quantity:quantity,totalPrice:totalPrice},timestamp:Date.now(),sessionId:'debug-session',runId:'run10',hypothesisId:'FormSubmission'})}).catch(()=>{});
-      // #endregion
 
       // Log order data (in production, send to server)
       console.log('Order submitted:', orderData);
@@ -397,15 +346,9 @@
   }
 
   function showPartnershipModal() {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:showPartnershipModal',message:'Showing partnership modal',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run8',hypothesisId:'PartnershipModal'})}).catch(()=>{});
-    // #endregion
     
     const modal = document.getElementById('partnershipModal');
     if (!modal) {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:showPartnershipModal',message:'Partnership modal not found',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run8',hypothesisId:'PartnershipModal'})}).catch(()=>{});
-      // #endregion
       return;
     }
 
@@ -417,9 +360,6 @@
     modal.dataset.shown = 'true';
     document.body.style.overflow = 'hidden';
     
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:showPartnershipModal',message:'Partnership modal shown',data:{modalActive:modal.classList.contains('active')},timestamp:Date.now(),sessionId:'debug-session',runId:'run8',hypothesisId:'PartnershipModal'})}).catch(()=>{});
-    // #endregion
   }
 
   function closePartnershipModal() {
@@ -431,12 +371,9 @@
   }
 
   function becomePartner() {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'order.js:becomePartner',message:'Redirecting to bulk order form',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run8',hypothesisId:'PartnershipModal'})}).catch(()=>{});
-    // #endregion
     
     // Redirect to bulk order form
-    window.location.href = 'bulk-order.html';
+    window.location.href = '/Order/bulk';
   }
 
   // Make functions globally available for onclick handlers

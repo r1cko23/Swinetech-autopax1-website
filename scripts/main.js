@@ -573,13 +573,10 @@
   // HERO CAROUSEL
   // ============================================
   function initHeroCarousel() {
-    // #region agent log
     const heroCarousel = document.querySelector(".hero__carousel");
     if (!heroCarousel) {
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:initHeroCarousel',message:'Hero carousel not found',data:{exists:false},timestamp:Date.now(),sessionId:'debug-session',runId:'run6',hypothesisId:'HeroCarousel'})}).catch(()=>{});
       return;
     }
-    // #endregion
     
     const track = heroCarousel.querySelector(".hero__carousel-track");
     const slides = heroCarousel.querySelectorAll(".hero__carousel-slide");
@@ -629,9 +626,6 @@
       
       currentSlide = index;
       
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:initHeroCarousel',message:'Hero carousel slide changed',data:{currentSlide:index,totalSlides:slides.length,prevVisible:index > 0,nextVisible:index < slides.length - 1},timestamp:Date.now(),sessionId:'debug-session',runId:'run6',hypothesisId:'HeroCarousel'})}).catch(()=>{});
-      // #endregion
     }
     
     // Previous button
@@ -903,16 +897,8 @@
       });
     });
 
-    // Handle "LEARN MORE" button click - open first certificate
-    if (learnMoreBtn) {
-      learnMoreBtn.addEventListener("click", function(e) {
-        e.preventDefault();
-        const firstViewMore = document.querySelector(".carousel__view-more");
-        if (firstViewMore) {
-          firstViewMore.click();
-        }
-      });
-    }
+    // Handle "LEARN MORE" button click - navigate to infographics page
+    // Removed event listener to allow default navigation to infographics.html
 
     // Close modal on close button click
     if (closeBtn) {
@@ -1766,207 +1752,21 @@
   // DEBUG: HERO SECTION LAYOUT TRACKING
   // ============================================
   function debugHeroSection() {
-    // #region agent log
-    const viewportWidth = window.innerWidth;
-    const isMobile = viewportWidth <= 480;
-    
-    const heroContainer = document.querySelector('.hero__container');
-    const heroContent = document.querySelector('.hero__content');
-    const heroImage = document.querySelector('.hero__image');
-    const heroBottle = document.querySelector('.hero__bottle');
-    
-    if (heroContainer && heroContent && heroImage && heroBottle) {
-      const containerComputed = window.getComputedStyle(heroContainer);
-      const contentComputed = window.getComputedStyle(heroContent);
-      const imageComputed = window.getComputedStyle(heroImage);
-      const bottleComputed = window.getComputedStyle(heroBottle);
-      
-      const containerRect = heroContainer.getBoundingClientRect();
-      const contentRect = heroContent.getBoundingClientRect();
-      const imageRect = heroImage.getBoundingClientRect();
-      const bottleRect = heroBottle.getBoundingClientRect();
-      
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugHeroSection',message:'Hero section layout',data:{viewportWidth,isMobile,containerDisplay:containerComputed.display,containerGridTemplateColumns:containerComputed.gridTemplateColumns,containerFlexDirection:containerComputed.flexDirection,contentWidth:contentComputed.width,contentRectWidth:contentRect.width,imageWidth:imageComputed.width,imageRectWidth:imageRect.width,bottleWidth:bottleComputed.width,bottleMaxWidth:bottleComputed.maxWidth,bottleRectWidth:bottleRect.width,contentLeft:contentRect.left,imageLeft:imageRect.left,bottleLeft:bottleRect.left,isSideBySide:contentRect.left < imageRect.left && imageRect.left > contentRect.right},timestamp:Date.now(),sessionId:'debug-session',runId:'run5',hypothesisId:'Hero'})}).catch(()=>{});
-    }
-    // #endregion
   }
   
   // ============================================
   // DEBUG: MOBILE ISSUES TRACKING
   // ============================================
   function debugMobileIssues() {
-    // #region agent log
-    const viewportWidth = window.innerWidth;
-    const isMobile = viewportWidth <= 480;
-    
-    // Hypothesis A: CTA button missing on mobile
-    const asfContent = document.querySelector('.asf-section__content');
-    const asfButton = document.querySelector('.asf-section__content .btn');
-    const asfContainer = document.querySelector('.asf-section__container');
-    const asfSection = document.querySelector('.asf-section');
-    
-    if (asfButton) {
-      const buttonComputed = window.getComputedStyle(asfButton);
-      const buttonRect = asfButton.getBoundingClientRect();
-      const contentRect = asfContent ? asfContent.getBoundingClientRect() : null;
-      const containerRect = asfContainer ? asfContainer.getBoundingClientRect() : null;
-      const sectionRect = asfSection ? asfSection.getBoundingClientRect() : null;
-      const contentComputed = asfContent ? window.getComputedStyle(asfContent) : null;
-      const containerComputed = asfContainer ? window.getComputedStyle(asfContainer) : null;
-      const sectionComputed = asfSection ? window.getComputedStyle(asfSection) : null;
-      
-      // Check if button is clipped or off-screen
-      const isOffScreen = buttonRect.top < 0 || buttonRect.left < 0 || buttonRect.bottom > window.innerHeight || buttonRect.right > window.innerWidth;
-      const hasZeroSize = buttonRect.width === 0 || buttonRect.height === 0;
-      const isClipped = contentRect && (buttonRect.top < contentRect.top || buttonRect.bottom > contentRect.bottom || buttonRect.left < contentRect.left || buttonRect.right > contentRect.right);
-      
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugMobileIssues',message:'Hypothesis A: CTA button mobile detailed',data:{viewportWidth,isMobile,display:buttonComputed.display,visibility:buttonComputed.visibility,opacity:buttonComputed.opacity,width:buttonComputed.width,height:buttonComputed.height,rectTop:buttonRect.top,rectLeft:buttonRect.left,rectWidth:buttonRect.width,rectHeight:buttonRect.height,contentTop:contentRect?.top,contentBottom:contentRect?.bottom,contentDisplay:contentComputed?.display,contentVisibility:contentComputed?.visibility,contentOverflow:contentComputed?.overflow,containerDisplay:containerComputed?.display,containerVisibility:containerComputed?.visibility,sectionDisplay:sectionComputed?.display,sectionOverflow:sectionComputed?.overflow,isOffScreen,hasZeroSize,isClipped},timestamp:Date.now(),sessionId:'debug-session',runId:'run4',hypothesisId:'A'})}).catch(()=>{});
-    } else {
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugMobileIssues',message:'Hypothesis A: CTA button not found',data:{viewportWidth,isMobile,exists:false},timestamp:Date.now(),sessionId:'debug-session',runId:'run4',hypothesisId:'A'})}).catch(()=>{});
-    }
-    
-    // Hypothesis B: Cell positioning on mobile
-    const cellContainer = document.querySelector('.cell-animation__container');
-    const cells = cellContainer ? cellContainer.querySelectorAll('[data-cell-index]') : [];
-    
-    if (cells.length > 0) {
-      const firstCell = cells[0];
-      const firstCellComputed = window.getComputedStyle(firstCell);
-      const firstCellRect = firstCell.getBoundingClientRect();
-      const containerRect = cellContainer ? cellContainer.getBoundingClientRect() : null;
-      
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugMobileIssues',message:'Hypothesis B: Cell positioning',data:{viewportWidth,isMobile,cellCount:cells.length,firstCellLeft:firstCellComputed.left,firstCellTop:firstCellComputed.top,firstCellWidth:firstCellComputed.width,firstCellHeight:firstCellComputed.height,containerWidth:containerRect?.width,containerHeight:containerRect?.height},timestamp:Date.now(),sessionId:'debug-session',runId:'run4',hypothesisId:'B'})}).catch(()=>{});
-    }
-    
-    // Hypothesis C: Certificate section scaling
-    const carousel = document.querySelector('.carousel');
-    const carouselImages = carousel ? carousel.querySelectorAll('.carousel__image') : [];
-    
-    if (carouselImages.length > 0) {
-      const firstImage = carouselImages[0];
-      const imageComputed = window.getComputedStyle(firstImage);
-      const imageRect = firstImage.getBoundingClientRect();
-      
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugMobileIssues',message:'Hypothesis C: Certificate scaling',data:{viewportWidth,isMobile,imageCount:carouselImages.length,imageWidth:imageComputed.width,imageHeight:imageComputed.height,rectWidth:imageRect.width,rectHeight:imageRect.height,transform:imageComputed.transform},timestamp:Date.now(),sessionId:'debug-session',runId:'run4',hypothesisId:'C'})}).catch(()=>{});
-    }
-    // #endregion
   }
   
   // ============================================
   // DEBUG: VIDEO THUMBNAIL MISSING TRACKING
   // ============================================
   function debugVideoThumbnailMissing() {
-    // #region agent log
-    const videoThumbnail = document.querySelector('.video-section__thumbnail');
-    const videoPlayer = document.querySelector('.video-section__player');
-    const videoSection = document.querySelector('.video-section');
-    const asfSection = document.querySelector('.asf-section');
-    
-    // Hypothesis A: Image not loading (404, wrong path)
-    if (videoThumbnail) {
-      const imgSrc = videoThumbnail.src || videoThumbnail.getAttribute('src');
-      const imgComplete = videoThumbnail.complete;
-      const imgNaturalWidth = videoThumbnail.naturalWidth;
-      const imgNaturalHeight = videoThumbnail.naturalHeight;
-      const imgOnError = videoThumbnail.onerror !== null;
-      
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoThumbnailMissing',message:'Hypothesis A: Image loading',data:{imgSrc,imgComplete,imgNaturalWidth,imgNaturalHeight,imgOnError,exists:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run2',hypothesisId:'A'})}).catch(()=>{});
-      
-      // Check for image load errors
-      videoThumbnail.addEventListener('error', function() {
-        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoThumbnailMissing',message:'Image load error detected',data:{imgSrc:this.src,error:true},timestamp:Date.now(),sessionId:'debug-session',runId:'run2',hypothesisId:'A'})}).catch(()=>{});
-      }, { once: true });
-    } else {
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoThumbnailMissing',message:'Hypothesis A: Thumbnail element missing',data:{exists:false},timestamp:Date.now(),sessionId:'debug-session',runId:'run2',hypothesisId:'A'})}).catch(()=>{});
-    }
-    
-    // Hypothesis B: CSS hiding it (display, visibility, opacity)
-    if (videoThumbnail) {
-      const computed = window.getComputedStyle(videoThumbnail);
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoThumbnailMissing',message:'Hypothesis B: CSS visibility',data:{display:computed.display,visibility:computed.visibility,opacity:computed.opacity,width:computed.width,height:computed.height},timestamp:Date.now(),sessionId:'debug-session',runId:'run2',hypothesisId:'B'})}).catch(()=>{});
-    }
-    
-    // Hypothesis C: Z-index putting it behind something
-    if (videoThumbnail && videoPlayer && asfSection) {
-      const thumbnailComputed = window.getComputedStyle(videoThumbnail);
-      const playerComputed = window.getComputedStyle(videoPlayer);
-      const videoSection = document.querySelector('.video-section');
-      const videoSectionComputed = videoSection ? window.getComputedStyle(videoSection) : null;
-      const asfComputed = window.getComputedStyle(asfSection);
-      const asfBefore = window.getComputedStyle(asfSection, '::before');
-      const asfContainer = document.querySelector('.asf-section__container');
-      const asfContainerComputed = asfContainer ? window.getComputedStyle(asfContainer) : null;
-      const asfHeading = document.querySelector('.asf-section__heading');
-      const asfHeadingComputed = asfHeading ? window.getComputedStyle(asfHeading) : null;
-      const thumbnailRect = videoThumbnail.getBoundingClientRect();
-      const asfRect = asfSection.getBoundingClientRect();
-      
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoThumbnailMissing',message:'Hypothesis C: Z-index stacking detailed',data:{thumbnailZIndex:thumbnailComputed.zIndex,playerZIndex:playerComputed.zIndex,videoSectionZIndex:videoSectionComputed?.zIndex,asfZIndex:asfComputed.zIndex,asfBeforeZIndex:asfBefore.zIndex,asfIsolation:asfComputed.isolation,asfContainerZIndex:asfContainerComputed?.zIndex,asfHeadingZIndex:asfHeadingComputed?.zIndex,thumbnailTop:thumbnailRect.top,asfTop:asfRect.top},timestamp:Date.now(),sessionId:'debug-session',runId:'run3',hypothesisId:'C'})}).catch(()=>{});
-    }
-    
-    // Hypothesis D: Position/transform moving it off-screen
-    if (videoThumbnail) {
-      const computed = window.getComputedStyle(videoThumbnail);
-      const rect = videoThumbnail.getBoundingClientRect();
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-      const isOffScreen = rect.right < 0 || rect.left > viewportWidth || rect.bottom < 0 || rect.top > viewportHeight;
-      
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoThumbnailMissing',message:'Hypothesis D: Position/transform',data:{position:computed.position,top:computed.top,left:computed.left,transform:computed.transform,rectTop:rect.top,rectLeft:rect.left,rectWidth:rect.width,rectHeight:rect.height,viewportWidth,viewportHeight,isOffScreen},timestamp:Date.now(),sessionId:'debug-session',runId:'run2',hypothesisId:'D'})}).catch(()=>{});
-    }
-    
-    // Hypothesis E: Size making it invisible (width/height: 0)
-    if (videoThumbnail) {
-      const computed = window.getComputedStyle(videoThumbnail);
-      const rect = videoThumbnail.getBoundingClientRect();
-      const hasZeroSize = rect.width === 0 || rect.height === 0;
-      
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoThumbnailMissing',message:'Hypothesis E: Size/visibility',data:{width:computed.width,height:computed.height,rectWidth:rect.width,rectHeight:rect.height,hasZeroSize,minWidth:computed.minWidth,maxWidth:computed.maxWidth},timestamp:Date.now(),sessionId:'debug-session',runId:'run2',hypothesisId:'E'})}).catch(()=>{});
-    }
-    // #endregion
   }
   
   function debugVideoOverlap() {
-    // #region agent log
-    const asfSection = document.querySelector('.asf-section');
-    const videoSection = document.querySelector('.video-section');
-    const videoPlayer = document.querySelector('.video-section__player');
-    const videoThumbnail = document.querySelector('.video-section__thumbnail');
-    
-    if (!asfSection || !videoSection || !videoPlayer || !videoThumbnail) {
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoOverlap',message:'Elements not found',data:{asfSection:!!asfSection,videoSection:!!videoSection,videoPlayer:!!videoPlayer,videoThumbnail:!!videoThumbnail},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'ALL'})}).catch(()=>{});
-      return;
-    }
-    
-    const asfRect = asfSection.getBoundingClientRect();
-    const videoSectionRect = videoSection.getBoundingClientRect();
-    const videoPlayerRect = videoPlayer.getBoundingClientRect();
-    const thumbnailRect = videoThumbnail.getBoundingClientRect();
-    
-    const asfComputed = window.getComputedStyle(asfSection);
-    const videoSectionComputed = window.getComputedStyle(videoSection);
-    const videoPlayerComputed = window.getComputedStyle(videoPlayer);
-    const thumbnailComputed = window.getComputedStyle(videoThumbnail);
-    
-    // Check overlap
-    const thumbnailOverlapsAsf = thumbnailRect.top < asfRect.bottom && thumbnailRect.bottom > asfRect.top;
-    const thumbnailOverlapsVideoSection = thumbnailRect.top < videoSectionRect.bottom && thumbnailRect.bottom > videoSectionRect.top;
-    
-    // Hypothesis A: Negative margins causing overlap
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoOverlap',message:'Hypothesis A: Negative margins',data:{videoSectionMarginTop:videoSectionComputed.marginTop,videoPlayerMarginTop:videoPlayerComputed.marginTop,thumbnailTop:thumbnailRect.top,asfBottom:asfRect.bottom,overlaps:thumbnailOverlapsAsf},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-    
-    // Hypothesis B: Z-index stacking issue
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoOverlap',message:'Hypothesis B: Z-index values',data:{asfZIndex:asfComputed.zIndex,asfIsolation:asfComputed.isolation,videoSectionZIndex:videoSectionComputed.zIndex,videoPlayerZIndex:videoPlayerComputed.zIndex,thumbnailZIndex:thumbnailComputed.zIndex},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-    
-    // Hypothesis C: Isolation stacking context
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoOverlap',message:'Hypothesis C: Isolation context',data:{asfIsolation:asfComputed.isolation,asfPosition:asfComputed.position,videoSectionPosition:videoSectionComputed.position,videoPlayerPosition:videoPlayerComputed.position},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-    
-    // Hypothesis D: Overflow and bounding boxes
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoOverlap',message:'Hypothesis D: Overflow and bounds',data:{asfOverflow:asfComputed.overflow,videoSectionOverflow:videoSectionComputed.overflow,videoPlayerOverflow:videoPlayerComputed.overflow,thumbnailHeight:thumbnailRect.height,thumbnailTop:thumbnailRect.top,thumbnailBottom:thumbnailRect.bottom,asfTop:asfRect.top,asfBottom:asfRect.bottom,videoSectionTop:videoSectionRect.top,videoSectionBottom:videoSectionRect.bottom},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-    
-    // Hypothesis E: Viewport-specific positioning
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugVideoOverlap',message:'Hypothesis E: Viewport positioning',data:{viewportWidth:window.innerWidth,viewportHeight:window.innerHeight,thumbnailTop:thumbnailRect.top,thumbnailLeft:thumbnailRect.left,thumbnailWidth:thumbnailRect.width,thumbnailHeight:thumbnailRect.height,asfTop:asfRect.top,asfBottom:asfRect.bottom,overlaps:thumbnailOverlapsAsf},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E'})}).catch(()=>{});
-    // #endregion
   }
 
   // ============================================
@@ -2056,31 +1856,19 @@
 
   // Debug proof section heading display
   function debugProofHeading() {
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugProofHeading',message:'Checking proof heading',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run9',hypothesisId:'ProofHeading'})}).catch(()=>{});
-    // #endregion
     
     const heading = document.getElementById('proof-heading');
     if (!heading) {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugProofHeading',message:'Proof heading not found',data:{},timestamp:Date.now(),sessionId:'debug-session',runId:'run9',hypothesisId:'ProofHeading'})}).catch(()=>{});
-      // #endregion
       return;
     }
 
     const lines = heading.querySelectorAll('.proof-section__heading-line');
-    // #region agent log
-    fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugProofHeading',message:'Found heading lines',data:{lineCount:lines.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run9',hypothesisId:'ProofHeading'})}).catch(()=>{});
-    // #endregion
 
     lines.forEach((line, index) => {
       const computedStyle = window.getComputedStyle(line);
       const display = computedStyle.display;
       const text = line.textContent.trim();
       
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:debugProofHeading',message:'Line style check',data:{lineIndex:index,text:text,display:display,whiteSpace:computedStyle.whiteSpace},timestamp:Date.now(),sessionId:'debug-session',runId:'run9',hypothesisId:'ProofHeading'})}).catch(()=>{});
-      // #endregion
     });
   }
 
@@ -2110,7 +1898,7 @@
 
       // All orders go to bulk order page
       // Navigate to bulk order page
-      window.location.href = "bulk-order.html";
+      window.location.href = "/Order/bulk";
 
       // Reset form
       orderForm.reset();
@@ -2164,11 +1952,11 @@
       openModalBtnFromNav.addEventListener("click", function (e) {
         e.preventDefault();
         // If we're on order-form.html, open modal directly
-        if (window.location.pathname.includes("order-form.html")) {
+        if (window.location.pathname.includes("/Order")) {
           openBulkOrderModal();
         } else {
           // Otherwise, navigate to order-form.html with hash
-          window.location.href = "order-form.html#bulk-order";
+          window.location.href = "/Order#bulk-order";
         }
       });
     }
