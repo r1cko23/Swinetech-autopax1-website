@@ -16,6 +16,7 @@
   --text-light: #ffffff; /* White - signifies purity, cleanliness, and precision */
   --bg-white: #ffffff; /* White - signifies purity, cleanliness, and precision */
   --bg-dark: #000000;
+  --bg-black: #000000; /* Black background for buttons */
   --bg-light: #f5f5f5;
 
   /* Typography - Brand Fonts */
@@ -212,13 +213,16 @@ main {
   padding: clamp(0.625rem, 2vw, 0.875rem) clamp(0.75rem, 2.5vw, 1rem);
   border-radius: 6px;
   font-weight: var(--font-weight-bold);
-  font-size: clamp(0.75rem, 2.5vw, 0.9375rem);
+  font-size: clamp(0.875rem, 2.5vw, 0.9375rem); /* Universal Design: Minimum readable size (16px base) */
   text-transform: uppercase;
   letter-spacing: 0.3px;
   text-align: center;
   display: inline-block;
   border: none;
   width: fit-content;
+  min-height: 44px; /* Universal Design: Minimum touch target (44x44px) */
+  min-width: 44px; /* Universal Design: Ensure square touch targets */
+  line-height: 1.5; /* Universal Design: Better readability */
 }
 
 .btn--blue:hover,
@@ -234,18 +238,21 @@ main {
 }
 
 .btn--black {
-  background-color: var(--bg-dark);
-  color: var(--text-light);
+  background-color: var(--bg-black) !important;
+  color: var(--text-light) !important;
   padding: clamp(0.625rem, 2vw, 0.875rem) clamp(0.75rem, 2.5vw, 1rem);
   border-radius: 6px;
   font-weight: var(--font-weight-bold);
-  font-size: clamp(0.75rem, 2.5vw, 0.9375rem);
+  font-size: clamp(0.875rem, 2.5vw, 0.9375rem); /* Universal Design: Minimum readable size (16px base) */
   text-transform: uppercase;
   letter-spacing: 0.3px;
   text-align: center;
   display: inline-block;
-  border: none;
+  border: none !important;
   width: fit-content;
+  min-height: 44px; /* Universal Design: Minimum touch target (44x44px) */
+  min-width: 44px; /* Universal Design: Ensure square touch targets */
+  line-height: 1.5; /* Universal Design: Better readability */
 }
 
 .btn--black:hover,
@@ -261,18 +268,44 @@ main {
   padding: clamp(0.625rem, 2vw, 0.875rem) clamp(0.75rem, 2.5vw, 1rem);
   border-radius: 6px;
   font-weight: var(--font-weight-bold);
-  font-size: clamp(0.75rem, 2.5vw, 0.9375rem);
+  font-size: clamp(0.875rem, 2.5vw, 0.9375rem); /* Universal Design: Minimum readable size (16px base) */
   text-transform: uppercase;
   letter-spacing: 0.3px;
   text-align: center;
   display: inline-block;
   border: none;
   width: fit-content;
+  min-height: 44px; /* Universal Design: Minimum touch target (44x44px) */
+  min-width: 44px; /* Universal Design: Ensure square touch targets */
+  line-height: 1.5; /* Universal Design: Better readability */
 }
 
 .btn--red:hover,
 .btn--red:focus {
   background-color: #e02e36;
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.btn--outline {
+  background-color: transparent;
+  color: var(--accent-blue);
+  padding: clamp(0.625rem, 2vw, 0.875rem) clamp(0.75rem, 2.5vw, 1rem);
+  border-radius: 6px;
+  font-weight: var(--font-weight-bold);
+  font-size: clamp(0.75rem, 2.5vw, 0.9375rem);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-align: center;
+  display: inline-block;
+  border: 2px solid var(--accent-blue);
+  width: fit-content;
+}
+
+.btn--outline:hover,
+.btn--outline:focus {
+  background-color: var(--accent-blue);
+  color: var(--text-light);
   opacity: 1;
   transform: scale(1.05);
 }
@@ -520,14 +553,26 @@ main {
 
 .hero__container {
   max-width: var(--container-max-width);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
-  gap: var(--spacing-lg);
-  align-items: center;
-  padding-left: var(--container-padding);
-  padding-right: var(--container-padding);
+  margin: 0 auto; /* Center the container */
+  display: grid !important; /* Force grid layout */
+  grid-template-columns: 1.3fr 0.7fr !important; /* Text left, bottle right - all screen sizes */
+  gap: clamp(0.5rem, 1.5vw, var(--spacing-sm)); /* Further reduced gap to bring bottle closer to text */
+  align-items: stretch; /* Stretch both columns to same height */
+  padding-left: 0; /* Remove padding - hero section handles margins */
+  padding-right: 0; /* Remove padding - hero section handles margins */
+  flex-direction: row !important; /* Override any flex column rules */
+  width: calc(100% - 0px); /* Ensure proper width calculation for centering */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
+
+/* Ensure side-by-side on all screen sizes */
+@media (max-width: 768px) {
+  .hero__container {
+    grid-template-columns: 1.2fr 0.8fr; /* Slightly adjust ratio on tablet */
+  }
+}
+
+/* Mobile media query moved to main mobile section below */
 
 .hero__content {
   padding-left: 0;
@@ -535,6 +580,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  height: 100%; /* Ensure content takes full grid cell height */
 }
 
 .hero__heading {
@@ -543,7 +589,7 @@ main {
   font-weight: var(--font-weight-bold); /* Gotham Bold */
   line-height: 1.2;
   margin-top: 0;
-  margin-bottom: var(--spacing-md);
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
   color: var(--text-dark);
 }
 
@@ -561,7 +607,7 @@ main {
 
 .hero__subtitle {
   font-size: clamp(0.875rem, 2.5vw, 1.25rem);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
   color: var(--text-dark);
   line-height: 1.6;
 }
@@ -574,60 +620,270 @@ main {
   margin-top: var(--spacing-sm);
 }
 
+.hero__cta-group {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm));
+  margin-top: var(--spacing-sm);
+}
+
+.hero__cta-group .btn {
+  margin-top: 0;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hero__cta-group {
+    flex-direction: row;
+    gap: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
+  }
+  
+  .hero__cta-group .btn {
+    width: auto;
+    flex: 0 1 auto;
+  }
+}
+
 .hero__image {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: stretch; /* Stretch to match content height */
   padding-top: 0;
-  padding-left: var(--spacing-lg);
-  align-self: flex-start;
-  margin-top: -60px; /* Align bottle top with Contact Us in navbar */
+  padding-bottom: 0;
+  padding-left: clamp(var(--spacing-xs), 1vw, var(--spacing-sm)); /* Further reduced padding to bring closer */
+  align-self: stretch; /* Match content height - align with content top and bottom */
+  margin-top: 0; /* Remove negative margin - use grid alignment instead */
+  margin-bottom: 0;
+  position: relative;
+  width: 100%;
+  overflow: visible; /* Allow arrow to be visible */
+  height: 100%; /* Match container height */
+}
+
+/* Hero Carousel */
+.hero__carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible; /* Allow arrow to be visible */
+}
+
+.hero__carousel-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: visible; /* Allow arrow to be visible outside track */
+  display: flex;
+  align-items: stretch; /* Stretch to match content height */
+}
+
+.hero__carousel-slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__carousel-slide--active {
+  display: block;
+}
+
+.hero__carousel-controls {
+  position: absolute;
+  top: 50%;
+  left: -10px; /* Extend beyond container to show arrow */
+  right: -10px; /* Extend beyond container to show arrow */
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 10;
+  padding: 0 clamp(10px, 2vw, 20px);
+}
+
+.hero__carousel-btn {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background-color: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity var(--transition-fast);
+  padding: clamp(8px, 1.5vw, 12px);
+  pointer-events: auto;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.8;
+}
+
+.hero__carousel-btn:hover,
+.hero__carousel-btn:focus {
+  opacity: 1;
+}
+
+.hero__carousel-btn--prev {
+  left: clamp(-20px, -3vw, -10px);
+}
+
+.hero__carousel-btn--prev:not(.hero__carousel-btn--visible) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero__carousel-btn--next {
+  right: clamp(-25px, -4vw, -10px); /* Moved further from bottle */
+}
+
+.hero__carousel-btn--next.hero__carousel-btn--hidden {
+  opacity: 0.6; /* Keep visible but dimmed when disabled */
+  pointer-events: none;
+}
+
+.hero__carousel-arrow {
+  width: clamp(12px, 2.5vw, 20px);
+  height: auto;
+  object-fit: contain;
+}
+
+.hero__carousel-arrow--prev {
+  transform: rotate(180deg);
+}
+
+/* Mobile responsive styles for hero carousel */
+@media (max-width: 768px) {
+  .hero__carousel-btn {
+    min-width: 40px;
+    min-height: 40px;
+    padding: clamp(6px, 1.2vw, 10px);
+  }
+  
+  .hero__carousel-btn--prev {
+    left: clamp(-15px, -2.5vw, -5px);
+  }
+  
+  .hero__carousel-btn--next {
+    right: clamp(-20px, -3.5vw, -8px); /* Moved further from bottle on tablet */
+  }
+  
+  .hero__carousel-arrow {
+    width: clamp(10px, 2vw, 16px);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__carousel-btn {
+    min-width: 36px;
+    min-height: 36px;
+    padding: clamp(5px, 1vw, 8px);
+  }
+  
+  .hero__carousel-btn--prev {
+    left: clamp(-12px, -2vw, -3px);
+  }
+  
+  .hero__carousel-btn--next {
+    right: clamp(-12px, -2vw, -2px); /* Moved further from bottle on mobile */
+  }
+  
+  .hero__carousel-arrow {
+    width: clamp(8px, 1.8vw, 14px);
+  }
+  
+  .hero__cta-group {
+    flex-direction: column;
+    gap: clamp(var(--spacing-xs), 1.2vw, var(--spacing-sm));
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .hero__cta-group .btn {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0;
+  }
 }
 
 .hero__bottle {
-  max-width: clamp(100px, 20vw, 240px);
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-  transform: rotate(1deg);
+  width: auto !important; /* Don't force 100% width */
+  max-width: 100% !important; /* Allow to scale within container */
+  height: 100% !important; /* Match content height */
+  object-fit: contain; /* Maintain aspect ratio while fitting height */
+  transform: rotate(-3deg); /* Tilt more to the left */
+  display: block;
+  /* Bottle height will match content height, width scales proportionally */
+}
+
+/* Further reduce bottle size on laptop/desktop screens */
+@media (min-width: 1024px) {
+  .hero__bottle {
+    max-width: clamp(120px, 12vw, 180px) !important; /* Smaller on laptop - max 180px */
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero__bottle {
+    max-width: clamp(130px, 11vw, 190px) !important; /* Controlled size on 1280px screens */
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero__bottle {
+    max-width: clamp(140px, 10vw, 200px) !important; /* Controlled size on very large screens */
+  }
 }
 
 /* ============================================
    ASF SECTION
    ============================================ */
 .asf-section {
-  background-image: url("../assets/Section 2/Background.png");
-  background-size: cover; /* Cover entire section with image */
-  background-position: center center;
-  background-repeat: no-repeat;
   padding: var(--spacing-xl) var(--container-padding);
-  padding-bottom: calc(var(--spacing-xl) + 180px); /* Reduced padding for video overlap below CTA */
+  padding-bottom: var(--spacing-lg); /* Reduced padding - no overlap needed, thumbnail is in Section 3 only */
   position: relative;
-  z-index: 3; /* Higher z-index than video section (z-index: 2) so ASF content appears above video */
-  isolation: isolate; /* Create new stacking context to ensure z-index works correctly */
+  z-index: 3; /* Normal stacking order */
   color: var(--text-light);
   min-height: auto; /* Remove fixed min-height */
   width: 100%;
-  overflow: visible; /* Allow video to overlap into next section */
+  overflow: visible;
+}
+
+.asf-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../assets/Section 2/Background.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: 0; /* Normal stacking order */
+  pointer-events: none; /* Allow clicks to pass through to content */
 }
 
 /* Tablet and smaller screens - reduce red section size */
 @media (max-width: 1024px) {
   .asf-section {
-    padding-bottom: calc(var(--spacing-lg) + 120px); /* Reduced for tablet */
+    padding-bottom: var(--spacing-md); /* Reduced padding - no overlap */
   }
 }
 
 @media (max-width: 768px) {
   .asf-section {
-    padding-bottom: calc(var(--spacing-md) + 80px); /* Further reduced for smaller tablets */
+    padding-bottom: var(--spacing-sm); /* Further reduced for smaller tablets */
   }
 }
 
 @media (max-width: 480px) {
   .asf-section {
-    overflow: visible; /* Ensure video can overlap on mobile */
-    padding-bottom: calc(var(--spacing-md) + 80px); /* Significantly reduced padding for smaller screens */
+    overflow: visible;
+    padding-bottom: var(--spacing-sm); /* Reduced padding for mobile - no overlap */
     padding-top: var(--spacing-md);
     min-height: auto;
   }
@@ -637,7 +893,7 @@ main {
   max-width: var(--container-max-width);
   margin: 0 auto;
   position: relative;
-  z-index: 10; /* Higher than video thumbnail to ensure text is visible */
+  z-index: 1; /* Normal stacking order - above background */
   text-align: center;
 }
 
@@ -645,11 +901,11 @@ main {
   font-family: var(--font-heading);
   font-size: clamp(2rem, 5vw, 3.5rem);
   font-weight: var(--font-weight-bold); /* Gotham Bold */
-  margin-bottom: var(--spacing-md);
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
   line-height: 1.2;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better readability */
   position: relative;
-  z-index: 12; /* Higher than video thumbnail (z-index: 3) to ensure text is always visible */
+  z-index: 2; /* Above background */
 }
 
 .asf-section__heading span {
@@ -658,29 +914,148 @@ main {
 
 .asf-section__text {
   font-size: clamp(1rem, 2vw, 1.25rem);
-  max-width: 800px;
-  margin: 0 auto var(--spacing-lg);
+  max-width: clamp(280px, 90vw, 800px);
+  margin: 0 auto clamp(var(--spacing-sm), 3vw, var(--spacing-lg));
   line-height: 1.8;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Add shadow for better readability */
   position: relative;
-  z-index: 12; /* Higher than video thumbnail (z-index: 3) to ensure text is always visible */
+  z-index: 2; /* Above background */
 }
 
 .asf-section__content {
   position: relative;
-  z-index: 10; /* Ensure CTA is above video thumbnail */
-  margin-bottom: var(--spacing-md); /* Reduced margin */
-  padding-bottom: var(--spacing-sm); /* Reduced padding */
+  z-index: 2; /* Above background */
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-sm)); /* Reduced margin below CTA - proportional */
+  padding-bottom: 0; /* No extra padding */
 }
 
 .asf-section__content .btn {
   position: relative;
-  z-index: 11 !important; /* Higher z-index to ensure CTA is always above video */
+  z-index: 2; /* Above background */
   display: inline-block;
-  margin-top: var(--spacing-md);
-  margin-bottom: 0; /* Remove bottom margin */
-  visibility: visible !important; /* Ensure button is visible */
-  opacity: 1 !important; /* Ensure button is not transparent */
+  margin-top: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
+  margin-bottom: 0;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* ============================================
+   VIDEO MODAL
+   ============================================ */
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.video-modal[aria-hidden="false"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+.video-modal__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  cursor: pointer;
+}
+
+.video-modal__content {
+  position: relative;
+  width: 95%;
+  max-width: 1920px;
+  height: 95%;
+  max-height: 1080px;
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  box-sizing: border-box;
+  pointer-events: none; /* Allow clicks to pass through to overlay */
+}
+
+.video-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10002;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  padding: 0;
+  pointer-events: auto; /* Ensure close button is clickable */
+}
+
+.video-modal__close:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.video-modal__close svg {
+  width: 24px;
+  height: 24px;
+  stroke: #000;
+}
+
+.video-modal__video-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  pointer-events: auto; /* Re-enable pointer events for video container */
+}
+
+.video-modal__video {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #000;
+}
+
+/* Responsive adjustments for video modal */
+@media (max-width: 768px) {
+  .video-modal__content {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+  }
+
+  .video-modal__close {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  .video-modal__close svg {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 /* ============================================
@@ -689,11 +1064,11 @@ main {
 .video-section {
   background-color: var(--bg-white);
   padding: var(--spacing-xl) var(--container-padding);
-  padding-top: 0;
+  padding-top: var(--spacing-xl); /* Normal padding - no overlap */
   position: relative;
-  z-index: 1; /* Lower than ASF section (z-index: 3) so video appears behind ASF content */
-  margin-top: -300px; /* Pull up to overlap ASF section, but not too much */
-  overflow: visible; /* Allow video to overlap from ASF section */
+  z-index: 1; /* Normal stacking order */
+  margin-top: 0; /* No negative margin - thumbnail stays in Section 3 */
+  overflow: visible;
 }
 
 .video-section__container {
@@ -726,12 +1101,12 @@ main {
 .video-section__player {
   position: relative;
   width: 100%;
-  max-width: 800px;
+  max-width: clamp(280px, 90vw, 800px);
   margin: 0 auto;
-  z-index: 0; /* Lower z-index - video should appear behind ASF section content (which has z-index: 3 with isolation) */
-  margin-top: -200px; /* Reduced overlap to prevent covering text - positioned below text and CTA */
-  margin-bottom: var(--spacing-md);
-  overflow: visible; /* Ensure thumbnail is not clipped */
+  z-index: 1; /* Normal stacking order */
+  margin-top: 0; /* No negative margin - thumbnail stays in Section 3 */
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
+  overflow: visible;
 }
 
 .video-section__play-btn {
@@ -748,6 +1123,9 @@ main {
   width: 100%;
   border-radius: 8px;
   box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 1; /* Normal stacking order */
+  display: block;
 }
 
 .video-section__play-icon {
@@ -755,28 +1133,22 @@ main {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
+  width: clamp(80px, 12vw, 120px);
+  height: clamp(80px, 12vw, 120px);
+  min-width: 80px;
+  min-height: 80px;
   transition: transform var(--transition-fast);
+  z-index: 10; /* Above thumbnail */
+  pointer-events: none; /* Allow clicks to pass through to button */
+  display: block;
+  object-fit: contain;
 }
 
 .video-section__play-btn:hover .video-section__play-icon {
   transform: translate(-50%, -50%) scale(1.1);
 }
 
-@media (max-width: 768px) {
-  .video-section__play-icon {
-    width: 60px;
-    height: 60px;
-  }
-}
-
-@media (max-width: 480px) {
-  .video-section__play-icon {
-    width: 50px;
-    height: 50px;
-  }
-}
+/* Play icon scales proportionally via clamp above - no need for separate media queries */
 
 /* ============================================
    MECHANISM SECTION
@@ -786,7 +1158,7 @@ main {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  padding: var(--spacing-xxl) var(--container-padding);
+  padding: clamp(var(--spacing-lg), 5vw, var(--spacing-xxl)) var(--container-padding);
   position: relative;
   color: var(--text-light);
 }
@@ -807,7 +1179,7 @@ main {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-xl);
+  gap: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
   align-items: center;
   position: relative;
   z-index: 1;
@@ -828,23 +1200,41 @@ main {
 }
 
 .mechanism-section__benefits {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: clamp(var(--spacing-sm), 3vw, var(--spacing-lg));
+}
+
+.mechanism-section__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center all content including CTA */
+  text-align: center;
+}
+
+.mechanism-section__content .btn--red {
+  margin-top: clamp(var(--spacing-sm), 2vw, var(--spacing-md));
+  align-self: center; /* Center the CTA button */
 }
 
 .mechanism-section__benefit {
   display: flex;
   align-items: flex-start;
-  gap: var(--spacing-sm);
-  margin-bottom: var(--spacing-sm);
+  gap: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm));
+  margin-bottom: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm));
   font-size: clamp(0.8rem, 2vw, 1.125rem);
   line-height: 1.6;
+  text-align: left; /* Left align text, but container is centered */
+  max-width: 100%;
 }
 
 .mechanism-section__check {
-  width: clamp(18px, 4vw, 24px);
-  height: clamp(18px, 4vw, 24px);
+  font-size: clamp(20px, 4.5vw, 28px);
+  color: var(--text-light);
   flex-shrink: 0;
   margin-top: 2px;
+  display: inline-block;
+  line-height: 1;
+  width: clamp(20px, 4.5vw, 28px);
+  text-align: center;
 }
 
 .mechanism-section__animation {
@@ -855,25 +1245,26 @@ main {
 /* Cell Animation */
 .cell-animation {
   width: 100%;
-  height: 400px;
+  height: clamp(250px, 35vw, 400px);
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible; /* Allow glow effects to show */
-  padding: 20px; /* Add padding to prevent cells from going outside while allowing glow */
+  padding: clamp(10px, 2vw, 20px); /* Add padding to prevent cells from going outside while allowing glow */
 }
 
 .cell-animation__container {
   position: relative;
   width: 100%;
-  max-width: clamp(250px, 33vw, 400px); /* Scale container proportionally */
-  height: 100%;
+  max-width: clamp(400px, 50vw, 600px); /* Larger base size to maintain cell positions */
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible; /* Allow glow effects to extend beyond container */
+  aspect-ratio: 1; /* Maintain square aspect ratio to preserve cell positions */
+  height: auto; /* Let aspect-ratio control height */
 }
 
 .cell-animation__cell {
@@ -1047,7 +1438,7 @@ main {
    ============================================ */
 .proof-section {
   background-color: var(--bg-white);
-  padding: var(--spacing-xl) var(--container-padding);
+  padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl)) var(--container-padding);
 }
 
 .proof-section__container {
@@ -1055,8 +1446,26 @@ main {
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--spacing-xl);
+  gap: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
   align-items: center;
+}
+
+.proof-section__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align content to left for cleaner layout */
+}
+
+.proof-section__learn-more-btn {
+  grid-column: 1 / -1; /* Span all columns in the grid */
+  margin-top: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
+  justify-self: center;
+  text-align: center;
+  display: inline-block;
+}
+
+.proof-section__heading {
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
 }
 
 .proof-section__heading {
@@ -1065,6 +1474,12 @@ main {
   font-weight: var(--font-weight-bold); /* Gotham Bold */
   margin-bottom: var(--spacing-md);
   color: var(--text-dark);
+  line-height: 1.2;
+}
+
+.proof-section__heading-line {
+  display: block; /* Each line on its own line */
+  line-height: 1.2;
 }
 
 .proof-section__heading--red {
@@ -1079,8 +1494,9 @@ main {
 .carousel {
   position: relative;
   width: 100%;
-  padding: 0 40px; /* Space for side arrows */
-  max-width: 100%;
+  max-width: clamp(300px, 75vw, 700px); /* Limit carousel width for cleaner layout */
+  margin: 0 auto; /* Center the carousel */
+  padding: 0 clamp(15px, 2.5vw, 35px); /* Space for side arrows - proportional */
   overflow: visible; /* Allow next slide preview to be visible */
 }
 
@@ -1221,18 +1637,20 @@ main {
 
 .carousel__image {
   width: 100%;
+  max-width: clamp(250px, 70vw, 600px); /* Scale down certificates - smaller max size */
   height: auto;
   display: block;
   border: none;
-  border-radius: 12px; /* Rounded corners for certificates */
+  border-radius: clamp(8px, 1.5vw, 12px); /* Rounded corners for certificates - proportional */
   position: relative;
   z-index: 0;
   /* Remove scale transform - show full cert */
   transform: none;
   transform-origin: center center;
   object-fit: contain;
-  min-height: 300px;
+  max-height: clamp(300px, 50vh, 500px); /* Limit height to prevent oversized certificates */
   background-color: transparent;
+  margin: 0 auto; /* Center the certificate */
 }
 
 /* Error state for missing/broken images */
@@ -3326,6 +3744,38 @@ main {
     height: 20px;
   }
 
+  /* Mobile dropdown menu styles */
+  .nav__dropdown-menu {
+    position: static;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    overflow: hidden;
+    transform: none;
+    margin-top: 0;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+    transition: max-height var(--transition-normal), opacity var(--transition-normal), padding var(--transition-normal);
+  }
+
+  .nav__dropdown-menu--open {
+    opacity: 1;
+    visibility: visible;
+    max-height: 500px;
+    padding: var(--spacing-xs) 0;
+    margin-top: 0;
+  }
+
+  .nav__dropdown-link {
+    padding-left: calc(var(--spacing-md) + var(--spacing-sm));
+    font-size: 0.95rem;
+  }
+
+  .nav__link--dropdown[aria-expanded="true"] .nav__dropdown-arrow {
+    transform: rotate(180deg);
+  }
+
   .hero {
     padding-top: calc(var(--spacing-md) + 60px);
     min-height: auto;
@@ -3334,8 +3784,8 @@ main {
 
   /* Keep same layout structure, just scale everything */
   .hero__container {
-    grid-template-columns: 1.3fr 0.7fr;
-    gap: clamp(1rem, 3vw, var(--spacing-lg));
+    grid-template-columns: 1.2fr 0.8fr; /* Slightly adjust ratio on tablet */
+    gap: clamp(var(--spacing-sm), 3vw, var(--spacing-lg));
   }
 
   .hero__image {
@@ -3344,9 +3794,9 @@ main {
     justify-content: flex-start;
   }
 
-  /* Make bottle bigger on tablet - it's the focus */
+  /* Bottle size proportional to its grid column */
   .hero__bottle {
-    max-width: clamp(160px, 30vw, 240px);
+    max-width: 100%;
     width: 100%;
   }
   
@@ -3392,6 +3842,10 @@ main {
   
   .asf-section__content {
     z-index: 10; /* Higher than video */
+    display: block !important; /* Ensure content is visible */
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: visible !important;
   }
   
   .asf-section__content .btn {
@@ -3401,6 +3855,10 @@ main {
     margin-top: var(--spacing-xs);
     z-index: 10; /* Higher than video */
     position: relative;
+    display: inline-block !important; /* Ensure button is visible on tablet */
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: var(--bg-black) !important;
   }
 
   /* Keep video absolute to maintain overlap between sections 2 and 3 */
@@ -3417,8 +3875,8 @@ main {
   }
 
   .video-section {
-    padding-top: var(--spacing-sm);
-    margin-top: -80px; /* Pull up to reduce gap - treat as one section */
+    padding-top: var(--spacing-lg);
+    margin-top: 0; /* No negative margin - thumbnail stays in Section 3 */
   }
   
   /* Scale down fonts in video section */
@@ -3437,7 +3895,7 @@ main {
 
   .mechanism-section__container {
     grid-template-columns: 1fr 1fr;
-    gap: clamp(1rem, 3vw, var(--spacing-xl));
+    gap: clamp(var(--spacing-sm), 3vw, var(--spacing-xl));
   }
 
   .mechanism-section__animation {
@@ -3445,12 +3903,17 @@ main {
   }
 
   .cell-animation {
-    height: clamp(150px, 30vw, 400px);
+    height: clamp(400px, 60vw, 600px); /* Larger height to maintain cell positions */
+  }
+  
+  .cell-animation__container {
+    max-width: clamp(400px, 60vw, 600px); /* Match height to maintain aspect ratio */
+    height: auto; /* Let aspect-ratio control height */
   }
 
   .proof-section__container {
     grid-template-columns: 1fr 1fr;
-    gap: clamp(1rem, 3vw, var(--spacing-xl));
+    gap: clamp(var(--spacing-sm), 3vw, var(--spacing-xl));
   }
 
   .proof-section__content {
@@ -3458,7 +3921,28 @@ main {
   }
 
   .carousel {
-    padding: 0 20px;
+    padding: 0 30px; /* Maintain space for arrows on tablet */
+    max-width: 100%;
+  }
+  
+  .carousel__slide--active {
+    display: block !important; /* Ensure active slide is visible */
+  }
+  
+  .carousel {
+    max-width: clamp(280px, 70vw, 600px); /* Smaller carousel on tablet */
+  }
+  
+  .carousel__image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-width: clamp(250px, 65vw, 550px); /* Scale down certificates */
+    max-height: clamp(280px, 45vh, 450px); /* Limit height */
+    transform: none !important; /* No scaling transform - maintain original positioning */
+    display: block !important; /* Ensure images are visible */
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .carousel__btn--prev {
@@ -3579,8 +4063,8 @@ main {
   }
 
   .video-section {
-    margin-top: -60px; /* Further reduced gap on small mobile */
-    padding-top: calc(var(--spacing-xs) + 60px);
+    margin-top: 0; /* No negative margin - thumbnail stays in Section 3 */
+    padding-top: var(--spacing-lg);
   }
   
   .video-section__heading {
@@ -3597,14 +4081,24 @@ main {
   }
 
   .carousel__image {
-    transform: scale(1);
+    transform: none; /* Maintain original positioning */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-width: 100%;
   }
 }
 
-/* Mobile portrait (480px) */
+/* Mobile portrait (480px) - Universal Design Principles Applied */
 @media (max-width: 480px) {
   :root {
     --container-padding: 0.75rem;
+    /* Universal Design: Minimum readable font size */
+    --font-size-min: 16px;
+    /* Universal Design: Minimum touch target size (44x44px) */
+    --touch-target-min: 44px;
+    /* Universal Design: Adequate spacing for readability */
+    --spacing-touch: 0.75rem;
   }
 
   .nav__container {
@@ -3638,13 +4132,43 @@ main {
   }
 
   .hero__container {
-    gap: var(--spacing-md);
+    display: grid !important; /* Force grid layout on mobile */
+    grid-template-columns: 1.2fr 0.8fr !important; /* Text left, bottle right - proportional */
+    gap: clamp(0.5rem, 1.5vw, var(--spacing-sm)) !important; /* Reduced gap on mobile to bring closer */
+    align-items: stretch !important; /* Stretch to align top and bottom */
+    flex-direction: row !important; /* Override any flex column rules */
+    grid-auto-flow: row !important; /* Ensure row flow */
   }
 
-  /* Make bottle bigger - it's the focus */
+  .hero__content {
+    text-align: left !important; /* Keep left alignment on mobile */
+    align-items: flex-start !important;
+    display: flex !important;
+    flex-direction: column !important; /* Content itself is column, but container is grid */
+    grid-column: 1 !important; /* Force to first column */
+    min-width: 0 !important; /* Allow shrinking */
+  }
+
+  .hero__image {
+    padding-left: clamp(0.25rem, 1vw, var(--spacing-xs)) !important; /* Reduced padding on mobile */
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    justify-content: flex-start !important;
+    align-items: stretch !important; /* Stretch to match content height */
+    align-self: stretch !important; /* Align with content top and bottom */
+    display: flex !important;
+    grid-column: 2 !important; /* Force to second column */
+    min-width: 0 !important; /* Allow shrinking */
+    height: 100% !important; /* Match content height */
+  }
+
+  /* Make bottle proportional to its grid column (0.8fr) on mobile */
   .hero__bottle {
-    max-width: clamp(140px, 35vw, 240px);
     width: 100%;
+    max-width: 100%; /* Take full width of its grid column */
+    height: auto;
   }
   
   /* Scale fonts proportionally to bottle size */
@@ -3660,11 +4184,13 @@ main {
     line-height: 1.6;
   }
   
-  /* Scale down CTA button */
+  /* Scale down CTA button - Universal Design: Minimum touch target */
   .hero__content .btn {
-    font-size: clamp(0.65rem, 2vw, 0.9375rem);
+    font-size: clamp(0.875rem, 2vw, 0.9375rem); /* Universal Design: Minimum readable size (16px base) */
     padding: clamp(0.5rem, 1.5vw, 0.875rem) clamp(0.65rem, 2vw, 1rem);
-    min-height: 40px;
+    min-height: 44px; /* Universal Design: Minimum touch target (44x44px) */
+    min-width: 44px; /* Universal Design: Ensure square touch targets */
+    line-height: 1.5; /* Universal Design: Better readability */
     margin-top: var(--spacing-xs);
   }
 
@@ -3687,20 +4213,29 @@ main {
 
   .asf-section {
     padding: var(--spacing-sm) var(--container-padding);
-    padding-bottom: calc(var(--spacing-xs) + 50px); /* Significantly reduced for mobile - video overlaps */
+    padding-bottom: var(--spacing-lg) !important; /* Increased padding to ensure button is visible */
     min-height: auto;
+    overflow: visible !important; /* Ensure nothing is clipped */
   }
   
   .asf-section__content {
-    margin-bottom: var(--spacing-sm); /* Reduced margin on mobile */
-    padding-bottom: var(--spacing-xs); /* Reduced padding on mobile */
+    position: relative;
+    z-index: 2; /* Above background */
+    margin-bottom: var(--spacing-md) !important; /* Increased margin to ensure button space */
+    padding-bottom: var(--spacing-xs) !important; /* Add padding to ensure button visibility */
+    display: block !important; /* Ensure content is visible */
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    min-height: auto !important; /* Ensure container can expand */
+    height: auto !important; /* Ensure container can expand */
   }
 
   .asf-section__heading {
     font-size: clamp(0.9rem, 3.8vw, 2.5rem);
     margin-bottom: var(--spacing-xs);
     position: relative;
-    z-index: 12; /* Higher than video thumbnail to ensure text is visible */
+    z-index: 2; /* Above background */
   }
 
   .asf-section__text {
@@ -3708,48 +4243,45 @@ main {
     margin-bottom: var(--spacing-xs);
     line-height: 1.7;
     position: relative;
-    z-index: 12; /* Higher than video thumbnail to ensure text is visible */
+    z-index: 2; /* Above background */
   }
   
   .asf-section__content .btn {
-    font-size: clamp(0.6rem, 1.8vw, 0.875rem);
-    padding: clamp(0.45rem, 1.3vw, 0.8rem) clamp(0.6rem, 1.8vw, 0.9rem);
-    min-height: 38px;
-    margin-top: var(--spacing-xs);
+    font-size: clamp(0.7rem, 2vw, 0.875rem) !important; /* Ensure readable font size */
+    padding: clamp(0.6rem, 1.5vw, 0.875rem) clamp(0.8rem, 2vw, 1rem) !important;
+    min-height: 44px !important; /* Minimum touch target size */
+    min-width: 150px !important; /* Ensure button has visible width */
+    margin-top: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm)) !important;
+    margin-bottom: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm)) !important; /* Add bottom margin to ensure visibility */
+    position: relative;
+    z-index: 2;
+    display: inline-block !important; /* Ensure button is visible on mobile */
+    visibility: visible !important;
+    opacity: 1 !important;
+    background-color: var(--bg-black) !important;
+    color: var(--text-light) !important;
+    width: auto !important; /* Override any width constraints */
+    height: auto !important; /* Override any height constraints */
+    line-height: 1.4 !important; /* Ensure text is readable */
   }
 
-  /* Video player positioning to overlap sections 2 and 3 on mobile */
+  /* Video player positioning - no overlap on mobile */
   .video-section__player {
     position: relative;
-    z-index: 0; /* Lower z-index - video should appear behind ASF section content (which has z-index: 3 with isolation) */
-    margin-top: -80px; /* Further reduced overlap to prevent covering text on mobile */
+    z-index: 1; /* Normal stacking order */
+    margin-top: 0; /* No negative margin */
     margin-bottom: var(--spacing-xs);
     width: 100%;
     max-width: 100%;
   }
-  
-  /* Ensure CTA button is above video on mobile - critical fix */
-  .asf-section__content {
-    position: relative;
-    z-index: 10; /* Higher than video */
-    margin-bottom: var(--spacing-md); /* Reduced margin for smaller screens */
-    padding-bottom: var(--spacing-sm); /* Reduced padding for smaller screens */
-  }
-  
-  .asf-section__content .btn {
-    z-index: 11 !important; /* Even higher than video to ensure it's clickable and visible */
-    position: relative;
-    display: inline-block;
-    background-color: var(--bg-black) !important; /* Ensure button is visible */
-  }
 
   .video-section {
     padding: var(--spacing-sm) var(--container-padding);
-    padding-top: 70px; /* Reduced padding to accommodate video overlap from section 2 */
-    margin-top: -70px; /* Reduced pull up for smaller screens */
+    padding-top: var(--spacing-lg); /* Normal padding - no overlap */
+    margin-top: 0; /* No negative margin - thumbnail stays in Section 3 */
     position: relative;
-    z-index: 2; /* Above section 2 background */
-    overflow: visible; /* Allow video to extend beyond section boundaries */
+    z-index: 1; /* Normal stacking order */
+    overflow: visible;
   }
   
   /* Ensure video thumbnail overlaps both red (section 2) and white (section 3) backgrounds */
@@ -3761,8 +4293,8 @@ main {
   
   /* Ensure ASF section allows overflow for video overlap */
   .asf-section {
-    overflow: visible; /* Allow video to overlap */
-    padding-bottom: calc(var(--spacing-sm) + 60px); /* Significantly reduced padding for mobile landscape */
+    overflow: visible;
+    padding-bottom: var(--spacing-sm); /* Reduced padding for mobile - no overlap */
   }
 
   .video-section__heading {
@@ -3782,14 +4314,32 @@ main {
     padding: var(--spacing-lg) var(--container-padding);
   }
 
+  .mechanism-section__container {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .mechanism-section__animation {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
+  }
+
   .mechanism-section__heading {
     font-size: clamp(1.1rem, 5vw, 2.5rem);
+    text-align: center;
   }
 
   .mechanism-section__text {
     font-size: clamp(0.8rem, 2.5vw, 1rem);
     line-height: 1.8; /* Better readability on mobile */
     margin-bottom: var(--spacing-md);
+    text-align: center;
   }
 
   .mechanism-section__benefit {
@@ -3799,19 +4349,80 @@ main {
   }
 
   .cell-animation {
-    height: clamp(120px, 25vw, 250px);
+    height: clamp(320px, 55vw, 500px); /* Larger height to maintain cell positions on mobile */
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding: 0;
+  }
+  
+  .cell-animation__container {
+    max-width: clamp(280px, 80vw, 500px);
+    width: clamp(280px, 80vw, 500px);
+    height: auto; /* Let aspect-ratio control height */
+    margin: 0 auto;
+    position: relative;
   }
 
   .proof-section {
     padding: var(--spacing-lg) var(--container-padding);
-  }}
+  }
+
+  .proof-section__container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .proof-section__content {
+    align-items: center;
+    text-align: center;
+  }
 
   .proof-section__heading {
     font-size: clamp(1.1rem, 5vw, 2.5rem);
+    line-height: 1.3; /* Universal Design: Better readability on mobile */
+    text-align: center;
+  }
+  
+  /* Each line displays on its own line on all screen sizes */
+  .proof-section__heading-line {
+    display: block;
+  }
+
+  .proof-section__learn-more-btn {
+    align-self: center;
+    margin-top: var(--spacing-lg);
+    width: auto;
+    display: inline-block;
   }
 
   .carousel {
-    padding: 0 10px;
+    padding: 0 20px; /* Space for arrows on mobile */
+    max-width: 100%;
+  }
+  
+  .carousel__slide--active {
+    display: block !important; /* Ensure active slide is visible on mobile */
+  }
+  
+  .carousel {
+    max-width: clamp(260px, 65vw, 500px); /* Smaller carousel on mobile */
+    padding: 0 clamp(10px, 2vw, 20px);
+  }
+  
+  .carousel__image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    max-width: clamp(240px, 60vw, 480px); /* Scale down certificates on mobile */
+    max-height: clamp(250px, 40vh, 400px); /* Limit height on mobile */
+    transform: none !important; /* No scaling transform - maintain original positioning */
+    display: block !important; /* Ensure images are visible */
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
   .carousel__btn--prev {

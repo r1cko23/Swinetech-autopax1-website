@@ -16,7 +16,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png" />
     <link rel="shortcut icon" href="favicon.ico" />
     <link rel="stylesheet" href="styles/main.css?v=21" />
-    <link rel="stylesheet" href="styles/funnel.css?v=4" />
+    <link rel="stylesheet" href="styles/funnel.css?v=5" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -74,16 +74,13 @@
                   </li>
                 </ul>
               </li>
-              <li class="nav__item--dropdown">
+              <li>
                 <a
-                  href="#faq"
-                  class="nav__link nav__link--dropdown"
+                  href="bulk-order.html#faq"
+                  class="nav__link"
                   role="menuitem"
-                  aria-haspopup="true"
-                  aria-expanded="false"
                 >
                   FAQ
-                  <span class="nav__dropdown-arrow" aria-hidden="true">▼</span>
                 </a>
               </li>
               <li class="nav__separator" aria-hidden="true">|</li>
@@ -110,58 +107,49 @@
           <div class="form-column">
             <div class="form-header-compact">
               <h1>Complete Your Order</h1>
-              <p>Choose your package and enter your details below</p>
+              <p>Enter quantity and your details below</p>
             </div>
 
             <form id="orderForm" class="compact-form">
-              <!-- Package Selection - Horizontal Cards -->
-              <div class="package-selector-compact">
-                <label class="package-option-compact">
-                  <input type="radio" name="package" value="starter" data-price="4984">
-                  <div class="package-box">
-                    <div class="package-name">Starter</div>
-                    <div class="package-bottles">1 Bottle</div>
-                    <div class="package-price-compact">₱4,984</div>
+              <!-- Quantity Selection -->
+              <div class="quantity-selector-compact">
+                <div class="input-group-compact">
+                  <label for="quantity">Number of Bottles *</label>
+                  <div class="quantity-input-wrapper">
+                    <button type="button" class="quantity-btn" id="quantityDecrease" aria-label="Decrease quantity">-</button>
+                    <input 
+                      type="number" 
+                      id="quantity" 
+                      name="quantity" 
+                      min="1" 
+                      value="1" 
+                      required 
+                      class="quantity-input"
+                      aria-label="Quantity"
+                    >
+                    <button type="button" class="quantity-btn" id="quantityIncrease" aria-label="Increase quantity">+</button>
                   </div>
-                </label>
-
-                <label class="package-option-compact popular-compact">
-                  <input type="radio" name="package" value="popular" data-price="13272" checked>
-                  <div class="popular-tag">Best Value</div>
-                  <div class="package-box">
-                    <div class="package-name">Popular</div>
-                    <div class="package-bottles">3 Bottles</div>
-                    <div class="package-price-compact">₱13,272</div>
-                    <div class="savings-tag">Save 15%</div>
+                  <div class="quantity-price-display">
+                    <span class="price-per-bottle">₱10,679.99 per bottle</span>
                   </div>
-                </label>
-
-                <label class="package-option-compact">
-                  <input type="radio" name="package" value="professional" data-price="23184">
-                  <div class="package-box">
-                    <div class="package-name">Professional</div>
-                    <div class="package-bottles">6 Bottles</div>
-                    <div class="package-price-compact">₱23,184</div>
-                    <div class="savings-tag">Save 25%</div>
-                  </div>
-                </label>
+                </div>
               </div>
 
               <!-- Contact & Shipping - Compact Grid -->
               <div class="info-grid-compact">
                 <div class="input-group-compact">
                   <label>Full Name *</label>
-                  <input type="text" name="fullname" required placeholder="John Doe">
+                  <input type="text" name="fullname" required placeholder="Juan dela Cruz">
                 </div>
                 
                 <div class="input-group-compact">
                   <label>Email *</label>
-                  <input type="email" name="email" required placeholder="john@example.com">
+                  <input type="email" name="email" required placeholder="juan.delacruz@example.com">
                 </div>
                 
                 <div class="input-group-compact">
                   <label>Phone *</label>
-                  <input type="tel" name="phone" required placeholder="+63 XXX XXX XXXX">
+                  <input type="tel" name="phone" required placeholder="+63 9XX XXX XXXX">
                 </div>
                 
                 <div class="input-group-compact">
@@ -178,7 +166,7 @@
                 
                 <div class="input-group-compact full-width">
                   <label>Complete Address *</label>
-                  <input type="text" name="address" required placeholder="Street, City, Postal Code">
+                  <input type="text" name="address" required placeholder="Street, Barangay, City, Province">
                 </div>
               </div>
 
@@ -206,8 +194,8 @@
               <h3>Order Summary</h3>
               
               <div class="summary-item">
-                <span id="selectedPackageName">Popular Package (3 Bottles)</span>
-                <span id="selectedPackagePrice">₱13,272</span>
+                <span id="selectedPackageName">Starter Package (1 Bottle)</span>
+                <span id="selectedPackagePrice">₱10,679.99</span>
               </div>
               
               <div class="summary-item">
@@ -219,17 +207,7 @@
               
               <div class="summary-total">
                 <span>Total</span>
-                <span id="totalPrice">₱13,272</span>
-              </div>
-
-              <div class="guarantee-badge">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <div>
-                  <div class="guarantee-title">60-Day Money Back Guarantee</div>
-                  <div class="guarantee-text">100% satisfaction or full refund</div>
-                </div>
+                <span id="totalPrice">₱10,679.99</span>
               </div>
 
               <div class="trust-badges-stack">
@@ -256,7 +234,7 @@
 
               <div class="contact-support">
                 <p>Need help?</p>
-                <a href="mailto:swinetech.ph@gmail.com">swinetech.ph@gmail.com</a>
+                <a href="mailto:autopax1@swinetech.ph">autopax1@swinetech.ph</a>
               </div>
             </div>
           </div>
@@ -598,15 +576,16 @@
 
               <div class="pricing-comparison">
                 <div class="price-row">
-                  <span>Regular Price:</span>
-                  <span class="old-price">₱9,968</span>
+                  <span>SRP (Suggested Retail Price):</span>
+                  <span class="old-price">₱10,679.99</span>
+                  <span class="price-unit">per bottle</span>
                 </div>
                 <div class="price-row special">
                   <span>Your Special Price Today:</span>
-                  <span class="new-price">₱7,224</span>
+                  <span class="new-price" id="specialPrice">₱10,679.99</span>
                 </div>
-                <div class="savings-highlight">
-                  You Save: ₱2,744 (28% OFF)
+                <div class="savings-highlight" id="savingsAmount">
+                  You Save: ₱0.00 (0% OFF)
                 </div>
               </div>
             </div>
@@ -744,6 +723,6 @@
       </div>
     </footer>
 
-    <script src="scripts/order.js?v=3"></script>
+    <script src="scripts/order.js?v=7"></script>
   </body>
 </html>

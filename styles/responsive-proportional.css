@@ -1,0 +1,282 @@
+/**
+ * Proportional Scaling System
+ * Ensures all elements scale proportionally while maintaining layout structure
+ */
+
+/* Base scaling factor - scales from 1200px (desktop) down to 320px (mobile) */
+:root {
+  --scale-base: 1200px;
+  --scale-factor: min(1, max(0.27, 100vw / var(--scale-base))); /* 0.27 at 320px, 1 at 1200px+ */
+}
+
+/* Proportional spacing that scales with viewport */
+:root {
+  --spacing-xs-scaled: calc(var(--spacing-xs) * var(--scale-factor));
+  --spacing-sm-scaled: calc(var(--spacing-sm) * var(--scale-factor));
+  --spacing-md-scaled: calc(var(--spacing-md) * var(--scale-factor));
+  --spacing-lg-scaled: calc(var(--spacing-lg) * var(--scale-factor));
+  --spacing-xl-scaled: calc(var(--spacing-xl) * var(--scale-factor));
+  --spacing-xxl-scaled: calc(var(--spacing-xxl) * var(--scale-factor));
+}
+
+/* Ensure all images scale proportionally */
+img,
+picture,
+video,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Proportional container padding */
+@media (max-width: 1024px) {
+  :root {
+    --container-padding: clamp(1rem, 3vw, 1.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-padding: clamp(0.75rem, 2.5vw, 1rem);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-padding: clamp(0.5rem, 2vw, 0.75rem);
+  }
+}
+
+/* Hero Section - Proportional Scaling */
+.hero {
+  padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl)) var(--container-padding);
+  min-height: clamp(60vh, 80vh, 90vh);
+  padding-top: clamp(calc(var(--spacing-md) + 40px), calc(4vw + 40px), calc(var(--spacing-xl) + 60px));
+}
+
+.hero__container {
+  display: grid !important; /* Ensure grid layout on all sizes */
+  grid-template-columns: 1.3fr 0.7fr !important; /* Text left, bottle right */
+  gap: clamp(var(--spacing-sm), 3vw, var(--spacing-lg)) !important;
+  padding-left: 0 !important; /* Remove padding - hero section handles margins */
+  padding-right: 0 !important; /* Remove padding - hero section handles margins */
+  flex-direction: row !important; /* Override any flex column rules */
+  width: 100% !important; /* Ensure full width for proper centering */
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .hero__container {
+    display: grid !important; /* Force grid on mobile */
+    grid-template-columns: 1.2fr 0.8fr !important; /* Adjusted ratio on mobile - keep side-by-side */
+    flex-direction: row !important; /* Ensure row layout */
+  }
+  
+  .hero__content {
+    grid-column: 1 !important; /* Force content to first column */
+    order: 1 !important;
+  }
+  
+  .hero__image {
+    grid-column: 2 !important; /* Force image to second column */
+    order: 2 !important;
+  }
+}
+
+.hero__bottle {
+  width: auto !important; /* Don't force 100% width */
+  max-width: clamp(120px, 15vw, 200px) !important; /* Limit size on all screens */
+  height: auto;
+  object-fit: contain;
+  transform: rotate(-3deg);
+}
+
+/* ASF Section - Proportional Scaling */
+.asf-section {
+  padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl)) var(--container-padding);
+  padding-bottom: clamp(var(--spacing-sm), 3vw, var(--spacing-lg));
+}
+
+.asf-section__container {
+  max-width: clamp(280px, 90vw, var(--container-max-width));
+}
+
+/* Video Section - Proportional Scaling */
+.video-section {
+  padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl)) var(--container-padding);
+  padding-top: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
+}
+
+.video-section__player {
+  max-width: clamp(280px, 90vw, 800px);
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
+}
+
+.video-section__thumbnail {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+/* Mechanism Section - Proportional Scaling */
+.mechanism-section {
+  padding: clamp(var(--spacing-lg), 5vw, var(--spacing-xxl)) var(--container-padding);
+}
+
+.mechanism-section__container {
+  gap: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
+}
+
+.cell-animation {
+  height: clamp(250px, 35vw, 400px);
+  padding: clamp(10px, 2vw, 20px);
+}
+
+.cell-animation__container {
+  max-width: clamp(280px, 45vw, 600px);
+}
+
+/* Proof Section - Proportional Scaling */
+.proof-section {
+  padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl)) var(--container-padding);
+}
+
+.proof-section__container {
+  gap: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
+}
+
+.carousel {
+  padding: 0 clamp(20px, 3vw, 40px);
+}
+
+.carousel__image {
+  width: 100%;
+  height: auto;
+  min-height: clamp(200px, 30vh, 400px);
+  object-fit: contain;
+}
+
+/* Buttons - Proportional Scaling */
+.btn {
+  font-size: clamp(0.7rem, 2.2vw, 0.9375rem);
+  padding: clamp(0.55rem, 1.6vw, 0.875rem) clamp(0.7rem, 2.1vw, 1rem);
+  min-height: clamp(38px, 5vw, 48px);
+  min-width: clamp(120px, 20vw, 200px);
+}
+
+.btn--large {
+  font-size: clamp(0.8rem, 2.5vw, 1rem);
+  padding: clamp(0.7rem, 2vw, 1rem) clamp(0.9rem, 2.8vw, 1.5rem);
+  min-height: clamp(42px, 5.5vw, 52px);
+}
+
+/* Headings - Proportional Scaling */
+h1, .hero__heading {
+  font-size: clamp(1.25rem, 4vw, 3.5rem);
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
+}
+
+h2, 
+.asf-section__heading,
+.video-section__heading,
+.mechanism-section__heading,
+.proof-section__heading {
+  font-size: clamp(1.25rem, 3.5vw, 3rem);
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
+}
+
+/* Text - Proportional Scaling */
+p,
+.hero__subtitle,
+.asf-section__text,
+.mechanism-section__text,
+.video-section__text {
+  font-size: clamp(0.875rem, 2vw, 1.125rem);
+  line-height: clamp(1.5, 1.6, 1.8);
+  margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
+}
+
+/* Icons and small elements - Proportional Scaling */
+.mechanism-section__check,
+.video-section__play-icon {
+  width: clamp(18px, 4vw, 24px);
+  height: clamp(18px, 4vw, 24px);
+}
+
+/* Grid gaps - Proportional Scaling */
+.grid,
+[class*="__container"] {
+  gap: clamp(var(--spacing-sm), 3vw, var(--spacing-xl));
+}
+
+/* Maintain aspect ratios for all media */
+img[src*=".png"],
+img[src*=".jpg"],
+img[src*=".jpeg"],
+img[src*=".svg"] {
+  aspect-ratio: attr(width) / attr(height);
+  object-fit: contain;
+}
+
+/* Ensure all sections maintain proportional spacing */
+section {
+  padding-top: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
+  padding-bottom: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* Maintain layout structure on all screen sizes */
+@media (max-width: 1024px) {
+  /* Hero section keeps side-by-side layout with adjusted ratio */
+  .hero__container {
+    grid-template-columns: 1.2fr 0.8fr !important; /* Keep side-by-side on tablet */
+  }
+  
+  .mechanism-section__container,
+  .proof-section__container {
+    grid-template-columns: 1fr 1fr; /* Maintain 2-column layout */
+    gap: clamp(var(--spacing-sm), 3vw, var(--spacing-lg));
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hero section keeps side-by-side layout on all sizes */
+  .hero__container {
+    grid-template-columns: 1.2fr 0.8fr !important; /* Keep side-by-side on tablet/mobile */
+  }
+  
+  .mechanism-section__container,
+  .proof-section__container {
+    grid-template-columns: 1fr; /* Single column on mobile for other sections */
+    gap: clamp(var(--spacing-sm), 2.5vw, var(--spacing-md));
+  }
+  
+  .cell-animation {
+    height: clamp(300px, 50vw, 550px);
+  }
+  
+  .cell-animation__container {
+    max-width: clamp(300px, 50vw, 550px);
+  }
+}
+
+@media (max-width: 480px) {
+  .cell-animation {
+    height: clamp(280px, 55vw, 500px);
+  }
+  
+  .cell-animation__container {
+    max-width: clamp(280px, 55vw, 500px);
+  }
+  
+  .carousel {
+    padding: 0 clamp(15px, 2.5vw, 25px);
+  }
+  
+  .carousel__image {
+    min-height: clamp(180px, 25vh, 300px);
+  }
+}

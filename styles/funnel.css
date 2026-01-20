@@ -200,6 +200,100 @@
 }
 
 /* ============================================
+   QUANTITY SELECTOR COMPACT
+   ============================================ */
+.quantity-selector-compact {
+  margin-bottom: var(--spacing-lg);
+}
+
+.quantity-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 0;
+  background-color: var(--bg-white);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.quantity-input-wrapper:focus-within {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(0, 125, 235, 0.1);
+}
+
+.quantity-btn {
+  background-color: var(--accent-blue);
+  color: var(--text-light);
+  border: none;
+  width: 44px; /* Universal Design: Minimum touch target */
+  height: 44px; /* Universal Design: Minimum touch target */
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
+}
+
+.quantity-btn:first-of-type {
+  border-radius: 6px 0 0 6px;
+}
+
+.quantity-btn:last-of-type {
+  border-radius: 0 6px 6px 0;
+}
+
+.quantity-btn:hover {
+  background-color: #0066cc;
+}
+
+.quantity-btn:active {
+  transform: scale(0.95);
+}
+
+.quantity-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.quantity-input {
+  flex: 1;
+  border: none;
+  padding: clamp(0.75rem, 2vw, 1rem);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-dark);
+  text-align: center;
+  background-color: transparent;
+  outline: none;
+  -moz-appearance: textfield; /* Remove spinner in Firefox */
+}
+
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none; /* Remove spinner in Chrome/Safari */
+  margin: 0;
+}
+
+.quantity-price-display {
+  margin-top: var(--spacing-xs);
+  text-align: center;
+}
+
+.price-per-bottle {
+  font-size: clamp(0.875rem, 2vw, 1rem);
+  color: var(--text-dark);
+  opacity: 0.7;
+}
+
+/* ============================================
    INFO GRID COMPACT
    ============================================ */
 .info-grid-compact {
@@ -727,6 +821,13 @@
 .old-price {
   text-decoration: line-through;
   opacity: 0.6;
+}
+
+.price-unit {
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  opacity: 0.7;
+  margin-left: 0.25rem;
+  font-weight: var(--font-weight-normal);
 }
 
 .new-price {

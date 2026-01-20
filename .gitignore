@@ -33,3 +33,9 @@ npm-debug.log*
 # Temporary files
 *.tmp
 *.temp
+
+# Large video files
+*.mp4
+*.mov
+*.avi
+swintech BRAND VIDEO eng FINAL W SUBS.mp4

@@ -15,7 +15,8 @@
     <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png" />
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" href="styles/main.css?v=33" />
+    <link rel="stylesheet" href="styles/main.css?v=36" />
+    <link rel="stylesheet" href="styles/responsive-proportional.css?v=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -73,16 +74,13 @@
                   </li>
                 </ul>
               </li>
-              <li class="nav__item--dropdown">
+              <li>
                 <a
-                  href="#faq"
-                  class="nav__link nav__link--dropdown"
+                  href="bulk-order.html#faq"
+                  class="nav__link"
                   role="menuitem"
-                  aria-haspopup="true"
-                  aria-expanded="false"
                 >
                   FAQ
-                  <span class="nav__dropdown-arrow" aria-hidden="true">▼</span>
                 </a>
               </li>
               <li class="nav__separator" aria-hidden="true">|</li>
@@ -129,20 +127,60 @@
               >
               <span>Immune Support against ASF and other viruses.</span>
             </p>
-            <a
-              href="order-form.html"
-              class="btn btn--blue btn--large"
-              aria-label="Secure my supply of Autopax 1"
-            >
-              SECURE MY SUPPLY
-            </a>
+            <div class="hero__cta-group">
+              <a
+                href="order-form.html"
+                class="btn btn--blue btn--large"
+                aria-label="Secure my supply of Autopax 1"
+              >
+                SECURE MY SUPPLY
+              </a>
+              <a
+                href="bulk-order.html"
+                class="btn btn--outline btn--large"
+                aria-label="Partner with us"
+              >
+                PARTNER WITH US
+              </a>
+            </div>
           </div>
           <div class="hero__image">
-            <img
-              src="assets/Section 1/Bottle.png"
-              alt="Autopax 1 - Swine Derived Glycoprotein"
-              class="hero__bottle"
-            />
+            <div class="hero__carousel">
+              <div class="hero__carousel-track">
+                <div class="hero__carousel-slide hero__carousel-slide--active">
+                  <img
+                    src="assets/Section 1/Bottle.png"
+                    alt="Autopax 1 - Swine Derived Glycoprotein"
+                    class="hero__bottle"
+                  />
+                </div>
+                <!-- Additional slides will be added here when you upload more objects -->
+              </div>
+              <div class="hero__carousel-controls" aria-label="Hero carousel navigation">
+                <button
+                  class="hero__carousel-btn hero__carousel-btn--prev"
+                  aria-label="Previous image"
+                  id="heroCarouselPrev"
+                >
+                  <img
+                    src="assets/Section 5/Arrow.png"
+                    alt="Previous"
+                    class="hero__carousel-arrow hero__carousel-arrow--prev"
+                  />
+                </button>
+                <button
+                  class="hero__carousel-btn hero__carousel-btn--next"
+                  aria-label="Next image"
+                  id="heroCarouselNext"
+                >
+                  <img
+                    src="assets/Section 5/Arrow.png"
+                    alt="Next"
+                    class="hero__carousel-arrow hero__carousel-arrow--next"
+                  />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -220,32 +258,17 @@
             </p>
             <ul class="mechanism-section__benefits" role="list">
               <li class="mechanism-section__benefit">
-                <img
-                  src="assets/Section 4/Hand Icon.png"
-                  alt=""
-                  class="mechanism-section__check"
-                  aria-hidden="true"
-                />
+                <i class="fas fa-check mechanism-section__check" aria-hidden="true"></i>
                 <span
                   >Boosts the innate immunity arm of the immune system.</span
                 >
               </li>
               <li class="mechanism-section__benefit">
-                <img
-                  src="assets/Section 4/Hand Icon.png"
-                  alt=""
-                  class="mechanism-section__check"
-                  aria-hidden="true"
-                />
+                <i class="fas fa-check mechanism-section__check" aria-hidden="true"></i>
                 <span>Inhibits the replication of viruses.</span>
               </li>
               <li class="mechanism-section__benefit">
-                <img
-                  src="assets/Section 4/Hand Icon.png"
-                  alt=""
-                  class="mechanism-section__check"
-                  aria-hidden="true"
-                />
+                <i class="fas fa-check mechanism-section__check" aria-hidden="true"></i>
                 <span>Activates effector cells of innate immunity.</span>
               </li>
             </ul>
@@ -261,18 +284,9 @@
         <div class="proof-section__container">
           <div class="proof-section__content">
             <h2 id="proof-heading" class="proof-section__heading">
-              Tested in the
-              <strong class="proof-section__heading--red">Red Zones.</strong>
-              Proven in the
-              <strong class="proof-section__heading--blue">Lab.</strong>
+              <span class="proof-section__heading-line">Tested in the <strong class="proof-section__heading--red">Red Zones.</strong></span>
+              <span class="proof-section__heading-line">Proven in the <strong class="proof-section__heading--blue">Lab.</strong></span>
             </h2>
-            <a
-              href="javascript:void(0)"
-              class="btn btn--blue proof-section__learn-more-btn"
-              aria-label="Learn more about certificates"
-            >
-              LEARN MORE
-            </a>
           </div>
           <div class="proof-section__carousel">
             <div
@@ -518,6 +532,13 @@
               </div>
             </div>
           </div>
+          <a
+            href="javascript:void(0)"
+            class="btn btn--blue proof-section__learn-more-btn"
+            aria-label="Learn more about certificates"
+          >
+            LEARN MORE
+          </a>
         </div>
       </section>
 
@@ -533,6 +554,25 @@
           </button>
           <div class="certificate-modal__image-container">
             <img id="certificateModalImage" src="" alt="" class="certificate-modal__image" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Modal -->
+      <div id="videoModal" class="video-modal" aria-hidden="true" role="dialog" aria-labelledby="videoModalTitle">
+        <div class="video-modal__overlay"></div>
+        <div class="video-modal__content">
+          <button class="video-modal__close" id="closeVideoModal" aria-label="Close video modal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          <div class="video-modal__video-container">
+            <video id="videoModalPlayer" class="video-modal__video" controls preload="metadata">
+              <source src="swintech BRAND VIDEO eng FINAL W SUBS.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
       </div>
