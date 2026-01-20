@@ -2063,14 +2063,35 @@ main {
   overflow: hidden;
 }
 
+/* Ensure section has enough height on larger screens */
+@media (min-width: 1025px) {
+  .product-section {
+    min-height: 900px; /* Increased minimum height on desktop */
+  }
+}
+
+@media (min-width: 1440px) {
+  .product-section {
+    min-height: 1000px; /* Even more height on large screens */
+  }
+}
+
+@media (min-width: 1920px) {
+  .product-section {
+    min-height: 1100px; /* Maximum height on extra large screens */
+  }
+}
+
 /* Desktop and larger screens - ensure features are well below product */
 @media (min-width: 1025px) {
   .product-section__features {
-    bottom: clamp(15%, 18vw, 25%); /* Increased spacing to position features well below product packaging on desktop */
+    /* Use fixed minimum spacing combined with percentage for better control on larger screens */
+    bottom: max(220px, 28%) !important; /* Minimum 220px from bottom, or 28% whichever is larger */
+    position: absolute !important;
   }
 
   .product-section__container {
-    padding-bottom: clamp(8rem, 15vw, 12rem); /* Extra bottom padding on desktop */
+    padding-bottom: clamp(14rem, 22vw, 20rem) !important; /* Extra bottom padding on desktop */
     padding-top: clamp(3rem, 6vw, 5rem);
   }
   
@@ -2082,11 +2103,22 @@ main {
 /* Large desktop screens - even more spacing */
 @media (min-width: 1440px) {
   .product-section__features {
-    bottom: clamp(18%, 20vw, 28%); /* Even more space on very large screens */
+    bottom: max(300px, 32%) !important; /* Minimum 300px from bottom on large screens */
   }
   
   .product-section__container {
-    padding-bottom: clamp(10rem, 18vw, 14rem);
+    padding-bottom: clamp(16rem, 26vw, 22rem) !important;
+  }
+}
+
+/* Extra large screens - maximum spacing */
+@media (min-width: 1920px) {
+  .product-section__features {
+    bottom: max(380px, 36%) !important; /* Minimum 380px from bottom on extra large screens */
+  }
+  
+  .product-section__container {
+    padding-bottom: clamp(18rem, 30vw, 26rem) !important;
   }
 }
 
