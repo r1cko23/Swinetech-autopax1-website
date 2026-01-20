@@ -136,7 +136,7 @@ test.describe('Navigation Tests - All Screen Sizes', () => {
           await page.waitForTimeout(300);
         }
 
-        const orderFormLink = page.getByRole('menuitem', { name: 'Order Form' });
+        const orderFormLink = page.locator('.nav__link--dropdown').filter({ hasText: 'Order Form' }).first();
         await expect(orderFormLink).toBeVisible();
 
         if (viewport.width <= 768) {
@@ -177,6 +177,15 @@ test.describe('Navigation Tests - All Screen Sizes', () => {
         await page.goto('http://localhost:8000/index.html');
         await page.waitForLoadState('domcontentloaded');
         await page.waitForTimeout(500);
+
+        // Open mobile menu if needed
+        if (viewport.width <= 768) {
+          const menuToggle = page.getByRole('button', { name: 'Toggle navigation menu' });
+          if (await menuToggle.isVisible()) {
+            await menuToggle.click();
+            await page.waitForTimeout(300);
+          }
+        }
 
         // Use more specific selector for nav phone link
         const phoneLink = page.locator('.nav__phone').first();

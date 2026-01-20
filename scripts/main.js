@@ -979,25 +979,68 @@
 
     if (!videoModal || !videoPlayer) return;
 
+    let playPromise = null;
+    let isClosing = false;
+
     // Open modal function
     function openVideoModal() {
+      isClosing = false;
       videoModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
       
-      // Reset video to beginning and play
+      // Reset video to beginning
       videoPlayer.currentTime = 0;
-      videoPlayer.play().catch((error) => {
-        console.error("Error playing video:", error);
+      
+      // Play video and store the promise to handle race conditions
+      playPromise = videoPlayer.play();
+      
+      // Handle play promise errors gracefully
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            // Video started playing successfully
+            playPromise = null;
+          })
+          .catch((error) => {
+            // Only log if it's not an abort error (which is expected when closing quickly)
+            if (error.name !== "AbortError" && !isClosing) {
+              console.error("Error playing video:", error);
+            }
+            playPromise = null;
+          });
+      }
+      
+      // Focus management for accessibility - focus close button after modal opens
+      requestAnimationFrame(() => {
+        if (closeBtn && videoModal.getAttribute("aria-hidden") === "false") {
+          closeBtn.focus();
+        }
       });
     }
 
     // Close modal function
     function closeVideoModal() {
+      isClosing = true;
+      
+      // Remove focus from modal elements before hiding (fixes aria-hidden accessibility issue)
+      if (document.activeElement && videoModal.contains(document.activeElement)) {
+        document.activeElement.blur();
+      }
+      
       videoModal.setAttribute("aria-hidden", "true");
       document.body.style.overflow = "";
       
+      // If play() is still pending, wait for it or handle the abort
+      if (playPromise !== null) {
+        playPromise.catch(() => {
+          // Ignore abort errors when closing
+        });
+      }
+      
       // Pause video when modal closes
-      videoPlayer.pause();
+      if (!videoPlayer.paused) {
+        videoPlayer.pause();
+      }
       videoPlayer.currentTime = 0;
     }
 
@@ -1027,9 +1070,9 @@
       }
     });
 
-    // Pause video when modal is closed (in case user clicks outside)
+    // Pause video when modal transition completes (only if still closed)
     videoModal.addEventListener("transitionend", function () {
-      if (videoModal.getAttribute("aria-hidden") === "true") {
+      if (videoModal.getAttribute("aria-hidden") === "true" && !videoPlayer.paused) {
         videoPlayer.pause();
         videoPlayer.currentTime = 0;
       }
