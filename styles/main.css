@@ -2083,7 +2083,8 @@ main {
 }
 
 /* Desktop and larger screens - ensure features are well below product */
-@media (min-width: 1025px) {
+/* Laptop and desktop screens - push features down more */
+@media (min-width: 1024px) {
   .product-section__features {
     /* Push features DOWN by using smaller bottom values - laptop sizes need more space */
     bottom: clamp(0.5%, 2.5vw, 3%) !important; /* Very small bottom = features pushed way down on laptops */
@@ -2123,7 +2124,7 @@ main {
 }
 
 /* Tablet screens - medium spacing */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1023px) {
   .product-section__features {
     bottom: clamp(12%, 15vw, 22%); /* Position features below product on tablet */
   }
