@@ -400,6 +400,12 @@ main {
   position: relative;
 }
 
+/* Hide Order menu item - uncomment when orders are active */
+.nav__item--order,
+.nav__item--order-dropdown {
+  display: none !important;
+}
+
 .nav__link--dropdown {
   position: relative;
 }
@@ -1690,13 +1696,16 @@ main {
 .carousel__overlay {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
-  height: 10%; /* Reduced from 15% - smaller overlay */
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(250px, 70vw, 600px); /* Match certificate max-width */
+  max-width: 100%; /* Don't exceed container */
+  height: clamp(30px, 8vh, 50px); /* Proportional height to certificate */
+  max-height: 10%; /* Limit to 10% of certificate height */
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding-bottom: var(--spacing-xs); /* Minimal padding */
+  padding-bottom: clamp(4px, 0.5vh, 8px); /* Minimal padding */
   pointer-events: none;
   z-index: 2;
   opacity: 0;
@@ -1713,14 +1722,14 @@ main {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 100%; /* Full height of overlay (now 10% of slide) */
+  height: 100%; /* Full height of overlay */
   background-color: rgba(128, 128, 128, 0.9); /* Solid grey background - no gradient */
   background-image: none; /* Remove gradient image */
   background-size: cover;
   background-position: center bottom;
   background-repeat: no-repeat;
   opacity: 1;
-  border-radius: 0 0 12px 12px; /* Match certificate rounded corners */
+  border-radius: 0 0 clamp(8px, 1.5vw, 12px) clamp(8px, 1.5vw, 12px); /* Match certificate rounded corners */
 }
 
 .carousel__view-more {
@@ -1728,9 +1737,9 @@ main {
   z-index: 3;
   color: var(--text-light); /* White text */
   font-weight: var(--font-weight-bold);
-  font-size: clamp(0.625rem, 1.2vw, 0.75rem); /* Smaller text */
+  font-size: clamp(0.5rem, 1vw, 0.65rem); /* Smaller text to match certificate size */
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
   text-decoration: underline; /* White underline */
   text-decoration-color: var(--text-light); /* White underline color */
@@ -1739,7 +1748,8 @@ main {
   cursor: pointer;
   transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
   opacity: 1; /* Always visible so users can hover over it */
-  padding: 0.25rem 0.5rem; /* Reduced padding */
+  padding: clamp(2px, 0.3vh, 4px) clamp(4px, 0.5vw, 8px); /* Reduced padding proportional to certificate */
+  white-space: nowrap; /* Prevent text wrapping */
 }
 
 /* Keep white text and underline on hover */
@@ -4024,6 +4034,11 @@ main {
     visibility: visible !important;
     opacity: 1 !important;
   }
+  
+  .carousel__overlay {
+    width: clamp(250px, 65vw, 550px); /* Match certificate max-width on tablet */
+    max-width: 100%;
+  }
 
   .carousel__btn--prev {
     left: -10px;
@@ -4503,6 +4518,11 @@ main {
     display: block !important; /* Ensure images are visible */
     visibility: visible !important;
     opacity: 1 !important;
+  }
+  
+  .carousel__overlay {
+    width: clamp(240px, 60vw, 480px); /* Match certificate max-width on mobile */
+    max-width: 100%;
   }
 
   .carousel__btn--prev {
