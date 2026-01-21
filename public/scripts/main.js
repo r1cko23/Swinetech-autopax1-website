@@ -1918,7 +1918,7 @@
     const orderForm = document.getElementById("orderForm");
     if (!orderForm) return;
 
-    orderForm.addEventListener("submit", function (e) {
+    orderForm.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       // Get form data
@@ -1935,12 +1935,41 @@
         return;
       }
 
-      // All orders go to bulk order page
-      // Navigate to bulk order page
-      window.location.href = "/Order/bulk";
+      // Disable submit button to prevent double submission
+      const submitButton = orderForm.querySelector('button[type="submit"]');
+      const originalButtonText = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
 
-      // Reset form
-      orderForm.reset();
+      try {
+        // Send email via API
+        const response = await fetch("/api/send-order-email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || "Failed to send email");
+        }
+
+        // Success - show confirmation message
+        alert("Thank you! Your inquiry has been sent successfully. We will contact you shortly at autopax1@swinetech.ph");
+        
+        // Reset form
+        orderForm.reset();
+      } catch (error) {
+        console.error("Error sending email:", error);
+        alert("There was an error sending your inquiry. Please try again or contact us directly at autopax1@swinetech.ph");
+      } finally {
+        // Re-enable submit button
+        submitButton.disabled = false;
+        submitButton.textContent = originalButtonText;
+      }
     });
   }
 
