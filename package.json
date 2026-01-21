@@ -16,7 +16,9 @@
   "type": "commonjs",
   "devDependencies": {
     "@playwright/test": "^1.57.0",
-    "playwright": "^1.57.0"
+    "playwright": "^1.57.0",
+    "sharp": "^0.34.5",
+    "to-ico": "^1.1.5"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.90.1"
