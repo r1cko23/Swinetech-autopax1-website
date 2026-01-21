@@ -30,6 +30,13 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- Auto-redirect to bulk order form -->
+    <script>
+      // Immediately redirect to bulk order form
+      if (window.location.pathname.includes('/Order') && !window.location.pathname.includes('/Order/bulk')) {
+        window.location.replace('/Order/bulk');
+      }
+    </script>
   </head>
   <body class="funnel-page">
     <!-- Header Navigation -->
@@ -53,7 +60,9 @@
                   >Learn</a
                 >
               </li>
-              <li class="nav__item--dropdown">
+              <!-- Order menu item - Hidden until orders are active -->
+              <!--
+              <li class="nav__item--dropdown nav__item--order-dropdown">
                 <a
                   href="/Order"
                   class="nav__link nav__link--dropdown nav__link--active"
@@ -83,6 +92,7 @@
                   FAQ
                 </a>
               </li>
+              -->
               <li class="nav__separator" aria-hidden="true">|</li>
               <li>
                 <a href="#contact" class="nav__link" role="menuitem"

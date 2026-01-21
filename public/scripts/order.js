@@ -181,8 +181,8 @@
       // Log order data (in production, send to server)
       console.log('Order submitted:', orderData);
 
-      // Show success message
-      alert('Thank you for your order! Your order has been received and you will receive a confirmation email shortly.');
+      // Redirect to bulk order form
+      window.location.href = '/Order/bulk';
     });
   }
 
@@ -331,8 +331,8 @@
     // Log order data (in production, send to server)
     console.log('Order submitted:', orderData);
 
-    // Show success message or redirect
-    alert('Thank you for your order! Your order has been received and you will receive a confirmation email shortly.');
+    // Redirect to bulk order form
+    window.location.href = '/Order/bulk';
     
     // In production, you would:
     // 1. Send orderData to your backend API
