@@ -3,8 +3,8 @@ const toIco = require('to-ico');
 const fs = require('fs');
 const path = require('path');
 
-const logoPath = path.join(__dirname, '..', 'Swine Tech_Iconic_Logo.png');
-const outputDir = __dirname.replace('scripts', '');
+const logoPath = path.join(__dirname, '..', 'logos', 'Swine Tech_Iconic_Logo.png');
+const outputDir = path.join(__dirname, '..', 'favicons');
 
 async function generateFavicon() {
   try {
@@ -15,6 +15,11 @@ async function generateFavicon() {
     }
 
     console.log('Generating favicons from Swine Tech Iconic Logo...');
+
+    // Ensure output directory exists
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
 
     // Generate 16x16 favicon
     await sharp(logoPath)
@@ -75,7 +80,7 @@ async function generateFavicon() {
     const ico16 = await sharp(logoPath)
       .resize(16, 16, {
         fit: 'contain',
-        background: { r: 0, g: 0, b: 0, alpha: 1 }
+        background: { r: 255, g: 255, b: 255, alpha: 1 } // White background
       })
       .png()
       .toBuffer();
@@ -83,7 +88,7 @@ async function generateFavicon() {
     const ico32 = await sharp(logoPath)
       .resize(32, 32, {
         fit: 'contain',
-        background: { r: 0, g: 0, b: 0, alpha: 1 }
+        background: { r: 255, g: 255, b: 255, alpha: 1 } // White background
       })
       .png()
       .toBuffer();
@@ -91,7 +96,7 @@ async function generateFavicon() {
     const ico48 = await sharp(logoPath)
       .resize(48, 48, {
         fit: 'contain',
-        background: { r: 0, g: 0, b: 0, alpha: 1 }
+        background: { r: 255, g: 255, b: 255, alpha: 1 } // White background
       })
       .png()
       .toBuffer();

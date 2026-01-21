@@ -8,7 +8,8 @@
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "test:visual": "playwright test visual-test.spec.js",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "generate-favicon": "node public/scripts/generate-favicon.js"
   },
   "keywords": [],
   "author": "",
