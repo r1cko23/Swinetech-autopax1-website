@@ -400,10 +400,50 @@ main {
   position: relative;
 }
 
-/* Hide Order menu item - uncomment when orders are active */
-.nav__item--order,
-.nav__item--order-dropdown {
-  display: none !important;
+/* Disabled Order menu item - Soon */
+.nav__item--order-disabled {
+  position: relative;
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.nav__item--order-disabled .nav__link {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+  min-height: 44px; /* Match other nav links */
+  line-height: 1.2;
+  padding: var(--spacing-xs);
+  margin: -4.5px 0 0 0;
+  height: 44px; /* Exact match to other nav links */
+}
+
+.nav__item--order-disabled .nav__link:hover {
+  opacity: 1;
+}
+
+.nav__soon {
+  display: block;
+  font-size: 0.45em;
+  color: #999;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  line-height: 0.8;
+  margin-top: -12px;
+  text-align: center;
+  height: auto;
+  padding: 0;
 }
 
 .nav__link--dropdown {

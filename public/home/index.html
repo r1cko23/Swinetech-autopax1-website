@@ -53,39 +53,18 @@
                   >Learn</a
                 >
               </li>
-              <!-- Order menu item - Hidden until orders are active -->
-              <!--
-              <li class="nav__item--dropdown nav__item--order-dropdown">
-                <a
-                  href="/Order"
-                  class="nav__link nav__link--dropdown"
-                  role="menuitem"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  id="orderFormDropdown"
-                >
-                  Order
-                  <span class="nav__dropdown-arrow" aria-hidden="true">▼</span>
-                </a>
-                <ul class="nav__dropdown-menu" role="menu" aria-labelledby="orderFormDropdown">
-                  <li role="none">
-                    <a href="/Order" class="nav__dropdown-link nav__dropdown-link--active" role="menuitem">Small Order Form</a>
-                  </li>
-                  <li role="none">
-                    <a href="/Order/bulk" class="nav__dropdown-link" role="menuitem">Bulk Order Form</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a
-                  href="/Order/bulk#faq"
+              <!-- Order menu item - Disabled (Soon) -->
+              <li class="nav__item--order-disabled">
+                <span
                   class="nav__link"
                   role="menuitem"
+                  aria-disabled="true"
+                  tabindex="-1"
                 >
-                  FAQ
-                </a>
+                  Order
+                </span>
+                <span class="nav__soon">SOON</span>
               </li>
-              -->
               <li class="nav__separator" aria-hidden="true">|</li>
               <li>
                 <a href="#contact" class="nav__link" role="menuitem"

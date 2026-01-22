@@ -67,6 +67,9 @@
 
     // Function to change cell color from red to blue (one-way, not reversible)
     function changeCellToBlue(cellIndex, cellImg, wrapper, clickEvent) {
+      // #region agent log
+      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:69',message:'changeCellToBlue called',data:{cellIndex,hasClickEvent:!!clickEvent},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B,C,D,E,F'})}).catch(()=>{});
+      // #endregion
       const cellData = window.cellWrappers[cellIndex];
       if (!cellData) return;
 
@@ -80,6 +83,9 @@
 
       // Get click position relative to the cell
       const rect = wrapper.getBoundingClientRect();
+      // #region agent log
+      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:82',message:'Before animation - container dimensions',data:{cellWidth:rect.width,cellHeight:rect.height,containerWidth:container.offsetWidth,containerHeight:container.offsetHeight,bodyScrollWidth:document.body.scrollWidth,bodyScrollHeight:document.body.scrollHeight,bodyClientWidth:document.body.clientWidth,bodyClientHeight:document.body.clientHeight},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B,C'})}).catch(()=>{});
+      // #endregion
       const clickX = clickEvent ? clickEvent.clientX - rect.left : rect.width / 2;
       const clickY = clickEvent ? clickEvent.clientY - rect.top : rect.height / 2;
       const centerX = rect.width / 2;
@@ -135,7 +141,9 @@
             const maxSize = Math.max(rect.width, rect.height) * (3.2 + i * 0.4); // Larger ripples
             const scaleX = 1.05 + (i * 0.04); // More subtle scaling
             const scaleY = 0.95 - (i * 0.03);
-            
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:135',message:'Ripple animation starting',data:{rippleIndex:i,maxSize,cellWidth:rect.width,cellHeight:rect.height,containerWidth:container.offsetWidth,containerHeight:container.offsetHeight},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B'})}).catch(()=>{});
+            // #endregion
             // Ultra-smooth easing for fluid motion
             ripple.style.transition = `width 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
               height 1.4s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -143,6 +151,9 @@
               transform 1.4s cubic-bezier(0.16, 1, 0.3, 1)`;
             ripple.style.width = `${maxSize}px`;
             ripple.style.height = `${maxSize}px`;
+            // #region agent log
+            fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:145',message:'After ripple size set',data:{bodyScrollWidth:document.body.scrollWidth,bodyScrollHeight:document.body.scrollHeight,bodyClientWidth:document.body.clientWidth,bodyClientHeight:document.body.clientHeight},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A,B,C'})}).catch(()=>{});
+            // #endregion
             ripple.style.opacity = "0";
             // Smooth organic scaling with gentle rotation
             ripple.style.transform = `translate(-50%, -50%) scale(${scaleX}, ${scaleY}) rotate(${i * 4}deg)`;
@@ -175,10 +186,16 @@
 
       // Transition to blue with ultra-smooth liquify effect
       setTimeout(() => {
+        // #region agent log
+        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:177',message:'Before image source change',data:{currentSrc:cellImg.src,currentOpacity:cellImg.style.opacity,hasTransition:!!cellImg.style.transition},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E,F'})}).catch(()=>{});
+        // #endregion
         // Switch image source from red to blue
         cellImg.src = `assets/Section 4/Blue Cells/Cell_${cellIndex + 1}.png`;
         cellImg.classList.add("cell-blue");
         cellImg.classList.remove("cell-red");
+        // #region agent log
+        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:180',message:'After image source change',data:{newSrc:cellImg.src,opacity:cellImg.style.opacity,bodyScrollWidth:document.body.scrollWidth,bodyScrollHeight:document.body.scrollHeight},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'E,F'})}).catch(()=>{});
+        // #endregion
 
         // Update wrapper state and make it non-clickable
         wrapper.setAttribute("data-cell-state", "blue");
@@ -282,6 +299,9 @@
       cell.style.objectFit = "contain";
       cell.style.pointerEvents = "none"; // Prevent image from interfering with click
       cell.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+      // #region agent log
+      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:283',message:'Wrapper styles check',data:{userSelect:window.getComputedStyle(wrapper).userSelect,outline:window.getComputedStyle(wrapper).outline,hasUserSelectStyle:wrapper.style.userSelect},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
+      // #endregion
 
       wrapper.appendChild(cell);
       container.appendChild(wrapper);
@@ -982,8 +1002,8 @@
     let isClosing = false;
 
     // YouTube video IDs
-    const brandVideoId = "4X285FkQPoI"; // Brand video: https://www.youtube.com/watch?v=4X285FkQPoI
-    const demoVideoId = "4stLX_ZbTXU"; // Demo video: https://www.youtube.com/watch?v=4stLX_ZbTXU
+    const brandVideoId = "CoDg3M7b_D4"; // Brand video: https://www.youtube.com/watch?v=CoDg3M7b_D4
+    const demoVideoId = "VNR2QtUhB60"; // Demo video: https://www.youtube.com/watch?v=VNR2QtUhB60&feature=youtu.be
 
     /**
      * Get YouTube embed URL from video ID
@@ -2273,4 +2293,36 @@
 
   // Start initialization
   init();
+
+  // Debug navigation alignment
+  function debugNavAlignment() {
+    setTimeout(() => {
+      const homeLink = document.querySelector('a[href="#home"]');
+      const learnLink = document.querySelector('a[href="infographics.html"], a[href="/Learn"], a[href*="Learn"]');
+      const orderLink = document.querySelector('.nav__item--order-disabled .nav__link');
+      
+      if (!homeLink || !learnLink || !orderLink) {
+        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:2295',message:'Nav elements not found',data:{hasHome:!!homeLink,hasLearn:!!learnLink,hasOrder:!!orderLink},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'alignment'})}).catch(()=>{});
+        return;
+      }
+      
+      const homeRect = homeLink.getBoundingClientRect();
+      const learnRect = learnLink.getBoundingClientRect();
+      const orderRect = orderLink.getBoundingClientRect();
+      const homeStyles = window.getComputedStyle(homeLink);
+      const learnStyles = window.getComputedStyle(learnLink);
+      const orderStyles = window.getComputedStyle(orderLink);
+      const orderItem = orderLink.closest('.nav__item--order-disabled');
+      const orderItemStyles = orderItem ? window.getComputedStyle(orderItem) : null;
+      
+      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:2310',message:'Nav alignment debug',data:{home:{top:homeRect.top,height:homeRect.height,padding:homeStyles.padding,margin:homeStyles.margin,lineHeight:homeStyles.lineHeight},learn:{top:learnRect.top,height:learnRect.height,padding:learnStyles.padding,margin:learnStyles.margin,lineHeight:learnStyles.lineHeight},order:{top:orderRect.top,height:orderRect.height,padding:orderStyles.padding,margin:orderStyles.margin,lineHeight:orderStyles.lineHeight,minHeight:orderStyles.minHeight},orderItem:{display:orderItemStyles?.display,alignSelf:orderItemStyles?.alignSelf,alignItems:orderItemStyles?.alignItems},alignment:{homeLearnDiff:Math.abs(homeRect.top-learnRect.top),homeOrderDiff:Math.abs(homeRect.top-orderRect.top)}},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'alignment'})}).catch(()=>{});
+    }, 500);
+  }
+  
+  // Run alignment debug after init
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", debugNavAlignment);
+  } else {
+    debugNavAlignment();
+  }
 })();

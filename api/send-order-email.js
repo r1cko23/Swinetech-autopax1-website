@@ -66,48 +66,162 @@ module.exports = async (req, res) => {
 
     // Format email content
     const emailSubject = `New Bulk Order Inquiry from ${firstName}`;
+    
+    // Get the site URL from environment or use default
+    const SITE_URL = process.env.SITE_URL || 'https://www.swinetech.ph';
+    const LOGO_URL = `${SITE_URL}/logos/Swine Tech_Iconic_Logo.png`;
+    
     const emailHtml = `
       <!DOCTYPE html>
       <html>
         <head>
           <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background-color: #0b8d0b; color: white; padding: 20px; text-align: center; }
-            .content { background-color: #f9f9f9; padding: 20px; border: 1px solid #ddd; }
-            .field { margin-bottom: 15px; }
-            .label { font-weight: bold; color: #0b8d0b; }
-            .value { margin-top: 5px; padding: 10px; background-color: white; border-left: 3px solid #0b8d0b; }
-            .footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 12px; color: #666; text-align: center; }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { 
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; 
+              line-height: 1.6; 
+              color: #111111; 
+              background-color: #f5f5f5;
+              padding: 20px;
+            }
+            .email-wrapper {
+              max-width: 600px; 
+              margin: 0 auto; 
+              background-color: #ffffff;
+              border-radius: 8px;
+              overflow: hidden;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .header { 
+              background: linear-gradient(135deg, #0b8d0b 0%, #007deb 100%);
+              color: #ffffff; 
+              padding: 30px 20px; 
+              text-align: center; 
+            }
+            .logo-container {
+              margin-bottom: 20px;
+            }
+            .logo {
+              max-width: 200px;
+              height: auto;
+              display: block;
+              margin: 0 auto;
+              background-color: #ffffff;
+              padding: 10px;
+              border-radius: 8px;
+            }
+            .header h1 {
+              font-size: 24px;
+              font-weight: 700;
+              margin: 0;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+            }
+            .header p {
+              font-size: 14px;
+              margin-top: 10px;
+              opacity: 0.95;
+            }
+            .content { 
+              background-color: #ffffff; 
+              padding: 30px 20px; 
+            }
+            .field { 
+              margin-bottom: 20px; 
+            }
+            .label { 
+              font-weight: 700; 
+              color: #0b8d0b; 
+              font-size: 12px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              margin-bottom: 8px;
+              display: block;
+            }
+            .value { 
+              padding: 12px 15px; 
+              background-color: #f5f5f5; 
+              border-left: 4px solid #007deb;
+              border-radius: 4px;
+              color: #111111;
+              font-size: 15px;
+              line-height: 1.5;
+            }
+            .message-value {
+              white-space: pre-wrap;
+              word-wrap: break-word;
+            }
+            .footer { 
+              background-color: #111111;
+              color: #ffffff;
+              padding: 20px; 
+              text-align: center; 
+              font-size: 12px; 
+              line-height: 1.6;
+            }
+            .footer p {
+              margin: 5px 0;
+            }
+            .footer a {
+              color: #007deb;
+              text-decoration: none;
+            }
+            .footer a:hover {
+              text-decoration: underline;
+            }
+            .divider {
+              height: 1px;
+              background: linear-gradient(to right, transparent, #ddd, transparent);
+              margin: 25px 0;
+            }
+            @media only screen and (max-width: 600px) {
+              body { padding: 10px; }
+              .content { padding: 20px 15px; }
+              .header { padding: 20px 15px; }
+              .logo { max-width: 150px; }
+            }
           </style>
         </head>
         <body>
-          <div class="container">
+          <div class="email-wrapper">
             <div class="header">
+              <div class="logo-container">
+                <img src="${LOGO_URL}" alt="Swine Tech Logo" class="logo" />
+              </div>
               <h1>New Bulk Order Inquiry</h1>
+              <p>You have received a new inquiry from your website</p>
             </div>
             <div class="content">
               <div class="field">
-                <div class="label">First Name:</div>
+                <span class="label">First Name</span>
                 <div class="value">${firstName}</div>
               </div>
+              <div class="divider"></div>
               <div class="field">
-                <div class="label">Farm Location:</div>
+                <span class="label">Farm Location</span>
                 <div class="value">${farmLocation}</div>
               </div>
+              <div class="divider"></div>
               <div class="field">
-                <div class="label">Herd Size:</div>
+                <span class="label">Herd Size</span>
                 <div class="value">${herdSize}</div>
               </div>
+              <div class="divider"></div>
               <div class="field">
-                <div class="label">Message:</div>
-                <div class="value">${message.replace(/\n/g, '<br>')}</div>
+                <span class="label">Message</span>
+                <div class="value message-value">${message.replace(/\n/g, '<br>')}</div>
               </div>
             </div>
             <div class="footer">
+              <p><strong>Swine Tech Inc. Philippines</strong></p>
               <p>This email was sent from the Swine Tech website bulk order form.</p>
-              <p>Submitted at: ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' })}</p>
+              <p>Submitted at: ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila', dateStyle: 'long', timeStyle: 'short' })}</p>
+              <p style="margin-top: 15px;">
+                <a href="mailto:autopax1@swinetech.ph">autopax1@swinetech.ph</a> | 
+                <a href="tel:+639569464189">+63 956 946 4189</a>
+              </p>
             </div>
           </div>
         </body>
