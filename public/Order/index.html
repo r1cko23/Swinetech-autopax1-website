@@ -33,8 +33,8 @@
     <!-- Auto-redirect to bulk order form -->
     <script>
       // Immediately redirect to bulk order form
-      if (window.location.pathname.includes('/Order') && !window.location.pathname.includes('/Order/bulk')) {
-        window.location.replace('/Order/bulk');
+      if (window.location.pathname.includes('/Order') && !window.location.pathname.includes('/Inquire')) {
+        window.location.replace('/Inquire');
       }
     </script>
   </head>
@@ -79,13 +79,13 @@
                     <a href="/Order" class="nav__dropdown-link nav__dropdown-link--active" role="menuitem">Small Order Form</a>
                   </li>
                   <li role="none">
-                    <a href="/Order/bulk" class="nav__dropdown-link" role="menuitem">Bulk Order Form</a>
+                    <a href="/Inquire" class="nav__dropdown-link" role="menuitem">Bulk Order Form</a>
                   </li>
                 </ul>
               </li>
               <li>
                 <a
-                  href="/Order/bulk#faq"
+                  href="/Inquire#faq"
                   class="nav__link"
                   role="menuitem"
                 >
@@ -630,7 +630,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="footer" role="contentinfo">
+    <footer id="contact" class="footer" role="contentinfo">
       <div class="footer__container">
         <div class="footer__brand">
           <img
@@ -674,15 +674,6 @@
               aria-label="LinkedIn"
             >
               <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a
-              href="https://www.twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="footer__social-link"
-              aria-label="Twitter"
-            >
-              <i class="fab fa-twitter"></i>
             </a>
           </div>
         </div>

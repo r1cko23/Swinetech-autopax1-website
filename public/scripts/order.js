@@ -182,7 +182,7 @@
       console.log('Order submitted:', orderData);
 
       // Redirect to bulk order form
-      window.location.href = '/Order/bulk';
+      window.location.href = '/Inquire';
     });
   }
 
@@ -332,7 +332,7 @@
     console.log('Order submitted:', orderData);
 
     // Redirect to bulk order form
-    window.location.href = '/Order/bulk';
+    window.location.href = '/Inquire';
     
     // In production, you would:
     // 1. Send orderData to your backend API
@@ -373,7 +373,7 @@
   function becomePartner() {
     
     // Redirect to bulk order form
-    window.location.href = '/Order/bulk';
+    window.location.href = '/Inquire';
   }
 
   // Make functions globally available for onclick handlers

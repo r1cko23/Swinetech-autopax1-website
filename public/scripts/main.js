@@ -1938,22 +1938,59 @@
     const orderForm = document.getElementById("orderForm");
     if (!orderForm) return;
 
+    // Email validation function
+    function isValidEmail(email) {
+      const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+      return emailRegex.test(email);
+    }
+
+    // Phone validation function (must include area code, international format)
+    function isValidPhone(phone) {
+      // Remove spaces and dashes for validation
+      const cleanPhone = phone.replace(/[\s\-]/g, '');
+      // Must start with + and have 7-15 digits after country code
+      // Examples: +63, +1, +44, etc.
+      const phoneRegex = /^\+[1-9]\d{6,14}$/;
+      return phoneRegex.test(cleanPhone);
+    }
+
     orderForm.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       // Get form data
-      const formData = {
-        firstName: document.getElementById("firstName").value.trim(),
-        farmLocation: document.getElementById("farmLocation").value,
-        herdSize: document.getElementById("herdSize").value,
-        message: document.getElementById("message").value.trim(),
-      };
+      const fullName = document.getElementById("fullName")?.value.trim() || '';
+      const location = document.getElementById("location")?.value.trim() || '';
+      const email = document.getElementById("email")?.value.trim() || '';
+      const contactNumber = document.getElementById("contactNumber")?.value.trim() || '';
+      const message = document.getElementById("message")?.value.trim() || '';
 
-      // Validate form
-      if (!formData.firstName || !formData.farmLocation || !formData.herdSize || !formData.message) {
-        alert("Please fill in all required fields.");
+      // Validate required fields
+      if (!fullName || !location || !email || !contactNumber) {
+        alert("Please fill in all required fields (Full Name, Location, E-mail, Contact Number).");
         return;
       }
+
+      // Validate email format
+      if (!isValidEmail(email)) {
+        alert("Please enter a valid email address.");
+        document.getElementById("email").focus();
+        return;
+      }
+
+      // Validate phone number format (must include area code)
+      if (!isValidPhone(contactNumber)) {
+        alert("Please enter a valid contact number with country code (e.g., +63 9XX XXX XXXX, +1 XXX XXX XXXX).");
+        document.getElementById("contactNumber").focus();
+        return;
+      }
+
+      const formData = {
+        fullName: fullName,
+        location: location,
+        email: email,
+        contactNumber: contactNumber,
+        message: message || ''
+      };
 
       // Disable submit button to prevent double submission
       const submitButton = orderForm.querySelector('button[type="submit"]');
@@ -1978,13 +2015,13 @@
         }
 
         // Success - show confirmation message
-        alert("Thank you! Your inquiry has been sent successfully. We will contact you shortly at autopax1@swinetech.ph");
+        alert("Thank you! Your update request has been sent successfully. We'll keep you updated with the latest news and updates.");
         
         // Reset form
         orderForm.reset();
       } catch (error) {
         console.error("Error sending email:", error);
-        alert("There was an error sending your inquiry. Please try again or contact us directly at autopax1@swinetech.ph");
+        alert("There was an error sending your update request. Please try again or contact us directly at autopax1@swinetech.ph");
       } finally {
         // Re-enable submit button
         submitButton.disabled = false;

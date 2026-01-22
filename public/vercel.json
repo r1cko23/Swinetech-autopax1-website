@@ -20,6 +20,10 @@
     {
       "source": "/Order/bulk",
       "destination": "/Order/bulk/index.html"
+    },
+    {
+      "source": "/Inquire",
+      "destination": "/Inquire/index.html"
     }
   ],
   "redirects": [
@@ -40,7 +44,7 @@
     },
     {
       "source": "/bulk-order.html",
-      "destination": "/Order/bulk",
+      "destination": "/Inquire",
       "permanent": true
     }
   ],

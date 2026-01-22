@@ -136,62 +136,80 @@
             </div>
           </div>
           <div class="order-section__form-wrapper">
-            <form class="order-form" id="orderForm" aria-label="Bulk order form">
+            <form class="order-form" id="orderForm" aria-label="Get updates form">
               <div class="order-form__field">
-                <label for="firstName" class="order-form__label">
-                  Your First Name<span class="order-form__required">*</span>
+                <label for="fullName" class="order-form__label">
+                  Full Name<span class="order-form__required">*</span>
                 </label>
                 <input
                   type="text"
-                  id="firstName"
-                  name="firstName"
+                  id="fullName"
+                  name="fullName"
                   class="order-form__input"
                   required
                   aria-required="true"
+                  placeholder="Juan dela Cruz"
                 />
               </div>
               <div class="order-form__field">
-                <label for="farmLocation" class="order-form__label">
-                  Farm Location<span class="order-form__required">*</span>
+                <label for="location" class="order-form__label">
+                  Location<span class="order-form__required">*</span>
                 </label>
                 <input
                   type="text"
-                  id="farmLocation"
-                  name="farmLocation"
+                  id="location"
+                  name="location"
                   class="order-form__input"
                   required
                   aria-required="true"
+                  placeholder="City, Province"
                 />
               </div>
               <div class="order-form__field">
-                <label for="herdSize" class="order-form__label">
-                  Herd Size<span class="order-form__required">*</span>
+                <label for="email" class="order-form__label">
+                  E-mail<span class="order-form__required">*</span>
                 </label>
                 <input
-                  type="text"
-                  id="herdSize"
-                  name="herdSize"
+                  type="email"
+                  id="email"
+                  name="email"
                   class="order-form__input"
                   required
                   aria-required="true"
+                  placeholder="example@email.com"
+                  pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                />
+              </div>
+              <div class="order-form__field">
+                <label for="contactNumber" class="order-form__label">
+                  Contact Number<span class="order-form__required">*</span>
+                </label>
+                <input
+                  type="tel"
+                  id="contactNumber"
+                  name="contactNumber"
+                  class="order-form__input"
+                  required
+                  aria-required="true"
+                  placeholder="+63 9XX XXX XXXX"
+                  pattern="^\+?[1-9]\d{1,14}$"
                 />
               </div>
               <div class="order-form__field">
                 <label for="message" class="order-form__label">
-                  Message<span class="order-form__required">*</span>
+                  Message
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   class="order-form__textarea"
                   rows="4"
-                  required
-                  aria-required="true"
+                  placeholder="Optional message"
                 ></textarea>
               </div>
-              <p class="order-form__note">Limited Slots Available for Pre-Order</p>
+              <p class="order-form__note">We'll keep you updated with the latest news and updates</p>
               <button type="submit" class="btn btn--blue order-form__submit">
-                SECURE MY SUPPLY
+                Get Updates
               </button>
             </form>
           </div>
@@ -227,7 +245,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="footer" role="contentinfo">
+    <footer id="contact" class="footer" role="contentinfo">
       <div class="footer__container">
         <div class="footer__brand">
           <img
@@ -271,15 +289,6 @@
               aria-label="LinkedIn"
             >
               <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a
-              href="https://www.twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="footer__social-link"
-              aria-label="Twitter"
-            >
-              <i class="fab fa-twitter"></i>
             </a>
           </div>
         </div>

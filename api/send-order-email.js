@@ -9,10 +9,11 @@
  * Usage:
  * POST /api/send-order-email
  * Body: {
- *   firstName: string,
- *   farmLocation: string,
- *   herdSize: string,
- *   message: string
+ *   fullName: string,
+ *   location: string,
+ *   email: string,
+ *   contactNumber: string,
+ *   message: string (optional)
  * }
  */
 
@@ -46,13 +47,30 @@ module.exports = async (req, res) => {
 
   try {
     // Get form data from request body
-    const { firstName, farmLocation, herdSize, message } = req.body;
+    const { fullName, location, email, contactNumber, message } = req.body;
 
     // Validate required fields
-    if (!firstName || !farmLocation || !herdSize || !message) {
+    if (!fullName || !location || !email || !contactNumber) {
       return res.status(400).json({ 
         error: 'Missing required fields',
-        required: ['firstName', 'farmLocation', 'herdSize', 'message']
+        required: ['fullName', 'location', 'email', 'contactNumber']
+      });
+    }
+
+    // Validate email format
+    const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ 
+        error: 'Invalid email format'
+      });
+    }
+
+    // Validate phone number format (must include area code)
+    const cleanPhone = contactNumber.replace(/[\s\-]/g, '');
+    const phoneRegex = /^\+[1-9]\d{6,14}$/;
+    if (!phoneRegex.test(cleanPhone)) {
+      return res.status(400).json({ 
+        error: 'Invalid contact number format. Must include country code (e.g., +63, +1, +44)'
       });
     }
 
@@ -65,7 +83,7 @@ module.exports = async (req, res) => {
     }
 
     // Format email content
-    const emailSubject = `New Bulk Order Inquiry from ${firstName}`;
+    const emailSubject = `New Update Request from ${fullName}`;
     
     // Get the site URL from environment or use default
     const SITE_URL = process.env.SITE_URL || 'https://www.swinetech.ph';
@@ -190,33 +208,38 @@ module.exports = async (req, res) => {
               <div class="logo-container">
                 <img src="${LOGO_URL}" alt="Swine Tech Logo" class="logo" />
               </div>
-              <h1>New Bulk Order Inquiry</h1>
-              <p>You have received a new inquiry from your website</p>
+              <h1>New Update Request</h1>
+              <p>You have received a new update request from your website</p>
             </div>
             <div class="content">
               <div class="field">
-                <span class="label">First Name</span>
-                <div class="value">${firstName}</div>
+                <span class="label">Full Name</span>
+                <div class="value">${fullName}</div>
               </div>
               <div class="divider"></div>
               <div class="field">
-                <span class="label">Farm Location</span>
-                <div class="value">${farmLocation}</div>
+                <span class="label">Location</span>
+                <div class="value">${location}</div>
               </div>
               <div class="divider"></div>
               <div class="field">
-                <span class="label">Herd Size</span>
-                <div class="value">${herdSize}</div>
+                <span class="label">E-mail</span>
+                <div class="value">${email}</div>
               </div>
               <div class="divider"></div>
+              <div class="field">
+                <span class="label">Contact Number</span>
+                <div class="value">${contactNumber}</div>
+              </div>
+              ${message ? `<div class="divider"></div>
               <div class="field">
                 <span class="label">Message</span>
                 <div class="value message-value">${message.replace(/\n/g, '<br>')}</div>
-              </div>
+              </div>` : ''}
             </div>
             <div class="footer">
               <p><strong>Swine Tech Inc. Philippines</strong></p>
-              <p>This email was sent from the Swine Tech website bulk order form.</p>
+              <p>This email was sent from the Swine Tech website update request form.</p>
               <p>Submitted at: ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila', dateStyle: 'long', timeStyle: 'short' })}</p>
               <p style="margin-top: 15px;">
                 <a href="mailto:autopax1@swinetech.ph">autopax1@swinetech.ph</a> | 
@@ -229,18 +252,17 @@ module.exports = async (req, res) => {
     `;
 
     const emailText = `
-New Bulk Order Inquiry
+New Update Request
 
-First Name: ${firstName}
-Farm Location: ${farmLocation}
-Herd Size: ${herdSize}
-
-Message:
-${message}
+Full Name: ${fullName}
+Location: ${location}
+E-mail: ${email}
+Contact Number: ${contactNumber}
+${message ? `Message: ${message}` : ''}
 
 ---
 Submitted at: ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' })}
-This email was sent from the Swine Tech website bulk order form.
+This email was sent from the Swine Tech website update request form.
     `;
 
     // Send email using Resend
@@ -250,7 +272,7 @@ This email was sent from the Swine Tech website bulk order form.
       subject: emailSubject,
       html: emailHtml,
       text: emailText,
-      replyTo: TO_EMAIL, // Allow replying directly to the customer
+      replyTo: email, // Allow replying directly to the customer
     });
 
     if (error) {
