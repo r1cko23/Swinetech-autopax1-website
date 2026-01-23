@@ -2331,35 +2331,4 @@
   // Start initialization
   init();
 
-  // Debug navigation alignment
-  function debugNavAlignment() {
-    setTimeout(() => {
-      const homeLink = document.querySelector('a[href="#home"]');
-      const learnLink = document.querySelector('a[href="infographics.html"], a[href="/Learn"], a[href*="Learn"]');
-      const orderLink = document.querySelector('.nav__item--order-disabled .nav__link');
-      
-      if (!homeLink || !learnLink || !orderLink) {
-        fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:2295',message:'Nav elements not found',data:{hasHome:!!homeLink,hasLearn:!!learnLink,hasOrder:!!orderLink},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'alignment'})}).catch(()=>{});
-        return;
-      }
-      
-      const homeRect = homeLink.getBoundingClientRect();
-      const learnRect = learnLink.getBoundingClientRect();
-      const orderRect = orderLink.getBoundingClientRect();
-      const homeStyles = window.getComputedStyle(homeLink);
-      const learnStyles = window.getComputedStyle(learnLink);
-      const orderStyles = window.getComputedStyle(orderLink);
-      const orderItem = orderLink.closest('.nav__item--order-disabled');
-      const orderItemStyles = orderItem ? window.getComputedStyle(orderItem) : null;
-      
-      fetch('http://127.0.0.1:7244/ingest/b76d1cdd-97ac-45d2-af38-06bb397558d8',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'main.js:2310',message:'Nav alignment debug',data:{home:{top:homeRect.top,height:homeRect.height,padding:homeStyles.padding,margin:homeStyles.margin,lineHeight:homeStyles.lineHeight},learn:{top:learnRect.top,height:learnRect.height,padding:learnStyles.padding,margin:learnStyles.margin,lineHeight:learnStyles.lineHeight},order:{top:orderRect.top,height:orderRect.height,padding:orderStyles.padding,margin:orderStyles.margin,lineHeight:orderStyles.lineHeight,minHeight:orderStyles.minHeight},orderItem:{display:orderItemStyles?.display,alignSelf:orderItemStyles?.alignSelf,alignItems:orderItemStyles?.alignItems},alignment:{homeLearnDiff:Math.abs(homeRect.top-learnRect.top),homeOrderDiff:Math.abs(homeRect.top-orderRect.top)}},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'alignment'})}).catch(()=>{});
-    }, 500);
-  }
-  
-  // Run alignment debug after init
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", debugNavAlignment);
-  } else {
-    debugNavAlignment();
-  }
 })();
