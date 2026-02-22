@@ -22,6 +22,10 @@
     {
       "source": "/Order/bulk",
       "destination": "/Order/bulk/index.html"
+    },
+    {
+      "source": "/kiosk",
+      "destination": "/kiosk.html"
     }
   ],
   "redirects": [
@@ -43,6 +47,11 @@
     {
       "source": "/bulk-order.html",
       "destination": "/Order/bulk",
+      "permanent": true
+    },
+    {
+      "source": "/kiosk.html",
+      "destination": "/kiosk",
       "permanent": true
     }
   ],

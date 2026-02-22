@@ -30,12 +30,7 @@ const TO_EMAIL = 'autopax1@swinetech.ph';
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev';
 
 module.exports = async (req, res) => {
-  // Only allow POST requests
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  // CORS headers for production
+  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -43,6 +38,11 @@ module.exports = async (req, res) => {
   // Handle preflight
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
+  }
+
+  // Only allow POST requests
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
@@ -65,12 +65,12 @@ module.exports = async (req, res) => {
       });
     }
 
-    // Validate phone number format (must include area code)
-    const cleanPhone = contactNumber.replace(/[\s\-]/g, '');
-    const phoneRegex = /^\+[1-9]\d{6,14}$/;
-    if (!phoneRegex.test(cleanPhone)) {
+    // Validate phone number format for PH mobile inputs used by kiosk
+    const cleanPhone = (contactNumber || '').replace(/\D/g, '');
+    const isValidPhone = /^09\d{9}$/.test(cleanPhone) || /^63\d{9}$/.test(cleanPhone);
+    if (!isValidPhone) {
       return res.status(400).json({ 
-        error: 'Invalid contact number format. Must include country code (e.g., +63, +1, +44)'
+        error: 'Invalid contact number format. Use 09XXXXXXXXX or +63 9XX XXX XXXX.'
       });
     }
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920, initial-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Swine Tech Kiosk - Secure your supply of Autopax 1" />
+    <title>Swine Tech Kiosk | Autopax 1</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png" />
+    <link rel="stylesheet" href="styles/main.css?v=36" />
+    <link rel="stylesheet" href="styles/funnel.css?v=5" />
+    <link rel="stylesheet" href="styles/kiosk.css?v=15" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="kiosk-body">
+    <!-- Home view: 1080x1920, Background.mp4 behind logo (with tagline in image) + CTA -->
+    <div id="kioskHomeView" class="kiosk-view kiosk-view--active" aria-hidden="false">
+      <div class="kiosk-video-wrap">
+        <video class="kiosk-video" id="kioskVideo" autoplay muted loop playsinline aria-hidden="true">
+          <source src="Background.mp4" type="video/mp4" />
+        </video>
+        <div class="kiosk-video-overlay" aria-hidden="true"></div>
+      </div>
+      <div class="kiosk-hero">
+        <div class="kiosk-hero__container">
+          <img src="logos/Swine Tech_Final_Vertical_Logo_with tagline.png" alt="Swine Tech - Building immunity for the swine industry" class="kiosk-hero__logo kiosk-hero__logo--big kiosk-hero__logo--transparent" />
+          <button type="button" id="kioskCtaSecure" class="kiosk-cta-btn" aria-label="Secure my supply">
+            SECURE MY SUPPLY
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order form view: per Swine Tech_Funnel Web_Order Form_01.jpg -->
+    <div id="kioskFormView" class="kiosk-view" aria-hidden="true">
+      <main class="kiosk-form-main" role="main">
+        <div class="kiosk-form-inner">
+        <div class="kiosk-form-header">
+          <img src="assets/Navi Section/Logo.png" alt="Swine Tech" class="kiosk-form-logo" />
+          <p class="kiosk-form-tagline">We're Here to Help You</p>
+          <h2 class="kiosk-form-headline">Join the Repopulation</h2>
+        </div>
+
+        <form id="kioskOrderForm" class="kiosk-form" novalidate>
+          <div class="kiosk-form__card">
+            <div class="kiosk-field">
+              <label for="kioskFullName">Full Name <span class="kiosk-required">*</span></label>
+              <input type="text" id="kioskFullName" name="fullName" required placeholder="Juan dela Cruz" />
+            </div>
+            <div class="kiosk-field">
+              <label for="kioskLocation">Location <span class="kiosk-required">*</span></label>
+              <input type="text" id="kioskLocation" name="location" required placeholder="City, Province" />
+            </div>
+            <div class="kiosk-field">
+              <label for="kioskEmail">E-mail <span class="kiosk-required">*</span></label>
+              <input type="email" id="kioskEmail" name="email" required placeholder="example@email.com" />
+            </div>
+            <div class="kiosk-field">
+              <label for="kioskContactNumber">Contact Number <span class="kiosk-required">*</span></label>
+              <input type="tel" id="kioskContactNumber" name="contactNumber" required placeholder="+63 9XX XXX XXXX" />
+            </div>
+            <div class="kiosk-field">
+              <label for="kioskMessage">Message <span class="kiosk-required">*</span></label>
+              <textarea id="kioskMessage" name="message" rows="4" placeholder="Your message" required></textarea>
+            </div>
+
+            <p class="kiosk-form-note">We'll keep you updated with the latest news and updates</p>
+            <button type="submit" id="kioskSubmitBtn" class="kiosk-submit-btn" aria-label="Secure my supply and send">
+              SECURE MY SUPPLY
+            </button>
+          </div>
+        </form>
+
+        <footer class="kiosk-form-footer">
+          <a href="mailto:autopax1@swinetech.ph" class="kiosk-footer-item">
+            <span class="kiosk-footer-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </span>
+            <span class="kiosk-footer-text">
+              <span class="kiosk-footer-label">E-mail</span>
+              <span class="kiosk-footer-value">autopax1@swinetech.ph</span>
+            </span>
+          </a>
+          <a href="tel:+639569464189" class="kiosk-footer-item">
+            <span class="kiosk-footer-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </span>
+            <span class="kiosk-footer-text">
+              <span class="kiosk-footer-label">Phone Number</span>
+              <span class="kiosk-footer-value">+63 956 946 4189</span>
+            </span>
+          </a>
+          <a href="https://swinetech.ph" target="_blank" rel="noopener noreferrer" class="kiosk-footer-item">
+            <span class="kiosk-footer-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+            </span>
+            <span class="kiosk-footer-text">
+              <span class="kiosk-footer-label">Website</span>
+              <span class="kiosk-footer-value">swinetech.ph</span>
+            </span>
+          </a>
+        </footer>
+
+        <button type="button" id="kioskBackBtn" class="kiosk-back-btn" aria-label="Back to home"><span class="kiosk-back-arrow" aria-hidden="true">←</span> Back</button>
+        </div>
+      </main>
+    </div>
+
+    <!-- Toast for success/error -->
+    <div id="kioskToast" class="kiosk-toast" role="status" aria-live="polite" aria-hidden="true"></div>
+
+    <script src="scripts/kiosk.js?v=4"></script>
+  </body>
+</html>

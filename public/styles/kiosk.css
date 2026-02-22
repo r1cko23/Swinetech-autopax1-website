@@ -1,0 +1,418 @@
+/**
+ * Kiosk layout – 1080×1920 portrait
+ * Home: Swine Tech_Funnel Web_Home_01.jpg
+ * Order form: Swine Tech_Funnel Web_Order Form_01.jpg
+ */
+
+/* Fixed 1080x1920 viewport; background/video fills exactly */
+.kiosk-body {
+  margin: 0;
+  padding: 0;
+  width: 1080px;
+  height: 1920px;
+  min-width: 1080px;
+  min-height: 1920px;
+  max-width: 1080px;
+  max-height: 1920px;
+  overflow: hidden;
+  position: relative;
+  font-family: var(--font-body, "Montserrat", sans-serif);
+  background: #fff;
+}
+
+/* Scale down on smaller screens but keep aspect ratio */
+@media (max-width: 1080px), (max-height: 1920px) {
+  .kiosk-body {
+    width: 100vw;
+    height: 100vh;
+    min-width: 0;
+    min-height: 0;
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+}
+
+.kiosk-view {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.kiosk-view--active {
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+}
+
+/* ========== HOME VIEW (1080x1920, video background) ========== */
+.kiosk-video-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.kiosk-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+}
+
+.kiosk-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.22) 100%);
+  pointer-events: none;
+}
+
+.kiosk-hero {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 120px 80px 140px;
+  box-sizing: border-box;
+}
+
+.kiosk-hero__container {
+  text-align: center;
+  max-width: 800px;
+}
+
+.kiosk-hero__logo {
+  width: 180px;
+  height: auto;
+  margin: 0 auto 32px;
+  display: block;
+  background: transparent;
+}
+
+.kiosk-hero__logo--big {
+  width: min(85vw, 520px);
+  max-width: 520px;
+  margin: 0 auto 48px;
+}
+
+.kiosk-hero__logo--transparent {
+  /* Exported PNG with transparent background – no blend */
+  mix-blend-mode: normal;
+}
+
+.kiosk-cta-btn {
+  display: inline-block;
+  margin-top: 64px;
+  padding: 26px 64px;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  background: #007deb;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  min-height: 76px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kiosk-cta-btn:hover,
+.kiosk-cta-btn:focus {
+  background: #0066c4;
+  outline: 3px solid rgba(255,255,255,0.5);
+  outline-offset: 4px;
+}
+
+.kiosk-cta-btn:active {
+  transform: scale(0.98);
+}
+
+/* ========== FORM VIEW (Order Form JPG) ========== */
+/* Top ~70% off-white, bottom ~30% white */
+.kiosk-form-main {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(to bottom, #f8f8f8 0%, #f8f8f8 70%, #ffffff 70%, #ffffff 100%);
+  padding: 48px 32px 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Centered form column: wider, overlaps footer; allow card to overlap into footer */
+.kiosk-form-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 0;
+  overflow: visible;
+}
+
+.kiosk-form-header {
+  text-align: center;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+/* Logo bigger; substantial gap below (per reference layout) */
+.kiosk-form-logo {
+  width: min(52vw, 340px);
+  height: auto;
+  margin: 0 auto 36px;
+  display: block;
+  background: transparent;
+}
+
+.kiosk-form-logo--single {
+  width: min(52vw, 340px);
+  margin: 0 auto 36px;
+}
+
+/* Tagline: regular weight, medium grey; smaller gap to headline */
+.kiosk-form-tagline {
+  font-size: 18px;
+  color: #707070;
+  margin: 0 0 12px;
+  font-weight: 400;
+}
+
+/* Main heading: Gotham Bold, dark grey, prominent */
+.kiosk-form-headline {
+  font-family: var(--font-heading, "Gotham", "Gotham Bold", "Montserrat", sans-serif);
+  font-size: 42px;
+  font-weight: var(--font-weight-bold, 700);
+  color: #343A40;
+  margin: 0;
+}
+
+.kiosk-form {
+  position: relative;
+  z-index: 2;
+  margin-top: 52px;
+  margin-bottom: -120px;
+  flex-shrink: 0;
+}
+
+.kiosk-form__card {
+  background: #fff;
+  border-radius: 28px;
+  padding: 56px 56px 72px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  margin-bottom: 0;
+}
+
+.kiosk-field {
+  margin-bottom: 32px;
+}
+
+.kiosk-field:last-child {
+  margin-bottom: 0;
+}
+
+.kiosk-field label {
+  display: block;
+  font-size: 22px;
+  font-weight: 400;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+
+.kiosk-required {
+  color: #fb3640;
+}
+
+.kiosk-field input,
+.kiosk-field textarea {
+  width: 100%;
+  padding: 20px 20px;
+  font-size: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f0f2f5;
+  box-sizing: border-box;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+  min-height: 64px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kiosk-field textarea {
+  min-height: 260px;
+  resize: vertical;
+}
+
+.kiosk-field input:focus,
+.kiosk-field textarea:focus {
+  border-color: #007deb;
+  outline: none;
+  background: #fff;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.kiosk-form-note {
+  font-size: 20px;
+  color: #6b7280;
+  margin: 0 0 44px;
+  text-align: center;
+}
+
+.kiosk-submit-btn {
+  width: 100%;
+  height: 96px;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  background: #007deb;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 0.2s, opacity 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.kiosk-submit-btn:hover {
+  background: #0066c4;
+}
+
+.kiosk-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Footer: same white as form card, no divider – form/button overlap into this area */
+.kiosk-form-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 36px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 176px 0 0 0;
+  background: #ffffff;
+  text-align: left;
+  flex-shrink: 0;
+}
+
+.kiosk-footer-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 1 auto;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Icon same height as the two lines (label + value) – per 2nd image */
+.kiosk-footer-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  color: #007deb;
+}
+
+.kiosk-footer-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Label above value within each module */
+.kiosk-footer-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kiosk-footer-label {
+  font-size: 14px;
+  line-height: 1.3;
+  color: #374151;
+  font-weight: 400;
+}
+
+.kiosk-footer-value {
+  font-size: 16px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: #000;
+}
+
+.kiosk-back-btn {
+  display: block;
+  margin: 32px auto 0;
+  padding: 18px 36px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #007deb;
+  background: #fff;
+  border: 2px solid #007deb;
+  border-radius: 10px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+}
+
+.kiosk-back-btn .kiosk-back-arrow {
+  margin-right: 4px;
+}
+
+.kiosk-back-btn:hover {
+  background: rgba(0, 125, 235, 0.08);
+}
+
+/* Toast */
+.kiosk-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 20px 32px;
+  max-width: 90%;
+  font-size: 20px;
+  color: #fff;
+  background: #111;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  z-index: 100;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.kiosk-toast.kiosk-toast--visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.kiosk-toast.kiosk-toast--error {
+  background: #fb3640;
+}
