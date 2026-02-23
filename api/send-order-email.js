@@ -13,6 +13,7 @@
  *   location: string,
  *   email: string,
  *   contactNumber: string,
+ *   herdSize: number (optional),
  *   message: string (optional)
  * }
  */
@@ -47,7 +48,7 @@ module.exports = async (req, res) => {
 
   try {
     // Get form data from request body
-    const { fullName, location, email, contactNumber, message } = req.body;
+    const { fullName, location, email, contactNumber, herdSize, message } = req.body;
 
     // Validate required fields
     if (!fullName || !location || !email || !contactNumber) {
@@ -72,6 +73,16 @@ module.exports = async (req, res) => {
       return res.status(400).json({ 
         error: 'Invalid contact number format. Use 09XXXXXXXXX or +63 9XX XXX XXXX.'
       });
+    }
+
+    // Optional herd size must be a positive integer when provided
+    if (herdSize !== undefined && herdSize !== null && String(herdSize).trim() !== '') {
+      const parsedHerdSize = Number(herdSize);
+      if (!Number.isInteger(parsedHerdSize) || parsedHerdSize <= 0) {
+        return res.status(400).json({
+          error: 'Invalid herd size. Use a positive whole number.'
+        });
+      }
     }
 
     // Check if Resend API key is configured
@@ -231,6 +242,11 @@ module.exports = async (req, res) => {
                 <span class="label">Contact Number</span>
                 <div class="value">${contactNumber}</div>
               </div>
+              ${herdSize ? `<div class="divider"></div>
+              <div class="field">
+                <span class="label">Herd Size</span>
+                <div class="value">${herdSize}</div>
+              </div>` : ''}
               ${message ? `<div class="divider"></div>
               <div class="field">
                 <span class="label">Message</span>
@@ -258,6 +274,7 @@ Full Name: ${fullName}
 Location: ${location}
 E-mail: ${email}
 Contact Number: ${contactNumber}
+${herdSize ? `Herd Size: ${herdSize}` : ''}
 ${message ? `Message: ${message}` : ''}
 
 ---

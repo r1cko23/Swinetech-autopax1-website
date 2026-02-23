@@ -49,8 +49,21 @@
               <input type="text" id="kioskFullName" name="fullName" required placeholder="Juan dela Cruz" />
             </div>
             <div class="kiosk-field">
-              <label for="kioskLocation">Location <span class="kiosk-required">*</span></label>
-              <input type="text" id="kioskLocation" name="location" required placeholder="City, Province" />
+              <label for="kioskLocation">Province <span class="kiosk-required">*</span></label>
+              <div class="kiosk-autocomplete">
+                <input
+                  type="text"
+                  id="kioskLocation"
+                  name="location"
+                  required
+                  autocomplete="off"
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-controls="kioskProvinceOptions"
+                  placeholder="Type or select your province"
+                />
+                <div id="kioskProvinceOptions" class="kiosk-autocomplete__list" role="listbox" hidden></div>
+              </div>
             </div>
             <div class="kiosk-field">
               <label for="kioskEmail">E-mail <span class="kiosk-required">*</span></label>
@@ -59,6 +72,10 @@
             <div class="kiosk-field">
               <label for="kioskContactNumber">Contact Number <span class="kiosk-required">*</span></label>
               <input type="tel" id="kioskContactNumber" name="contactNumber" required placeholder="+63 9XX XXX XXXX" />
+            </div>
+            <div class="kiosk-field">
+              <label for="kioskHerdSize">Herd Size (Optional)</label>
+              <input type="number" id="kioskHerdSize" name="herdSize" min="1" step="1" inputmode="numeric" placeholder="e.g. 500" />
             </div>
             <div class="kiosk-field">
               <label for="kioskMessage">Message <span class="kiosk-required">*</span></label>
@@ -110,6 +127,6 @@
     <!-- Toast for success/error -->
     <div id="kioskToast" class="kiosk-toast" role="status" aria-live="polite" aria-hidden="true"></div>
 
-    <script src="scripts/kiosk.js?v=4"></script>
+    <script src="scripts/kiosk.js?v=6"></script>
   </body>
 </html>

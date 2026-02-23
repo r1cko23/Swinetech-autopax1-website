@@ -1,6 +1,6 @@
 /**
  * Kiosk: home view (video + CTA) and order form per Order Form JPG.
- * Submit sends to /api/send-order-email (fullName, location, email, contactNumber, message), then returns to home.
+ * Submit sends to /api/send-order-email (fullName, location, email, contactNumber, herdSize, message), then returns to home.
  */
 (function () {
   'use strict';
@@ -18,6 +18,135 @@
   const form = document.getElementById('kioskOrderForm');
   const submitBtn = document.getElementById('kioskSubmitBtn');
   const toast = document.getElementById('kioskToast');
+  const provinceInput = document.getElementById('kioskLocation');
+  const provinceOptions = document.getElementById('kioskProvinceOptions');
+  let highlightedProvinceIndex = -1;
+  let visibleProvinces = [];
+  const PROVINCES = [
+    'Abra', 'Agusan del Norte', 'Agusan del Sur', 'Aklan', 'Albay', 'Antique', 'Apayao', 'Aurora',
+    'Basilan', 'Bataan', 'Batanes', 'Batangas', 'Benguet', 'Biliran', 'Bohol', 'Bukidnon', 'Bulacan',
+    'Cagayan', 'Camarines Norte', 'Camarines Sur', 'Camiguin', 'Capiz', 'Catanduanes', 'Cavite', 'Cebu',
+    'Cotabato', 'Davao de Oro', 'Davao del Norte', 'Davao del Sur', 'Davao Occidental', 'Davao Oriental',
+    'Dinagat Islands', 'Eastern Samar', 'Guimaras', 'Ifugao', 'Ilocos Norte', 'Ilocos Sur', 'Iloilo',
+    'Isabela', 'Kalinga', 'La Union', 'Laguna', 'Lanao del Norte', 'Lanao del Sur', 'Leyte',
+    'Maguindanao del Norte', 'Maguindanao del Sur', 'Marinduque', 'Masbate', 'Metro Manila',
+    'Misamis Occidental', 'Misamis Oriental', 'Mountain Province', 'Negros Occidental', 'Negros Oriental',
+    'Northern Samar', 'Nueva Ecija', 'Nueva Vizcaya', 'Occidental Mindoro', 'Oriental Mindoro',
+    'Palawan', 'Pampanga', 'Pangasinan', 'Quezon', 'Quirino', 'Rizal', 'Romblon', 'Samar', 'Sarangani',
+    'Siquijor', 'Sorsogon', 'South Cotabato', 'Southern Leyte', 'Sultan Kudarat', 'Sulu',
+    'Surigao del Norte', 'Surigao del Sur', 'Tarlac', 'Tawi-Tawi', 'Zambales', 'Zamboanga del Norte',
+    'Zamboanga del Sur', 'Zamboanga Sibugay'
+  ];
+
+  function closeProvinceOptions() {
+    if (!provinceOptions || !provinceInput) return;
+    provinceOptions.hidden = true;
+    provinceInput.setAttribute('aria-expanded', 'false');
+    highlightedProvinceIndex = -1;
+  }
+
+  function openProvinceOptions() {
+    if (!provinceOptions || !provinceInput || visibleProvinces.length === 0) return;
+    provinceOptions.hidden = false;
+    provinceInput.setAttribute('aria-expanded', 'true');
+  }
+
+  function renderProvinceOptions(query) {
+    if (!provinceOptions || !provinceInput) return;
+    const normalizedQuery = (query || '').trim().toLowerCase();
+    visibleProvinces = PROVINCES.filter(function (province) {
+      return province.toLowerCase().includes(normalizedQuery);
+    }).slice(0, 12);
+
+    provinceOptions.innerHTML = '';
+    highlightedProvinceIndex = -1;
+
+    visibleProvinces.forEach(function (province, index) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'kiosk-autocomplete__option';
+      button.setAttribute('role', 'option');
+      button.textContent = province;
+      button.addEventListener('mousedown', function (event) {
+        event.preventDefault();
+      });
+      button.addEventListener('click', function () {
+        provinceInput.value = province;
+        closeProvinceOptions();
+      });
+      provinceOptions.appendChild(button);
+
+      if (index === highlightedProvinceIndex) {
+        button.classList.add('kiosk-autocomplete__option--active');
+      }
+    });
+
+    if (visibleProvinces.length > 0) {
+      openProvinceOptions();
+    } else {
+      closeProvinceOptions();
+    }
+  }
+
+  function setProvinceHighlight(nextIndex) {
+    if (!provinceOptions || visibleProvinces.length === 0) return;
+    const maxIndex = visibleProvinces.length - 1;
+    highlightedProvinceIndex = Math.max(0, Math.min(nextIndex, maxIndex));
+    const optionButtons = provinceOptions.querySelectorAll('.kiosk-autocomplete__option');
+    optionButtons.forEach(function (button, index) {
+      button.classList.toggle('kiosk-autocomplete__option--active', index === highlightedProvinceIndex);
+    });
+  }
+
+  function isValidProvince(value) {
+    return PROVINCES.indexOf((value || '').trim()) !== -1;
+  }
+
+  function setupProvinceAutocomplete() {
+    if (!provinceInput) return;
+
+    provinceInput.addEventListener('focus', function () {
+      renderProvinceOptions(provinceInput.value);
+    });
+
+    provinceInput.addEventListener('input', function () {
+      renderProvinceOptions(provinceInput.value);
+    });
+
+    provinceInput.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        if (provinceOptions && provinceOptions.hidden) {
+          renderProvinceOptions(provinceInput.value);
+        }
+        setProvinceHighlight(highlightedProvinceIndex + 1);
+        return;
+      }
+
+      if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        setProvinceHighlight(highlightedProvinceIndex - 1);
+        return;
+      }
+
+      if (event.key === 'Enter' && highlightedProvinceIndex >= 0) {
+        event.preventDefault();
+        provinceInput.value = visibleProvinces[highlightedProvinceIndex];
+        closeProvinceOptions();
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        closeProvinceOptions();
+      }
+    });
+
+    provinceInput.addEventListener('blur', function () {
+      setTimeout(function () {
+        closeProvinceOptions();
+      }, 120);
+    });
+  }
 
   function showView(activeView) {
     const isHome = activeView === homeView;
@@ -57,6 +186,7 @@
 
   function resetForm() {
     if (form) form.reset();
+    closeProvinceOptions();
   }
 
   function validatePhone(value) {
@@ -88,6 +218,8 @@
     }
 
     if (form) {
+      setupProvinceAutocomplete();
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -95,6 +227,7 @@
         const location = (form.querySelector('[name="location"]') || {}).value || '';
         const email = (form.querySelector('[name="email"]') || {}).value || '';
         const contactNumber = (form.querySelector('[name="contactNumber"]') || {}).value || '';
+        const herdSize = (form.querySelector('[name="herdSize"]') || {}).value || '';
         const message = (form.querySelector('[name="message"]') || {}).value || '';
 
         if (!fullName.trim()) {
@@ -102,7 +235,11 @@
           return;
         }
         if (!location.trim()) {
-          showToast('Please enter your location.', true);
+          showToast('Please select your location.', true);
+          return;
+        }
+        if (!isValidProvince(location)) {
+          showToast('Please choose a province from the dropdown list.', true);
           return;
         }
         if (!validateEmail(email)) {
@@ -111,6 +248,10 @@
         }
         if (!validatePhone(contactNumber)) {
           showToast('Please enter a valid phone number (e.g. 09XX XXX XXXX or +63 9XX XXX XXXX).', true);
+          return;
+        }
+        if (herdSize && !/^\d+$/.test(herdSize.trim())) {
+          showToast('Herd size must be a valid number.', true);
           return;
         }
         if (!message.trim()) {
@@ -123,6 +264,7 @@
           location: location.trim(),
           email: email.trim(),
           contactNumber: contactNumber.trim(),
+          herdSize: herdSize ? Number(herdSize) : undefined,
           message: message.trim()
         };
 
