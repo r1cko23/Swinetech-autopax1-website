@@ -259,7 +259,7 @@ module.exports = async (req, res) => {
               <p>Submitted at: ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila', dateStyle: 'long', timeStyle: 'short' })}</p>
               <p style="margin-top: 15px;">
                 <a href="mailto:autopax1@swinetech.ph">autopax1@swinetech.ph</a> | 
-                <a href="tel:+639569464189">+63 956 946 4189</a>
+                <a href="tel:+639178229754">+63 917 822 9754</a>
               </p>
             </div>
           </div>
@@ -286,6 +286,7 @@ This email was sent from the Swine Tech website update request form.
     const { data, error } = await resend.emails.send({
       from: FROM_EMAIL,
       to: TO_EMAIL,
+      cc: 'firstfilbio@gmail.com',
       subject: emailSubject,
       html: emailHtml,
       text: emailText,
