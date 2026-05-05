@@ -672,6 +672,31 @@ main {
 
 .hero__heading--blue {
   color: var(--accent-blue);
+  font-weight: var(--font-weight-bold);
+}
+
+.hero__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(1rem, 2.25vw, 1.75rem);
+  width: 100%;
+}
+
+.hero__stack > .hero__subtitle {
+  margin-bottom: 0;
+}
+
+.hero__stack > .hero__cta-group {
+  margin-top: 0;
+}
+
+.hero__stack > .hero__cta-button {
+  margin-top: 0;
+}
+
+.hero__stack .btn--large {
+  margin-top: 0;
 }
 
 .hero__subtitle {
@@ -691,28 +716,74 @@ main {
 
 .hero__cta-group {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm));
-  margin-top: var(--spacing-sm);
+  margin-top: 0;
+  align-items: flex-start;
 }
 
 .hero__cta-group .btn {
   margin-top: 0;
-  width: 100%;
-  max-width: 300px;
+  width: auto;
+  max-width: none;
   text-align: center;
+  white-space: nowrap;
+}
+
+.hero__partner {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 2vw, 14px);
+}
+
+.hero__partner-shield {
+  width: clamp(44px, 7vw, 52px);
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+.hero__partner-text {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  line-height: 1.25;
+}
+
+.hero__partner-label {
+  font-family: var(--font-heading);
+  font-size: clamp(0.75rem, 1.25vw, 0.875rem);
+  font-weight: var(--font-weight-normal);
+  color: #5c5c5c;
+}
+
+.hero__partner-name {
+  font-family: var(--font-heading);
+  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  font-weight: var(--font-weight-bold);
+  color: var(--accent-red);
+}
+
+.hero__cta-button {
+  margin-top: 0;
+}
+
+.hero__cta-button .btn {
+  margin-top: 0;
 }
 
 @media (min-width: 768px) {
   .hero__cta-group {
     flex-direction: row;
-    gap: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
+    flex-wrap: nowrap;
+    gap: clamp(var(--spacing-xs), 1.5vw, var(--spacing-sm));
   }
   
-  .hero__cta-group .btn {
-    width: auto;
-    flex: 0 1 auto;
-  }
 }
 
 .hero__image {
@@ -875,6 +946,10 @@ main {
     width: 100%;
     max-width: 100%;
     margin-top: 0;
+  }
+
+  .hero__partner {
+    width: 100%;
   }
 }
 

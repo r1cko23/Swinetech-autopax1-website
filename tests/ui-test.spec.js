@@ -37,7 +37,7 @@ test.describe('Swine Tech Funnel Website', () => {
         // Check phone icon and number
         await expect(page.locator('.nav__phone')).toBeVisible();
         await expect(page.locator('.nav__phone-icon')).toBeVisible();
-        await expect(page.locator('.nav__phone')).toContainText('+63 956 946 4189');
+        await expect(page.locator('.nav__phone')).toContainText('+63 917 822 9754');
         
         // Check dropdown arrows
         const dropdownArrows = page.locator('.nav__dropdown-arrow');
@@ -179,7 +179,7 @@ test.describe('Swine Tech Funnel Website', () => {
         await expect(address).toContainText('Poblacion 3005, Pulilan Bulacan');
         
         // Check contact info
-        await expect(page.locator('.footer__contact-item').first()).toContainText('+63 956 946 4189');
+        await expect(page.locator('.footer__contact-item').first()).toContainText('+63 917 822 9754');
         await expect(page.locator('.footer__contact-item').nth(1)).toContainText('autopax1@swinetech.ph');
         
         // Check legal links

@@ -39,13 +39,13 @@ test.describe('Footer Section - Reference Design Verification', () => {
         // Scroll to footer
         await page.locator('footer').scrollIntoViewIfNeeded();
         
-        // Check phone number matches reference (2nd image): +63 956 946 4189
+        // Check phone number matches reference (2nd image): +63 917 822 9754
         const phoneItem = page.locator('.footer__contact-item').first();
         await expect(phoneItem).toBeVisible();
-        await expect(phoneItem).toContainText('+63 956 946 4189');
+        await expect(phoneItem).toContainText('+63 917 822 9754');
         
         // Verify phone link href (the contact-item itself is the link)
-        await expect(phoneItem).toHaveAttribute('href', 'tel:+639569464189');
+        await expect(phoneItem).toHaveAttribute('href', 'tel:+639178229754');
         
         // Verify phone icon is visible
         const phoneIcon = phoneItem.locator('.footer__icon');
