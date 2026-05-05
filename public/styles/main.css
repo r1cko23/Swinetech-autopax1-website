@@ -43,6 +43,7 @@
   /* Layout */
   --container-max-width: 1200px;
   --container-padding: 1.5rem;
+  --header-height: 84px;
 
   /* Transitions */
   --transition-fast: 0.2s ease;
@@ -611,13 +612,14 @@ main {
    ============================================ */
 .hero {
   background-color: var(--bg-white);
-  padding: var(--spacing-xl) var(--container-padding);
-  min-height: 80vh;
+  --hero-pad-y: var(--spacing-xl);
+  padding: var(--hero-pad-y) var(--container-padding);
+  min-height: calc(100vh - var(--header-height));
   display: flex;
   align-items: center;
-  padding-top: calc(
-    var(--spacing-xl) + 60px
-  ); /* Align with Contact Us in navbar */
+  /* Header is sticky (in-flow), so hero needs symmetric padding only */
+  padding-top: var(--hero-pad-y);
+  padding-bottom: var(--hero-pad-y);
 }
 
 .hero__container {
@@ -681,6 +683,9 @@ main {
   align-items: flex-start;
   gap: clamp(1rem, 2.25vw, 1.75rem);
   width: 100%;
+  /* Keep subtitle + partner text aligned to the same column width */
+  --hero-stack-text-width: clamp(280px, 46vw, 560px);
+  max-width: min(100%, var(--hero-stack-text-width));
 }
 
 .hero__stack > .hero__subtitle {
@@ -704,6 +709,7 @@ main {
   margin-bottom: clamp(var(--spacing-xs), 2vw, var(--spacing-md));
   color: var(--text-dark);
   line-height: 1.6;
+  max-width: var(--hero-stack-text-width);
 }
 
 .hero__subtitle span {
@@ -753,6 +759,7 @@ main {
   align-items: flex-start;
   gap: 0.2rem;
   line-height: 1.25;
+  max-width: var(--hero-stack-text-width);
 }
 
 .hero__partner-label {
@@ -764,9 +771,10 @@ main {
 
 .hero__partner-name {
   font-family: var(--font-heading);
-  font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+  font-size: calc(clamp(1rem, 1.5vw, 1.28rem) + 1px);
   font-weight: var(--font-weight-bold);
   color: var(--accent-red);
+  letter-spacing: 0.015em;
 }
 
 .hero__cta-button {
@@ -775,6 +783,13 @@ main {
 
 .hero__cta-button .btn {
   margin-top: 0;
+  font-size: calc(clamp(0.8rem, 2.8vw, 1rem) + 2px);
+  letter-spacing: 0.025em;
+  width: 100%;
+  max-width: clamp(300px, 40vw, 435px);
+  min-width: clamp(300px, 40vw, 435px);
+  padding-left: clamp(1.25rem, 4.5vw, 2.75rem);
+  padding-right: clamp(1.25rem, 4.5vw, 2.75rem);
 }
 
 @media (min-width: 768px) {
@@ -4009,9 +4024,10 @@ main {
   }
 
   .hero {
-    padding-top: calc(var(--spacing-md) + 60px);
     min-height: auto;
-    padding-bottom: var(--spacing-lg); /* Better spacing on mobile */
+    --hero-pad-y: var(--spacing-md);
+    padding-top: var(--hero-pad-y);
+    padding-bottom: var(--hero-pad-y);
   }
 
   /* Keep same layout structure, just scale everything */
@@ -4364,8 +4380,9 @@ main {
 
   .hero {
     min-height: auto;
-    padding: var(--spacing-md) var(--container-padding);
-    padding-top: calc(var(--spacing-md) + 60px);
+    --hero-pad-y: var(--spacing-md);
+    padding-top: var(--hero-pad-y);
+    padding-bottom: var(--hero-pad-y);
   }
 
   .hero__container {
