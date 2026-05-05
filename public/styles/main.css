@@ -614,7 +614,7 @@ main {
   background-color: var(--bg-white);
   --hero-pad-y: var(--spacing-xl);
   padding: var(--hero-pad-y) var(--container-padding);
-  min-height: calc(100vh - var(--header-height));
+  min-height: calc(100svh - var(--header-height));
   display: flex;
   align-items: center;
   /* Header is sticky (in-flow), so hero needs symmetric padding only */
@@ -4024,7 +4024,6 @@ main {
   }
 
   .hero {
-    min-height: auto;
     --hero-pad-y: var(--spacing-md);
     padding-top: var(--hero-pad-y);
     padding-bottom: var(--hero-pad-y);
@@ -4379,7 +4378,6 @@ main {
   }
 
   .hero {
-    min-height: auto;
     --hero-pad-y: var(--spacing-md);
     padding-top: var(--hero-pad-y);
     padding-bottom: var(--hero-pad-y);

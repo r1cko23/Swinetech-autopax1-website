@@ -49,53 +49,10 @@ svg {
   }
 }
 
-/* Hero Section - Proportional Scaling */
-.hero {
-  padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl)) var(--container-padding);
-  min-height: calc(100vh - var(--header-height));
-  /* Keep top/bottom padding symmetric (header is sticky, not fixed) */
-  padding-top: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
-  padding-bottom: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
-  display: flex;
-  align-items: center;
-}
-
-.hero__container {
-  display: grid !important; /* Ensure grid layout on all sizes */
-  grid-template-columns: 1.3fr 0.7fr !important; /* Text left, bottle right */
-  gap: clamp(var(--spacing-sm), 3vw, var(--spacing-lg)) !important;
-  padding-left: 0 !important; /* Remove padding - hero section handles margins */
-  padding-right: 0 !important; /* Remove padding - hero section handles margins */
-  flex-direction: row !important; /* Override any flex column rules */
-  width: 100% !important; /* Ensure full width for proper centering */
-}
-
-/* Mobile adjustments */
-@media (max-width: 480px) {
-  .hero__container {
-    display: grid !important; /* Force grid on mobile */
-    grid-template-columns: 1.2fr 0.8fr !important; /* Adjusted ratio on mobile - keep side-by-side */
-    flex-direction: row !important; /* Ensure row layout */
-  }
-  
-  .hero__content {
-    grid-column: 1 !important; /* Force content to first column */
-    order: 1 !important;
-  }
-  
-  .hero__image {
-    grid-column: 2 !important; /* Force image to second column */
-    order: 2 !important;
-  }
-}
-
-.hero__bottle {
-  width: auto !important; /* Don't force 100% width */
-  max-width: clamp(120px, 15vw, 200px) !important; /* Limit size on all screens */
-  height: auto;
-  object-fit: contain;
-  transform: rotate(-3deg);
-}
+/* Hero Section
+   Note: Avoid vw-based "proportional" overrides for hero.
+   These cause noticeable reflow when browser zoom changes the layout viewport.
+   Hero layout is controlled in `main.css` using rem-based spacing + breakpoints. */
 
 /* ASF Section - Proportional Scaling */
 .asf-section {
@@ -220,7 +177,6 @@ img[src*=".png"],
 img[src*=".jpg"],
 img[src*=".jpeg"],
 img[src*=".svg"] {
-  aspect-ratio: attr(width) / attr(height);
   object-fit: contain;
 }
 
